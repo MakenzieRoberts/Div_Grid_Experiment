@@ -1,0 +1,277 @@
+/* This is just a proof of concept... CSS would be a lot less messy if I used classes instead of id, but that's for future me to deal with. */
+
+html {
+	box-sizing: border-box;
+}
+
+#numbers,
+#a,
+#b,
+#c,
+#d,
+#e,
+#f,
+#g,
+#h,
+#i,
+#j {
+	display: grid;
+	grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto;
+	height: fit-content;
+	width: fit-content;
+	background-color: white;
+	border: 1px solid white;
+}
+
+#num0,
+#num1,
+#num2,
+#num3,
+#num4,
+#num5,
+#num6,
+#num7,
+#num8,
+#num9,
+#num10 {
+	width: 20px;
+	height: 20px;
+	border: 1px solid white;
+	text-align: center;
+}
+#a0,
+#b0,
+#c0,
+#d0,
+#e0,
+#f0,
+#g0,
+#h0,
+#i0,
+#j0 {
+	width: 20px;
+	height: 20px;
+	border: 1px solid white;
+	text-align: center;
+}
+#a1,
+#b1,
+#c1,
+#d1,
+#e1,
+#f1,
+#g1,
+#h1,
+#i1,
+#j1 {
+	width: 20px;
+	height: 20px;
+	border: 1px solid blue;
+}
+#a2,
+#b2,
+#c2,
+#d2,
+#e2,
+#f2,
+#g2,
+#h2,
+#i2,
+#j2 {
+	width: 20px;
+	height: 20px;
+	border: 1px solid green;
+}
+#a3,
+#b3,
+#c3,
+#d3,
+#e3,
+#f3,
+#g3,
+#h3,
+#i3,
+#j3 {
+	width: 20px;
+	height: 20px;
+	border: 1px solid lime;
+}
+#a4,
+#b4,
+#c4,
+#d4,
+#e4,
+#f4,
+#g4,
+#h4,
+#i4,
+#j4 {
+	width: 20px;
+	height: 20px;
+	border: 1px solid yellow;
+}
+#a5,
+#b5,
+#c5,
+#d5,
+#e5,
+#f5,
+#g5,
+#h5,
+#i5,
+#j5 {
+	width: 20px;
+	height: 20px;
+	border: 1px solid orange;
+}
+#a6,
+#b6,
+#c6,
+#d6,
+#e6,
+#f6,
+#g6,
+#h6,
+#i6,
+#j6 {
+	width: 20px;
+	height: 20px;
+	border: 1px solid red;
+}
+#a7,
+#b7,
+#c7,
+#d7,
+#e7,
+#f7,
+#g7,
+#h7,
+#i7,
+#j7 {
+	width: 20px;
+	height: 20px;
+	border: 1px solid pink;
+}
+#a8,
+#b8,
+#c8,
+#d8,
+#e8,
+#f8,
+#g8,
+#h8,
+#i8,
+#j8 {
+	width: 20px;
+	height: 20px;
+	border: 1px solid magenta;
+}
+#a9,
+#b9,
+#c9,
+#d9,
+#e9,
+#f9,
+#g9,
+#h9,
+#i9,
+#j9 {
+	width: 20px;
+	height: 20px;
+	border: 1px solid purple;
+}
+#a10,
+#b10,
+#c10,
+#d10,
+#e10,
+#f10,
+#g10,
+#h10,
+#i10,
+#j10 {
+	width: 20px;
+	height: 20px;
+	border: 1px solid purple;
+}
+
+/* ---------------- PIXEL ART EXAMPLE ---------------- */
+
+/* #numbers,#a, #b, #c, #d, #e, #f, #g, #h, #i, #j{
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto;
+    height: fit-content;
+    width: fit-content;
+    background-color: white;
+    border: none;
+  }
+  
+  #c4, #c5, #c6, #c7, #c8, #d3, #d9, #e2, #e5, #e7, #e10, #f2, #f10, #g2, #g4, #g8, #g10, #h2, #h5, #h6, #h7, #h10, #i3, #i9, #j4, #j5, #j6, #j7, #j8{
+    background-color: black;
+  }
+  
+  #d4, #d5, #d6, #d7, #d8, #e3, #e4, #e6, #e8, #e9, #f3, #f4, #f5,#f6, #f7, #f8, #f9, #g3, #g5, #g6, #g7, #g9, #h3, #h4, #h8, #h9, #i4, #i5, #i6, #i7, #i8{
+    background-color: yellow;
+  }
+  
+  #num0, #num1, #num2, #num3, #num4, #num5, #num6, #num7, #num8, #num9, #num10{
+    width: 20px;
+    height: 20px;
+    border:none;
+    text-align: center;
+  }
+  #a0, #b0, #c0, #d0, #e0, #f0, #g0, #h0, #i0, #j0{
+    width: 20px;
+    height: 20px;
+    border:none;
+    text-align: center;
+  }
+  #a1, #b1, #c1, #d1, #e1, #f1, #g1, #h1, #i1, #j1{
+    width: 20px;
+    height: 20px;
+    border:none;
+  }
+  #a2, #b2, #c2, #d2, #e2, #f2, #g2, #h2, #i2, #j2{
+    width: 20px;
+    height: 20px;
+    border:none;
+  }
+  #a3, #b3, #c3, #d3, #e3, #f3, #g3, #h3, #i3, #j3{
+    width: 20px;
+    height: 20px;
+    border:none;
+  }
+  #a4, #b4, #c4, #d4, #e4, #f4, #g4, #h4, #i4, #j4{
+    width: 20px;
+    height: 20px;
+    border:none;
+  }
+  #a5, #b5, #c5, #d5, #e5, #f5, #g5, #h5, #i5, #j5{
+    width: 20px;
+    height: 20px;
+    border:none;
+  }
+  #a6, #b6, #c6, #d6, #e6, #f6, #g6, #h6, #i6, #j6{
+    width: 20px;
+    height: 20px;
+    border:none;
+  }
+  #a7, #b7, #c7, #d7, #e7, #f7, #g7, #h7, #i7, #j7{
+    width: 20px;
+    height: 20px;
+    border:none;
+  }
+  #a8, #b8, #c8, #d8, #e8, #f8, #g8, #h8, #i8, #j8{
+    width: 20px;
+    height: 20px;
+    border:none;
+  }
+  #a9, #b9, #c9, #d9, #e9, #f9, #g9, #h9, #i9, #j9{
+    width: 20px;
+    height: 20px;
+    border:none;
+  }
+  #a10, #b10, #c10, #d10, #e10, #f10, #g10, #h10, #i10, #j10{
+    width: 20px;
+    height: 20px;
+    border:none; */
