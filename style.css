@@ -6,7 +6,7 @@ html {
 	box-sizing: border-box;
 }
 
-#column-number-labels,
+/* #column-number-labels,
 #row-a,
 #row-b,
 #row-c,
@@ -22,7 +22,17 @@ html {
 	height: fit-content;
 	width: fit-content;
 	background-color: white;
-	padding-left: 20px;
+
+} */
+
+.row {
+	display: grid;
+	/* grid-template-columns: auto auto auto auto auto auto auto auto auto auto; */
+	grid-template-rows: repeat(21, auto);
+	height: fit-content;
+	width: fit-content;
+	background-color: white;
+	/* padding-left: 20px; */
 }
 
 .label {
@@ -32,6 +42,11 @@ html {
 	text-align: center;
 }
 
+.cell {
+	width: 20px;
+	height: 20px;
+	border: 1px solid black;
+}
 ._1 {
 	width: 20px;
 	height: 20px;
@@ -83,22 +98,14 @@ html {
 	border: 1px solid purple;
 }
 
-/* Solution 3 - Newest Solution 😊 (automatically fills row. Cuts down on code by 10x!) */
+/* Solution 3 - Newest Solution 😊 (automatically fills row. Cuts down on code by 10x!) 
+This removes the need for row/column labels outside the grid. This way, the new grid labels can be easily toggled on and off during development*/
 #row-a,
 #row-b,
 #row-c #row-d #row-e #row-f #row-g #row-h #row-i #row-j {
 	counter-reset: col-counter 0;
 }
-.a:nth-child(1n):before,
-.b:nth-child(1n):before,
-.c:nth-child(1n):before,
-.d:nth-child(1n):before,
-.e:nth-child(1n):before,
-.f:nth-child(1n):before,
-.g:nth-child(1n):before,
-.h:nth-child(1n):before,
-.i:nth-child(1n):before,
-.j:nth-child(1n):before {
+.cell:nth-child(1n):before {
 	/* 
     !NOTE(content: attr(id);) - Could also use attr(class); instead but it has an underscore so I used id  
     instead 
@@ -115,168 +122,6 @@ html {
 }
 
 /*
-------------------------- ▼ ▼ ▼ -------------------------
-Solution 2 - Old Solution (This does the same thing as newest solution, but I wanted to cut down on the amount of code and put them all in one selector. That caused some problems with the content property so I had to use attr(id) instead of manually putting the row letter then increment the column number usering a counter. I learned a lot in the process though! */
-/* #row-b {
-	counter-reset: col-counter 0;
-}
-.b:nth-child(1n):before {
-	font-size: x-small;
-	background-color: pink;
-
-	counter-increment: col-counter;
-	content: "B" counter(col-counter);
-}
-
-#row-c {
-	counter-reset: col-counter 0;
-}
-.c:nth-child(1n):before {
-	font-size: x-small;
-	background-color: pink;
-
-	counter-increment: col-counter;
-	content: "C" counter(col-counter);
-}
-
-#row-d {
-	counter-reset: col-counter 0;
-}
-.d:nth-child(1n):before {
-	font-size: x-small;
-	background-color: pink;
-
-	counter-increment: col-counter;
-	content: "D" counter(col-counter);
-}
-
-#row-e {
-	counter-reset: col-counter 0;
-}
-.e:nth-child(1n):before {
-	font-size: x-small;
-	counter-increment: col-counter;
-	content: "E" counter(col-counter);
-}
-
-#row-f {
-	counter-reset: col-counter 0;
-}
-.f:nth-child(1n):before {
-	font-size: x-small;
-	counter-increment: col-counter;
-	content: "F" counter(col-counter);
-}
-
-#row-g {
-	counter-reset: col-counter 0;
-}
-.g:nth-child(1n):before {
-	font-size: x-small;
-	counter-increment: col-counter;
-	content: "G" counter(col-counter);
-}
-
-#row-h {
-	counter-reset: col-counter 0;
-}
-.h:nth-child(1n):before {
-	font-size: x-small;
-	counter-increment: col-counter;
-	content: "H" counter(col-counter);
-}
-
-#row-i {
-	counter-reset: col-counter 0;
-}
-.i:nth-child(1n):before {
-	font-size: x-small;
-	counter-increment: col-counter;
-	content: "I" counter(col-counter);
-}
-
-#row-j {
-	counter-reset: col-counter 0;
-}
-.j:nth-child(1n):before {
-	font-size: x-small;
-	counter-increment: col-counter;
-	content: "J" counter(col-counter);
-} 
-------------------------- ▲ ▲ ▲ -------------------------
-*/
-
-/*
-------------------------- ▼ ▼ ▼ -------------------------
-Solution 1 - Oldest Solution (Requires code for every single box) 
-*/
-/* .a:nth-child(1)::before {
-	counter-increment: col-counter;
-	content: "A" counter(col-counter);
-	width: 20px;
-	text-align: center;
-}
-
-.a:nth-child(2)::before {
-	counter-increment: col-counter;
-	content: "A" counter(col-counter);
-	width: 20px;
-	text-align: center;
-} 
-
-... Then .b:nth-child(1), .b:nth-child(2), .c:nth-child(1), .b:nth-child(2), etc...
-------------------------- ▲ ▲ ▲ ------------------------- */
-
-#row-a:before {
-	content: "A";
-	width: 20px;
-	text-align: center;
-}
-#row-b:before {
-	content: "B";
-	width: 20px;
-	text-align: center;
-}
-#row-c:before {
-	content: "C";
-	width: 20px;
-	text-align: center;
-}
-#row-d:before {
-	content: "D";
-	width: 20px;
-	text-align: center;
-}
-#row-e:before {
-	content: "E";
-	width: 20px;
-	text-align: center;
-}
-#row-f:before {
-	content: "F";
-	width: 20px;
-	text-align: center;
-}
-#row-g:before {
-	content: "G";
-	width: 20px;
-	text-align: center;
-}
-#row-h:before {
-	content: "H";
-	width: 20px;
-	text-align: center;
-}
-#row-i:before {
-	content: "I";
-	width: 20px;
-	text-align: center;
-}
-#row-j:before {
-	content: "J";
-	width: 20px;
-	text-align: center;
-}
 
 /* ---------------- PIXEL ART EXAMPLE ---------------- */
 
