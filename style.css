@@ -4,8 +4,26 @@
 
 html {
 	box-sizing: border-box;
+	font-family: "Courier New", Courier, monospace;
+	font-size: 6pt;
+	height: 100%;
+	margin: 0;
 }
 
+body {
+	margin: 0;
+	box-sizing: border-box;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	/* width: fit-content; */
+}
+
+/* #grid {
+	padding-left: 20px;
+} */
 /* #column-number-labels,
 #row-a,
 #row-b,
@@ -35,14 +53,18 @@ html {
 	/* padding-left: 20px; */
 }
 
-.label {
+/* .label {
 	width: 20px;
 	height: 20px;
 	border: 1px solid white;
 	text-align: center;
-}
+} */
+/* canvas {
+	border: 1px solid black;
+} */
 
 .cell {
+	box-sizing: border-box !important; /*IMPORTANT - TAKES AWAY ADDED SPACE FROM BORDER (TAKES ITS WIDTH INTO ACCOUNT SO EACH CELL STAYS 20X20)*/
 	width: 20px;
 	height: 20px;
 	border: 1px solid black;
@@ -100,16 +122,35 @@ html {
 
 /* Solution 3 - Newest Solution 😊 (automatically fills row. Cuts down on code by 10x!) 
 This removes the need for row/column labels outside the grid. This way, the new grid labels can be easily toggled on and off during development*/
-#row-a,
+
+/* #row-a, // I think this was for the older solution. Keeping it here for now just in case
 #row-b,
 #row-c #row-d #row-e #row-f #row-g #row-h #row-i #row-j {
 	counter-reset: col-counter 0;
-}
-.cell:nth-child(1n):before {
-	/* 
+} */
+
+/* 
     !NOTE(content: attr(id);) - Could also use attr(class); instead but it has an underscore so I used id  
     instead 
-  */
+*/
+
+/* 
+****************** OLD CSS BEFORE TOGGLE CLASS WAS ADDED (.labelled) ***************** 
+This way it can be toggled on and off depending on if there's an auto-generated picture or not
+
+ .cell:nth-child(1n):before {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: grey;
+	content: attr(id);
+	font-size: 8pt;
+	font-weight: bold;
+	height: 100%;
+	text-transform: uppercase;
+} 
+*/
+.labelled:nth-child(1n):before {
 	display: flex;
 	align-items: center;
 	justify-content: center;
