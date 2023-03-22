@@ -1,10 +1,52 @@
-// TODO: Clean up what I have so far.
+// // TODO: Clean up what I have so far.
 
 // create the grid container
 const grid = document.createElement("div");
 const row = document.querySelector(".row");
 grid.id = "grid";
 const numColumns = 20;
+
+// ******** ▼ **** ▼ **** ▼ ****** CANVAS TEST ****** ▼ **** ▼ **** ▼ *******
+
+const canvas = document.createElement("canvas");
+const context = canvas.getContext("2d");
+const image = new Image();
+
+image.onload = function () {
+	console.log(image.height + " " + image.width);
+	canvas.width = image.width;
+	canvas.height = image.height;
+	context.drawImage(image, 0, 0, image.width, image.height);
+	const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+	const pixels = imageData.data;
+	let hexColours = [];
+	for (let i = 0; i < pixels.length; i += 4) {
+		const red = pixels[i];
+		const green = pixels[i + 1];
+		const blue = pixels[i + 2];
+		const alpha = pixels[i + 3];
+		const hexColor = rgbToHex(red, green, blue);
+		// Do something with the hex color value
+		hexColours.push(hexColor);
+		// console.log(hexColor);
+	}
+	// function getHexColours(array) {
+	// 	return hexColours;
+	// }
+	// console.log(hexColours);
+	// console.log(getHexColours(hexColours));
+	const finalHexArray = hexColours;
+};
+
+image.src = "../images/img2.png";
+
+function rgbToHex(red, green, blue) {
+	const r = red.toString(16).padStart(2, "0");
+	const g = green.toString(16).padStart(2, "0");
+	const b = blue.toString(16).padStart(2, "0");
+	return "#" + r + g + b;
+}
+// ******** ▲ **** ▲ **** ▲ ****** CANVAS TEST ****** ▲ **** ▲ **** ▲ *******
 
 // create the grid cells
 for (let i = 0; i < numColumns; i++) {
@@ -72,7 +114,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
 			// TODO: Get the colours to repeat every 10 columns.
 
-			/* 
+			/*
 			✨✨✨BRAINSTORMING...✨✨✨
 			 var num = 0;
 			 case 1 + n:
@@ -245,16 +287,19 @@ console.todo("TODO: ", 20);
 /*
 ┌————————————————————————————————————————————————————————————————————————————————————————————┐
 │                                                                                            │
-│  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  │    
-│  ░░░░█████╗░░█████╗░██████╗░██╗██╗░░░░░░█████╗░████████╗░░░░░░░██████╗░░░░░██╗░█████╗░░░░  │    
-│  ░░░██╔══██╗██╔══██╗██╔══██╗██║██║░░░░░██╔══██╗╚══██╔══╝░░░░░░██╔═══██╗░░░██╔╝██╔══██╗░░░  │    
-│  ░░░██║░░╚═╝██║░░██║██████╔╝██║██║░░░░░██║░░██║░░░██║░░░░░░░░░██║██╗██║░░██╔╝░███████║░░░  │    
-│  ░░░██║░░██╗██║░░██║██╔═══╝░██║██║░░░░░██║░░██║░░░██║░░░░░░░░░╚██████╔╝░██╔╝░░██╔══██║░░░  │    
-│  ░░░╚█████╔╝╚█████╔╝██║░░░░░██║███████╗╚█████╔╝░░░██║░░░░░░░░░░╚═██╔═╝░██╔╝░░░██║░░██║░░░  │    
-│  ░░░░╚════╝░░╚════╝░╚═╝░░░░░╚═╝╚══════╝░╚════╝░░░░╚═╝░░░░░░░░░░░░╚═╝░░░╚═╝░░░░╚═╝░░╚═╝░░░  │    
-│  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  │    
-└————————————————————————————————————————————————————————————————————————————————————————————┘    
+│  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  │
+│  ░░░░█████╗░░█████╗░██████╗░██╗██╗░░░░░░█████╗░████████╗░░░░░░░██████╗░░░░░██╗░█████╗░░░░  │
+│  ░░░██╔══██╗██╔══██╗██╔══██╗██║██║░░░░░██╔══██╗╚══██╔══╝░░░░░░██╔═══██╗░░░██╔╝██╔══██╗░░░  │
+│  ░░░██║░░╚═╝██║░░██║██████╔╝██║██║░░░░░██║░░██║░░░██║░░░░░░░░░██║██╗██║░░██╔╝░███████║░░░  │
+│  ░░░██║░░██╗██║░░██║██╔═══╝░██║██║░░░░░██║░░██║░░░██║░░░░░░░░░╚██████╔╝░██╔╝░░██╔══██║░░░  │
+│  ░░░╚█████╔╝╚█████╔╝██║░░░░░██║███████╗╚█████╔╝░░░██║░░░░░░░░░░╚═██╔═╝░██╔╝░░░██║░░██║░░░  │
+│  ░░░░╚════╝░░╚════╝░╚═╝░░░░░╚═╝╚══════╝░╚════╝░░░░╚═╝░░░░░░░░░░░░╚═╝░░░╚═╝░░░░╚═╝░░╚═╝░░░  │
+│  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  │
+└————————————————————————————————————————————————————————————————————————————————————————————┘
 */
 
 // Q: What does %c do?
 // A: %c is a CSS placeholder. It allows you to apply CSS to the text that follows it. The second argument is a string of CSS rules.
+
+// Q: How do I initialize a node project?
+// A: npm init
