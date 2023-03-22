@@ -47,7 +47,7 @@ html {
 	height: 20px;
 	border: 1px solid black;
 }
-._1 {
+/* ._1 {
 	width: 20px;
 	height: 20px;
 	border: 1px solid blue;
@@ -96,7 +96,7 @@ html {
 	width: 20px;
 	height: 20px;
 	border: 1px solid purple;
-}
+} */
 
 /* Solution 3 - Newest Solution 😊 (automatically fills row. Cuts down on code by 10x!) 
 This removes the need for row/column labels outside the grid. This way, the new grid labels can be easily toggled on and off during development*/
@@ -132,5 +132,3 @@ This removes the need for row/column labels outside the grid. This way, the new 
 #d4, #d5, #d6, #d7, #d8, #e3, #e4, #e6, #e8, #e9, #f3, #f4, #f5,#f6, #f7, #f8, #f9, #g3, #g5, #g6, #g7, #g9, #h3, #h4, #h8, #h9, #i4, #i5, #i6, #i7, #i8{
   background-color: yellow;
 } */
-
-/* ---------------- PIXEL ART EXAMPLE ---------------- */
