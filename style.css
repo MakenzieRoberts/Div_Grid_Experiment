@@ -1,47 +1,47 @@
-/* This is just a proof of concept... CSS would be a lot less messy if I used classes instead of id, but that's for future me to deal with. */
+/*	
+		/* ************************************************************************** /*
+		/*                                ✨ Notes ✨                                /*
+		/* ************************************************************************** /*
 
-/* TODO: Create constants for box width/height */
+		    ---     
+			---     
+			---    	
+
+		/* ************************** 📝 Quick To-Do List 📝 *********************** /*
+
+		!TODO :     Create constants for box width/height 
+
+		!TODO :     Make scroll snap y axis to center to account for large grid on narrow
+		            screen (scroll-snap-align: center;) 
+*/
 
 html {
 	box-sizing: border-box;
 	font-family: "Courier New", Courier, monospace;
 	font-size: 6pt;
-	height: 100%;
-	margin: 0;
+	height: fit-content;
+	margin: 0 auto;
+	width: fit-content;
+	background-color: l;
 }
 
 body {
-	margin: 0;
+	align-items: center;
 	box-sizing: border-box;
-	height: 100%;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	height: fit-content;
 	justify-content: center;
+	margin: 0;
+	width: fit-content;
 	/* width: fit-content; */
 }
 
-/* #grid {
-	padding-left: 20px;
-} */
-/* #column-number-labels,
-#row-a,
-#row-b,
-#row-c,
-#row-d,
-#row-e,
-#row-f,
-#row-g,
-#row-h,
-#row-i,
-#row-j {
-	display: grid;
-	grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto;
-	height: fit-content;
-	width: fit-content;
-	background-color: white;
+/* 
+#grid {
 
-} */
+} 
+*/
 
 .row {
 	display: grid;
@@ -53,102 +53,16 @@ body {
 	/* padding-left: 20px; */
 }
 
-/* .label {
-	width: 20px;
-	height: 20px;
-	border: 1px solid white;
-	text-align: center;
-} */
-/* canvas {
-	border: 1px solid black;
-} */
-
 .cell {
-	box-sizing: border-box !important; /*IMPORTANT - TAKES AWAY ADDED SPACE FROM BORDER (TAKES ITS WIDTH INTO ACCOUNT SO EACH CELL STAYS 20X20)*/
+	box-sizing: border-box !important; /* IMPORTANT - TAKES AWAY ADDED SPACE FROM BORDER (TAKES ITS WIDTH INTO ACCOUNT SO EACH CELL STAYS 20X20)*/
 	width: 20px;
 	height: 20px;
 	border: 1px solid black;
 }
-/* ._1 {
-	width: 20px;
-	height: 20px;
-	border: 1px solid blue;
-}
-._2 {
-	width: 20px;
-	height: 20px;
-	border: 1px solid green;
-}
-._3 {
-	width: 20px;
-	height: 20px;
-	border: 1px solid lime;
-}
-._4 {
-	width: 20px;
-	height: 20px;
-	border: 1px solid yellow;
-}
-._5 {
-	width: 20px;
-	height: 20px;
-	border: 1px solid orange;
-}
-._6 {
-	width: 20px;
-	height: 20px;
-	border: 1px solid red;
-}
-._7 {
-	width: 20px;
-	height: 20px;
-	border: 1px solid pink;
-}
-._8 {
-	width: 20px;
-	height: 20px;
-	border: 1px solid magenta;
-}
-._9 {
-	width: 20px;
-	height: 20px;
-	border: 1px solid purple;
-}
-._10 {
-	width: 20px;
-	height: 20px;
-	border: 1px solid purple;
-} */
-
-/* Solution 3 - Newest Solution 😊 (automatically fills row. Cuts down on code by 10x!) 
-This removes the need for row/column labels outside the grid. This way, the new grid labels can be easily toggled on and off during development*/
-
-/* #row-a, // I think this was for the older solution. Keeping it here for now just in case
-#row-b,
-#row-c #row-d #row-e #row-f #row-g #row-h #row-i #row-j {
-	counter-reset: col-counter 0;
-} */
 
 /* 
     !NOTE(content: attr(id);) - Could also use attr(class); instead but it has an underscore so I used id  
     instead 
-*/
-
-/* 
-****************** OLD CSS BEFORE TOGGLE CLASS WAS ADDED (.labelled) ***************** 
-This way it can be toggled on and off depending on if there's an auto-generated picture or not
-
- .cell:nth-child(1n):before {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	color: grey;
-	content: attr(id);
-	font-size: 8pt;
-	font-weight: bold;
-	height: 100%;
-	text-transform: uppercase;
-} 
 */
 .labelled:nth-child(1n):before {
 	display: flex;
@@ -161,15 +75,3 @@ This way it can be toggled on and off depending on if there's an auto-generated 
 	height: 100%;
 	text-transform: uppercase;
 }
-
-/*
-
-/* ---------------- PIXEL ART EXAMPLE ---------------- */
-
-/* #c4, #c5, #c6, #c7, #c8, #d3, #d9, #e2, #e5, #e7, #e10, #f2, #f10, #g2, #g4, #g8, #g10, #h2, #h5, #h6, #h7, #h10, #i3, #i9, #j4, #j5, #j6, #j7, #j8{
-  background-color: black;
-}
-
-#d4, #d5, #d6, #d7, #d8, #e3, #e4, #e6, #e8, #e9, #f3, #f4, #f5,#f6, #f7, #f8, #f9, #g3, #g5, #g6, #g7, #g9, #h3, #h4, #h8, #h9, #i4, #i5, #i6, #i7, #i8{
-  background-color: yellow;
-} */

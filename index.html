@@ -5,136 +5,12 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="style.css" />
-		<script src="index.js" defer></script>
+
 		<!-- "defer" makes the script act as if it was added to the bottom of body -->
-		<title>Div Grid Experiment</title>
+		<script src="index.js" defer></script>
+		<title>DIV-IF-FY</title>
 	</head>
 	<body>
-		<!-- <div id="grid">
-
-			<div id="row-a">
-				<div class="a _1" id="a1"></div>
-				<div class="a _2" id="a2"></div>
-				<div class="a _3" id="a3"></div>
-				<div class="a _4" id="a4"></div>
-				<div class="a _5" id="a5"></div>
-				<div class="a _6" id="a6"></div>
-				<div class="a _7" id="a7"></div>
-				<div class="a _8" id="a8"></div>
-				<div class="a _9" id="a9"></div>
-				<div class="a _10" id="a10"></div>
-			</div>
-			<div id="row-b">
-				<div class="b _1" id="b1"></div>
-				<div class="b _2" id="b2"></div>
-				<div class="b _3" id="b3"></div>
-				<div class="b _4" id="b4"></div>
-				<div class="b _5" id="b5"></div>
-				<div class="b _6" id="b6"></div>
-				<div class="b _7" id="b7"></div>
-				<div class="b _8" id="b8"></div>
-				<div class="b _9" id="b9"></div>
-				<div class="b _10" id="b10"></div>
-			</div>
-			<div id="row-c">
-				<div class="c _1" id="c1"></div>
-				<div class="c _2" id="c2"></div>
-				<div class="c _3" id="c3"></div>
-				<div class="c _4" id="c4"></div>
-				<div class="c _5" id="c5"></div>
-				<div class="c _6" id="c6"></div>
-				<div class="c _7" id="c7"></div>
-				<div class="c _8" id="c8"></div>
-				<div class="c _9" id="c9"></div>
-				<div class="c _10" id="c10"></div>
-			</div>
-			<div id="row-d">
-				<div class="d _1" id="d1"></div>
-				<div class="d _2" id="d2"></div>
-				<div class="d _3" id="d3"></div>
-				<div class="d _4" id="d4"></div>
-				<div class="d _5" id="d5"></div>
-				<div class="d _6" id="d6"></div>
-				<div class="d _7" id="d7"></div>
-				<div class="d _8" id="d8"></div>
-				<div class="d _9" id="d9"></div>
-				<div class="d _10" id="d10"></div>
-			</div>
-			<div id="row-e">
-				<div class="e _1" id="e1"></div>
-				<div class="e _2" id="e2"></div>
-				<div class="e _3" id="e3"></div>
-				<div class="e _4" id="e4"></div>
-				<div class="e _5" id="e5"></div>
-				<div class="e _6" id="e6"></div>
-				<div class="e _7" id="e7"></div>
-				<div class="e _8" id="e8"></div>
-				<div class="e _9" id="e9"></div>
-				<div class="e _10" id="e10"></div>
-			</div>
-			<div id="row-f">
-				<div class="f _1" id="f1"></div>
-				<div class="f _2" id="f2"></div>
-				<div class="f _3" id="f3"></div>
-				<div class="f _4" id="f4"></div>
-				<div class="f _5" id="f5"></div>
-				<div class="f _6" id="f6"></div>
-				<div class="f _7" id="f7"></div>
-				<div class="f _8" id="f8"></div>
-				<div class="f _9" id="f9"></div>
-				<div class="f _10" id="f10"></div>
-			</div>
-			<div id="row-g">
-				<div class="g _1" id="g1"></div>
-				<div class="g _2" id="g2"></div>
-				<div class="g _3" id="g3"></div>
-				<div class="g _4" id="g4"></div>
-				<div class="g _5" id="g5"></div>
-				<div class="g _6" id="g6"></div>
-				<div class="g _7" id="g7"></div>
-				<div class="g _8" id="g8"></div>
-				<div class="g _9" id="g9"></div>
-				<div class="g _10" id="g10"></div>
-			</div>
-			<div id="row-h">
-				<div class="h _1" id="h1"></div>
-				<div class="h _2" id="h2"></div>
-				<div class="h _3" id="h3"></div>
-				<div class="h _4" id="h4"></div>
-				<div class="h _5" id="h5"></div>
-				<div class="h _6" id="h6"></div>
-				<div class="h _7" id="h7"></div>
-				<div class="h _8" id="h8"></div>
-				<div class="h _9" id="h9"></div>
-				<div class="h _10" id="h10"></div>
-			</div>
-			<div id="row-i">
-				<div class="i _1" id="i1"></div>
-				<div class="i _2" id="i2"></div>
-				<div class="i _3" id="i3"></div>
-				<div class="i _4" id="i4"></div>
-				<div class="i _5" id="i5"></div>
-				<div class="i _6" id="i6"></div>
-				<div class="i _7" id="i7"></div>
-				<div class="i _8" id="i8"></div>
-				<div class="i _9" id="i9"></div>
-				<div class="i _10" id="i10"></div>
-			</div>
-			<div id="row-j">
-				<div class="j _1" id="j1"></div>
-				<div class="j _2" id="j2"></div>
-				<div class="j _3" id="j3"></div>
-				<div class="j _4" id="j4"></div>
-				<div class="j _5" id="j5"></div>
-				<div class="j _6" id="j6"></div>
-				<div class="j _7" id="j7"></div>
-				<div class="j _8" id="j8"></div>
-				<div class="j _9" id="j9"></div>
-				<div class="j _10" id="j10"></div>
-			</div>
-		</div> -->
-		<!-- <img id="myImage" src="../images/img3.png" /> -->
-
 		<p style="padding: 0 0 20px 0">
 			░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░<br />
 			░░░█████╗░██████╗░██╗░██████╗░██╗███╗░░██╗░█████╗░██╗░░░░░░░<br />
@@ -145,6 +21,7 @@
 			░░░╚════╝░╚═╝░░╚═╝╚═╝░╚═════╝░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝╚══════╝░░<br />
 			░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░<br />
 		</p>
+
 		<canvas id="canvas"></canvas>
 
 		<p style="margin-top: 80px; padding: 20px">
