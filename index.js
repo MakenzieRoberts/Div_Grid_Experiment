@@ -5,10 +5,10 @@ const grid = document.createElement("div");
 grid.id = "grid";
 const row = document.querySelector(".row");
 // const cell = document.querySelector(".cell");
-const numColumns = 20;
+const numColumns = 64; // Must be equal to the image's width/height (in pixels). The image must have the same width and height (ex. 64x64) - for now. In the future, I'll make it so the grid can be any size, and the image will be scaled to fit the grid.
 // TODO: instead of separate variables for width and height, use an object or array to store the values
-const cellWidth = 20; // (px) - For 1 to 1 scale, set both to 1
-const cellHeight = 20; // (px)
+const cellWidth = 4; // (px) - For 1 to 1 scale, set both to 1
+const cellHeight = 4; // (px)
 
 // TODO: get image width/height and then pass it on to numColumns so the grid is always the same size as the image. (in the future also make it so the grid doesn't need to have an equal number of rows and columns. And even later than that... lol... allow the user can choose the size of the grid)
 // TODO: allow for more than a 26x26 grid (constrained by the alphabet). Maybe I could use numbers instead? so they'd be labelled like:
@@ -146,7 +146,7 @@ async function extractHexColours() {
 	const image = new Image(); // Using optional size for image
 
 	// Load an image of intrinsic size 300x227 in CSS pixels
-	image.src = "../images/img3.png";
+	image.src = "../images/img2.png";
 
 	// image.onload = drawImageActualSize; // Draw when image has loaded
 
