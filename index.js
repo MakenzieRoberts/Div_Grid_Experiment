@@ -222,14 +222,15 @@ function colourCodeGrid() {
 		selectedCells.forEach((element) => {
 			let colourNum = count;
 
+			if (colourNum > 10) {
+				colourNum = (colourNum % 10) + 1;
+			}
+
 			console.log("--------------🔽--------------");
 			console.inspect({ colourNum });
 			console.inspect({ count });
 			console.log("--------------🔼--------------");
 
-			if (colourNum > 10) {
-				colourNum -= 10;
-			}
 			/* TODO: Why does this work up to 20???? */
 			switch (colourNum) {
 				case 1:
@@ -261,7 +262,7 @@ function colourCodeGrid() {
 					break;
 				case 10:
 					element.style.border = `1px solid purple`;
-					colourNum = 1;
+					// colourNum = 1;
 					break;
 				default: {
 					console.log("default switch break executing");
