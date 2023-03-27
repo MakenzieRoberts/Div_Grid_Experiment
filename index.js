@@ -10,6 +10,11 @@
 
 		/* ************************** 📝 Quick To-Do List 📝 *********************** /*
 
+		!TODO :     🌟 FEATURE 🌟   - Animation on-click (Turn the laptop screen on and
+		                            off in img2 on-click) 
+
+		                            - Link door to another page containing a different room
+
 		!TODO :     Get image width/height and then pass it on to numColumns so the grid
 		            is always the same size as the image. (in the future also make it so
 		            the doesn't need to have an equal number of rows and columns. And even
@@ -53,9 +58,12 @@
 /* ************************************************************************** */
 
 const image = new Image();
-image.src = "../images/img2.png";
+image.src = "../images/book.png";
 
-const numColumns = 64; /* Must be equal to the image's width/height (in pixels). The image must have the same width and height (ex. 64x64) - for now. In the future, I'll make it so the grid can be any size, and the image will be scaled to fit the grid. */
+const numColumns = image.width;
+const numRows = image.height;
+// const numColumns = 60;
+// const numRows = 60;
 const cellWidth = 20; /* (px) - For 1 to 1 scale, set both to 1 */
 const cellHeight = 20; /* (px) */
 
@@ -64,11 +72,12 @@ const cellHeight = 20; /* (px) */
 /* ************************************************************************** */
 
 window.addEventListener("DOMContentLoaded", async (event) => {
-	console.log("DOM fully loaded and parsed");
+	console.log("DOM content loaded.");
 	let hexArray = await extractHexColours(); // This was returning undefined before, but I fixed it with the async/await/promises
 	console.log(hexArray);
 	createGrid();
 	colourCodeGrid();
+
 	// hexArray = null; /* Comment/Uncomment to test */
 	if (!hexArray) {
 		colourCodeGrid();
@@ -169,7 +178,7 @@ async function extractHexColours() {
 function createGrid() {
 	const grid = document.createElement("div");
 	grid.id = "grid";
-	for (let i = 0; i < numColumns; i++) {
+	for (let i = 0; i < numRows; i++) {
 		const row = document.createElement("div");
 		row.id = "row-" + String.fromCharCode(97 + i);
 		row.className = "row";
