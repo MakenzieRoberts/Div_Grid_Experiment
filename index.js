@@ -74,12 +74,21 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 	console.log("DOM content loaded.");
 
 	//  imageData = { width: image.width, height: image.height, hexColours: hexArray };
-	let imageData = await extractImageData(imgSrc); // This was returning undefined before, but I fixed it with the async/await/promises
+	// let imageData = await extractImageData(imgSrc); // This was returning undefined before, but I fixed it with the async/await/promises
+	const canvas = document.getElementById("canvas");
+	const context = canvas.getContext("2d");
+
+	await loadImage(imgSrc).then((image) => {
+		drawImage(canvas, context, image);
+	});
+
+	let imageData = await extractImageData(canvas, context);
 
 	createGrid(imageData.width, imageData.height);
 	colourCodeGrid(imageData.width, imageData.height);
 
 	// imageData = null; /* Comment/Uncomment to test */
+
 	if (!imageData) {
 		colourCodeGrid();
 	} else {
@@ -96,86 +105,79 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 });
 
 /* ************************************************************************** */
-/*      ✏️ drawImageActualSize(): Draws original input image on screen ✏️    */
+/*      ✏️ drawImage(): Draws original input image on screen ✏️    */
 /* ************************************************************************** */
 
-function drawImageActualSize() {
-	/* Use the intrinsic size of image in CSS pixels for the canvas element */
-	canvas.width = this.naturalWidth;
-	canvas.height = this.naturalHeight;
+function drawImage(canvas, context, image) {
+	console.log(image.height + " " + image.width);
 
-	/* 		
-			Will draw the image as 300x227, ignoring the custom size of 60x45
-			given in the constructor 
-		*/
-	context.drawImage(this, 0, 0);
+	canvas.width = image.width;
+	canvas.height = image.height;
 
-	/* 		
-			To use the custom size we'll have to specify the scale parameters
-			using the element's width and height properties - lets draw one
-			on top in the corner: 
-		*/
-	// context.drawImage(this, 0, 0, this.width, this.height);
+	context.drawImage(image, 0, 0, image.width, image.height);
+}
+
+/* ************************************************************************** */
+/*    	    ⏳ loadImage(): Loads image for use in other functions ⏳         */
+/* ************************************************************************** */
+
+function loadImage(imgSrc) {
+	return new Promise((resolve) => {
+		const image = new Image();
+		image.onload = () => {
+			resolve(image);
+		};
+		image.src = imgSrc;
+		console.log("loadImage() finished.");
+	});
 }
 
 /* ************************************************************************** */
 /*     ⛏️ extractImageData(): Get image data & add hex values to array ⛏️   */
 /* ************************************************************************** */
 
-async function extractImageData(imgSrc) {
-	const image = new Image();
+async function extractImageData(canvas, context) {
+	const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+	// Using Uint32Array to improve performance
+	const pixels = new Uint32Array(imageData.data);
 
-	const canvas = document.getElementById("canvas");
-	const context = canvas.getContext("2d");
-
-	const hexArray = await new Promise((resolve) => {
-		image.onload = async function () {
-			/* When image has loaded, draw it to canvas */
-			drawImageActualSize; /* This function uses the 'this' keyword, so we need to call it like this. TODO: Get more familiar with the intricacies of the 'this' keyword */
-
-			console.log(image.height + " " + image.width);
-
-			canvas.width = image.width;
-			canvas.height = image.height;
-
-			context.drawImage(image, 0, 0, image.width, image.height);
-			const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-			const pixels = imageData.data;
-
-			/*
+	/*
 				Extraction goes to left to right for each row of pixels, starting at the top
 				left and moving down each row. That way it will correspond with the grid
 				construction perfectly.
 			*/
-			let hexColours = [];
-			for (let i = 0; i < pixels.length; i += 4) {
-				const red = pixels[i];
-				const green = pixels[i + 1];
-				const blue = pixels[i + 2];
-				const alpha = pixels[i + 3];
-				const hexColor = rgbToHex(red, green, blue);
-				hexColours.push(hexColor);
-				// console.log(hexColor);
-			}
-			resolve(hexColours);
-		};
-		// Set image source to begin loading
-		image.src = imgSrc;
-	});
+	let hexColours = [];
+	for (let i = 0; i < pixels.length; i += 4) {
+		const red = pixels[i];
+		const green = pixels[i + 1];
+		const blue = pixels[i + 2];
+		const alpha = pixels[i + 3];
+		const hexColor = rgbaToHex(red, green, blue, alpha);
+		hexColours.push(hexColor);
+		// console.log(hexColor);
+	}
 
-	function rgbToHex(red, green, blue) {
+	// function rgbToHex(red, green, blue) {
+	// 	const r = red.toString(16).padStart(2, "0");
+	// 	const g = green.toString(16).padStart(2, "0");
+	// 	const b = blue.toString(16).padStart(2, "0");
+	// 	return "#" + r + g + b;
+	// }
+
+	function rgbaToHex(red, green, blue, alpha) {
 		const r = red.toString(16).padStart(2, "0");
 		const g = green.toString(16).padStart(2, "0");
 		const b = blue.toString(16).padStart(2, "0");
-		return "#" + r + g + b;
+		const a = alpha.toString(16).padStart(2, "0");
+		return "#" + r + g + b + a;
 	}
 
-	let imageData = {
-		width: image.width,
-		height: image.height,
-		hexColours: hexArray,
+	let imageDataObj = {
+		width: imageData.width,
+		height: imageData.height,
+		hexColours: hexColours,
 	};
-	return imageData;
+	return imageDataObj;
 }
 
 /* ************************************************************************** */
