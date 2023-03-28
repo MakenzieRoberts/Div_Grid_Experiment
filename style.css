@@ -22,7 +22,7 @@ html {
 	height: fit-content;
 	margin: 0 auto;
 	width: fit-content;
-	background-color: l;
+	background-color: rgb(237, 198, 203);
 }
 
 body {
@@ -49,7 +49,7 @@ body {
 	grid-template-rows: repeat(21, auto);
 	height: fit-content;
 	width: fit-content;
-	background-color: white;
+	/* background-color: white; */ /* Don't uncomment this and then wonder why the alpha channel isn't working lmao 🤦‍♀️*/
 	/* padding-left: 20px; */
 }
 
@@ -70,8 +70,8 @@ body {
 	justify-content: center;
 	color: grey;
 	content: attr(id);
-	font-size: 8pt;
-	font-weight: bold;
+	font-size: 6pt;
+	/* font-weight: bold; */
 	height: 100%;
 	text-transform: uppercase;
 }
