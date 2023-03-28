@@ -10,27 +10,16 @@
 
 		/* ************************** 📝 Quick To-Do List 📝 *********************** /*
 
+		!TODO : 	Identify possible performance improvements...
+
+		            (?) Could save load time on large images by performing some tasks on a backend or
+		            in a web worker?: 
+					(https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
+
 		!TODO :     🌟 FEATURE 🌟   - Animation on-click (Turn the laptop screen on and
 		                            off in img2 on-click) 
 
 		                            - Link door to another page containing a different room
-
-		!TODO :     ❔ Instead of separate variables for width and height, use an object or
-		            array to store the values
-
-		!TODO :     ❕❕❕ Maybe use async/promise/listener/something to call the draw image
-		            function when image loads (image onload) so it still works the same
-		            but can be removed from the extract hex function
-		            (single-responsibility principle)
-
-					image.addEventListener('load', function() {
-							console.log('Image loaded successfully!');
-							// Code to execute after image has loaded
-					});
-
-		!TODO :     Figure out how to handle images with transparency. See what hex is
-		            extracted on a fully transparent pixel.See if I can get the "a" value
-		            (opacity value) from rgbToHex(). 
 
 		!TODO :     Create a main "controller" function that calls the other functions
 
@@ -56,15 +45,32 @@
 		            r1-c3 r2-c1, r2-c2, r2-c3 r3-c1, r3-c2, r3-c3 (r for row and c for
 		            column)
 
+		!DONE :     ❔ Instead of separate variables for width and height, use an object or
+		            array to store the values
+
+		!DONE :     ❕ Maybe use async/promise/listener/something to call the draw image
+		            function when image loads (image onload) so it still works the same
+		            but can be removed from the extract hex function
+		            (single-responsibility principle)
+
+					image.addEventListener('load', function() {
+							console.log('Image loaded successfully!');
+							// Code to execute after image has loaded
+					});
+
+		!DONE :     Figure out how to handle images with transparency. See what hex is
+		            extracted on a fully transparent pixel.See if I can get the "a" value
+		            (opacity value) from rgbToHex(). 
+
 */
 
 /* ************************************************************************** */
 /*                         🧱 Variables & Constants 🧱                       */
 /* ************************************************************************** */
 
-const imgSrc = "../images/book.png";
-const cellWidth = 1; /* (px) - For 1 to 1 scale, set both to 1 */
-const cellHeight = 1; /* (px) */
+const imgSrc = "../images/gif1.gif";
+const cellWidth = 20; /* (px) - For 1 to 1 scale, set both to 1 */
+const cellHeight = 20; /* (px) */
 
 /* ************************************************************************** */
 /*                    👂 DOMContentLoaded Event Listener 👂                   */
@@ -73,8 +79,6 @@ const cellHeight = 1; /* (px) */
 window.addEventListener("DOMContentLoaded", async (event) => {
 	console.log("DOM content loaded.");
 
-	//  imageData = { width: image.width, height: image.height, hexColours: hexArray };
-	// let imageData = await extractImageData(imgSrc); // This was returning undefined before, but I fixed it with the async/await/promises
 	const canvas = document.getElementById("canvas");
 	const context = canvas.getContext("2d");
 
@@ -82,10 +86,14 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 		drawImage(canvas, context, image);
 	});
 
+	/* 🔺 Alternate code (leaving here for learning purposes) */
+	// let image = await loadImage(imgSrc);
+	// await drawImage(canvas, context, image);
+
 	let imageData = await extractImageData(canvas, context);
 
 	createGrid(imageData.width, imageData.height);
-	colourCodeGrid(imageData.width, imageData.height);
+	colourCodeGrid(imageData.width);
 
 	// imageData = null; /* Comment/Uncomment to test */
 
@@ -98,9 +106,9 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 			element.style.border = `none`;
 			element.classList.remove("labelled");
 		});
-		console.log("imageData: ", imageData);
-		console.log("imageData.hexColours: ", imageData.hexColours);
-		applyExtractedColoursToGrid(imageData.hexColours);
+		// console.log("imageData: ", imageData);
+		// console.log("imageData.channels: ", imageData.channels);
+		applyExtractedColoursToGrid(imageData.channels);
 	}
 });
 
@@ -132,51 +140,67 @@ function loadImage(imgSrc) {
 	});
 }
 
-/* ************************************************************************** */
-/*     ⛏️ extractImageData(): Get image data & add hex values to array ⛏️   */
-/* ************************************************************************** */
+/* 
+   ************************************************************************** 
+/*     						⛏️ extractImageData() ⛏️ 			
+   ************************************************************************** 
+	Extracts RGBA values to array, returns object containing:
+
+	width    --> image.width, 
+	height   --> image.height, 
+	channels --> array of objects containing rgba values
+	
+	channels format: [{ r: red, g: green, b: blue, a: alpha }, ...]
+   ************************************************************************** 
+*/
 
 async function extractImageData(canvas, context) {
 	const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+
 	// Using Uint32Array to improve performance
 	const pixels = new Uint32Array(imageData.data);
 
 	/*
-				Extraction goes to left to right for each row of pixels, starting at the top
-				left and moving down each row. That way it will correspond with the grid
-				construction perfectly.
-			*/
-	let hexColours = [];
+		Extraction goes to left to right for each row of pixels, starting at the top
+		left and moving down each row. That way it will correspond with the grid
+		construction perfectly.
+	*/
+	let channels = [];
 	for (let i = 0; i < pixels.length; i += 4) {
 		const red = pixels[i];
 		const green = pixels[i + 1];
 		const blue = pixels[i + 2];
 		const alpha = pixels[i + 3];
-		const hexColor = rgbaToHex(red, green, blue, alpha);
-		hexColours.push(hexColor);
-		// console.log(hexColor);
+		// console.log("red: ", red);
+		// console.log("green: ", green);
+		// console.log("blue: ", blue);
+		// console.log("alpha: ", alpha);
+		// const hexColor = rgbaToHex(red, green, blue, alpha);
+
+		channels.push({ r: red, g: green, b: blue, a: alpha });
 	}
 
-	// function rgbToHex(red, green, blue) {
+	/* 
+		I decided to use rbga values instead of hex, so I can use the alpha channel.
+		However, I'm going to leave this here in case I want to use the hex values for
+		something in the future 
+	*/
+
+	// function rgbaToHex(red, green, blue, alpha) {
 	// 	const r = red.toString(16).padStart(2, "0");
 	// 	const g = green.toString(16).padStart(2, "0");
 	// 	const b = blue.toString(16).padStart(2, "0");
-	// 	return "#" + r + g + b;
+	// 	const a = alpha.toString(16).padStart(2, "0");
+	// 	return "#" + r + g + b + a;
 	// }
 
-	function rgbaToHex(red, green, blue, alpha) {
-		const r = red.toString(16).padStart(2, "0");
-		const g = green.toString(16).padStart(2, "0");
-		const b = blue.toString(16).padStart(2, "0");
-		const a = alpha.toString(16).padStart(2, "0");
-		return "#" + r + g + b + a;
-	}
-
+	/* TODO: Find a better name for this object */
 	let imageDataObj = {
 		width: imageData.width,
 		height: imageData.height,
-		hexColours: hexColours,
+		channels: channels,
 	};
+
 	return imageDataObj;
 }
 
@@ -222,10 +246,10 @@ function createGrid(width, height) {
 */
 
 /* Colouring divs with rainbow pattern for easier identification */
-function colourCodeGrid(width, height) {
+function colourCodeGrid(width) {
 	const numColumns = width;
-	const numRows = height;
-	const allCells = document.querySelectorAll(`[class*="cell"]`);
+
+	// const allCells = document.querySelectorAll(`[class*="cell"]`);
 
 	let count = 1;
 	while (count < numColumns + 1) {
@@ -292,10 +316,12 @@ function colourCodeGrid(width, height) {
 /*      🎨 applyExtractedColoursToGrid(): Add hex values to grid cells 🎨    */
 /* ************************************************************************** */
 
-function applyExtractedColoursToGrid(hexArray) {
+function applyExtractedColoursToGrid(rgbData) {
 	const allCells = document.querySelectorAll(`[class*="cell"]`);
 	allCells.forEach((element) => {
-		element.style.backgroundColor = hexArray.shift();
+		const { r, g, b, a } = rgbData.shift();
+
+		element.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${a})`;
 	});
 }
 
