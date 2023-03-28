@@ -15,24 +15,18 @@
 
 		                            - Link door to another page containing a different room
 
-		!TODO :     Get image width/height and then pass it on to numColumns so the grid
-		            is always the same size as the image. (in the future also make it so
-		            the doesn't need to have an equal number of rows and columns. And even
-		            later than that... lol... allow the user can choose the size of the
-		            grid)
-
-		!TODO :     Allow for more than a 26x26 grid (constrained by the alphabet). Maybe
-		            I could use numbers instead? so they'd be labelled like: r1-c1, r1-c2,
-		            r1-c3 r2-c1, r2-c2, r2-c3 r3-c1, r3-c2, r3-c3 (r for row and c for
-		            column)
-
-		!TODO :     Instead of separate variables for width and height, use an object or
+		!TODO :     ❔ Instead of separate variables for width and height, use an object or
 		            array to store the values
 
-		!TODO :     Maybe use async/promise/listener/something to call the draw image
+		!TODO :     ❕❕❕ Maybe use async/promise/listener/something to call the draw image
 		            function when image loads (image onload) so it still works the same
 		            but can be removed from the extract hex function
 		            (single-responsibility principle)
+
+					image.addEventListener('load', function() {
+							console.log('Image loaded successfully!');
+							// Code to execute after image has loaded
+					});
 
 		!TODO :     Figure out how to handle images with transparency. See what hex is
 		            extracted on a fully transparent pixel.See if I can get the "a" value
@@ -44,12 +38,23 @@
 		            DOMContentLoaded listener
 
 		!DONE :     Put image display in it's own function (right now it's in
-		            extractHexColours() which breaks the single-responsibility principle)
+		            extractImageData() which breaks the single-responsibility principle)
 
 		!DONE :     Clean up what I have so far. (Date: March 23 2023, 7:40pm)
 
 		!DONE :     Remove blank canvas space, or use it to display the image that's being
 		            div-if-ied
+
+		!DONE :     Get image width/height and then pass it on to numColumns so the grid
+		            is always the same size as the image. (in the future also make it so
+		            the doesn't need to have an equal number of rows and columns. And even
+		            later than that... lol... allow the user can choose the size of the
+		            grid)
+
+		!DONE :     Allow for more than a 26x26 grid (constrained by the alphabet). Maybe
+		            I could use numbers instead? so they'd be labelled like: r1-c1, r1-c2,
+		            r1-c3 r2-c1, r2-c2, r2-c3 r3-c1, r3-c2, r3-c3 (r for row and c for
+		            column)
 
 */
 
@@ -57,15 +62,9 @@
 /*                         🧱 Variables & Constants 🧱                       */
 /* ************************************************************************** */
 
-const image = new Image();
-image.src = "../images/book.png";
-
-const numColumns = image.width;
-const numRows = image.height;
-// const numColumns = 60;
-// const numRows = 60;
-const cellWidth = 20; /* (px) - For 1 to 1 scale, set both to 1 */
-const cellHeight = 20; /* (px) */
+const imgSrc = "../images/book.png";
+const cellWidth = 1; /* (px) - For 1 to 1 scale, set both to 1 */
+const cellHeight = 1; /* (px) */
 
 /* ************************************************************************** */
 /*                    👂 DOMContentLoaded Event Listener 👂                   */
@@ -73,13 +72,15 @@ const cellHeight = 20; /* (px) */
 
 window.addEventListener("DOMContentLoaded", async (event) => {
 	console.log("DOM content loaded.");
-	let hexArray = await extractHexColours(); // This was returning undefined before, but I fixed it with the async/await/promises
-	console.log(hexArray);
-	createGrid();
-	colourCodeGrid();
 
-	// hexArray = null; /* Comment/Uncomment to test */
-	if (!hexArray) {
+	//  imageData = { width: image.width, height: image.height, hexColours: hexArray };
+	let imageData = await extractImageData(imgSrc); // This was returning undefined before, but I fixed it with the async/await/promises
+
+	createGrid(imageData.width, imageData.height);
+	colourCodeGrid(imageData.width, imageData.height);
+
+	// imageData = null; /* Comment/Uncomment to test */
+	if (!imageData) {
 		colourCodeGrid();
 	} else {
 		/* TODO: In the future, make this toggle a class on and off instead. It's neater. */
@@ -88,8 +89,9 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 			element.style.border = `none`;
 			element.classList.remove("labelled");
 		});
-
-		applyExtractedColoursToGrid(hexArray);
+		console.log("imageData: ", imageData);
+		console.log("imageData.hexColours: ", imageData.hexColours);
+		applyExtractedColoursToGrid(imageData.hexColours);
 	}
 });
 
@@ -117,10 +119,12 @@ function drawImageActualSize() {
 }
 
 /* ************************************************************************** */
-/*     ⛏️ extractHexColours(): Get image data & add hex values to array ⛏️   */
+/*     ⛏️ extractImageData(): Get image data & add hex values to array ⛏️   */
 /* ************************************************************************** */
 
-async function extractHexColours() {
+async function extractImageData(imgSrc) {
+	const image = new Image();
+
 	const canvas = document.getElementById("canvas");
 	const context = canvas.getContext("2d");
 
@@ -154,9 +158,9 @@ async function extractHexColours() {
 				// console.log(hexColor);
 			}
 			resolve(hexColours);
-			// function getHexColours(array) {
-			// 	return hexColours;
 		};
+		// Set image source to begin loading
+		image.src = imgSrc;
 	});
 
 	function rgbToHex(red, green, blue) {
@@ -166,8 +170,12 @@ async function extractHexColours() {
 		return "#" + r + g + b;
 	}
 
-	console.log(hexArray);
-	return hexArray;
+	let imageData = {
+		width: image.width,
+		height: image.height,
+		hexColours: hexArray,
+	};
+	return imageData;
 }
 
 /* ************************************************************************** */
@@ -175,7 +183,9 @@ async function extractHexColours() {
 /* ************************************************************************** */
 
 /* create the grid cells */
-function createGrid() {
+function createGrid(width, height) {
+	const numColumns = width;
+	const numRows = height;
 	const grid = document.createElement("div");
 	grid.id = "grid";
 	for (let i = 1; i <= numRows; i++) {
@@ -210,7 +220,9 @@ function createGrid() {
 */
 
 /* Colouring divs with rainbow pattern for easier identification */
-function colourCodeGrid() {
+function colourCodeGrid(width, height) {
+	const numColumns = width;
+	const numRows = height;
 	const allCells = document.querySelectorAll(`[class*="cell"]`);
 
 	let count = 1;
@@ -225,10 +237,10 @@ function colourCodeGrid() {
 				colourNum = (colourNum % 10) + 1;
 			}
 
-			console.log("--------------🔽--------------");
-			console.inspect({ colourNum });
-			console.inspect({ count });
-			console.log("--------------🔼--------------");
+			// console.log("--------------🔽--------------");
+			// console.inspect({ colourNum });
+			// console.inspect({ count });
+			// console.log("--------------🔼--------------");
 
 			/* TODO: Why does this work up to 20???? */
 			switch (colourNum) {
