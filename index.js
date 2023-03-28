@@ -178,15 +178,14 @@ async function extractHexColours() {
 function createGrid() {
 	const grid = document.createElement("div");
 	grid.id = "grid";
-	for (let i = 0; i < numRows; i++) {
+	for (let i = 1; i <= numRows; i++) {
 		const row = document.createElement("div");
-		row.id = "row-" + String.fromCharCode(97 + i);
+		row.id = "row-" + i;
 		row.className = "row";
 		for (let j = 1; j <= numColumns; j++) {
 			const cell = document.createElement("div");
-			cell.className =
-				"cell labelled " + String.fromCharCode(97 + i) + " " + "_" + j;
-			cell.id = String.fromCharCode(97 + i) + j.toString();
+			cell.className = "cell labelled r" + i + " " + "c" + j;
+			cell.id = "c" + j + "-" + "r" + i;
 
 			row.appendChild(cell);
 		}
@@ -216,7 +215,7 @@ function colourCodeGrid() {
 
 	let count = 1;
 	while (count < numColumns + 1) {
-		let classVar = `"_${count}"`;
+		let classVar = `"c${count}"`;
 		const selectedCells = document.querySelectorAll(`[class$=${classVar}]`);
 		// let colourNum = 1;
 		selectedCells.forEach((element) => {
