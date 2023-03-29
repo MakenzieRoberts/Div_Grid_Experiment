@@ -61,6 +61,8 @@
 		!DONE :     Figure out how to handle images with transparency. See what hex is
 		            extracted on a fully transparent pixel.See if I can get the "a" value
 		            (opacity value) from rgbToHex(). 
+					
+		!DONE :     Test image opacity handling with an image with varying levels of opacity.
 
 */
 
@@ -68,7 +70,9 @@
 /*                         🧱 Variables & Constants 🧱                       */
 /* ************************************************************************** */
 
-const imgSrc = "../images/gif1.gif";
+// const imgSrc = "../images/gif1.gif";
+const imgSrc = "../images/book2.png";
+// const imgSrc = "../images/test.png";
 const cellWidth = 20; /* (px) - For 1 to 1 scale, set both to 1 */
 const cellHeight = 20; /* (px) */
 
@@ -321,7 +325,10 @@ function applyExtractedColoursToGrid(rgbData) {
 	allCells.forEach((element) => {
 		const { r, g, b, a } = rgbData.shift();
 
-		element.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${a})`;
+		const alphaRange = a / 255; // Convert alpha value to range of 0-1
+
+		console.log(a);
+		element.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${alphaRange})`;
 	});
 }
 
@@ -486,3 +493,68 @@ var commands = [
 // 		count++;
 // 	}
 // }
+
+/* ************************************************************************** */
+/*           🤖 ChatGpt Performance Suggestions (March 29, 2023) 🤖          */
+/* ************************************************************************** */
+
+/*
+    Here are some suggestions that may help improve performance in the code:
+
+	▶   Cache DOM elements: In the window.addEventListener("DOMContentLoaded") function,
+		the code is repeatedly accessing the DOM using document.getElementById and
+		document.querySelectorAll. To avoid doing this repeatedly, you can store these
+		elements in variables outside of the function so that they can be accessed when
+		needed without having to search the DOM again.
+
+	▶	Use CSS classes instead of inline styles: In the if (!imageData) block, the code is
+		setting the style of all cells using element.style.border and
+		element.classList.remove. It's generally better to use CSS classes instead of
+		inline styles as it's easier to manage and manipulate styles. You can define a
+		class for the cell border and a class for the "labelled" state, and then add or
+		remove these classes from the elements as needed.
+
+	▶	Use requestAnimationFrame: The extractImageData function is looping over all the
+		pixels in the image to extract the RGBA values. This can be a time-consuming
+		operation, especially for large images. To avoid blocking the main thread, you can
+		break up the extraction into smaller chunks and use requestAnimationFrame to
+		perform the work in the background. This will allow the UI to remain responsive
+		while the extraction is taking place.
+
+	▶	Use a worker thread: A more advanced technique for offloading expensive tasks like
+		image processing is to use a worker thread. Worker threads run in the background
+		and can perform operations in parallel to the main thread, which can improve
+		performance and responsiveness. You can create a new worker thread using the Worker
+		constructor and pass the image data to it for processing. Once the processing is
+		complete, the worker thread can send the results back to the main thread using the
+		postMessage method.
+
+	▶	Use a smaller canvas: The canvas is being set to the exact size of the image, which
+		can be very large for high-resolution images. You can improve performance by using
+		a smaller canvas and scaling the image down to fit. This will reduce the number of
+		pixels that need to be processed and displayed on the screen.
+
+	▶	Use Object.values instead of for...in loop: In the applyExtractedColoursToGrid
+		function, the code is looping over the imageData.channels object using a for...in
+		loop. It's generally faster to use the Object.values method to extract an array of
+		values from the object and then loop over that array.
+
+	▶	Use Array.from instead of querySelectorAll: In the colourCodeGrid function, the
+		code is using querySelectorAll to select all the grid cells and then looping over
+		them using forEach. It's generally faster to use the Array.from method to convert
+		the NodeList returned by querySelectorAll into an array and then loop over that
+		array.
+
+	▶	Use textContent instead of innerText: In the colourCodeGrid function, the code is
+		setting the text of the cell labels using the innerText property. It's generally
+		faster to use the textContent property instead as it doesn't parse HTML and is
+		therefore less expensive.
+
+	▶	Minimize unnecessary logging: The code contains several console.log statements that
+		may be slowing down performance. You can remove these statements or comment them
+		out when not needed.
+
+	▶	Remove unnecessary comments: The code contains many comments that may not be needed
+		for the code to function properly. Removing these comments can improve performance
+		by reducing the amount of code that needs to be parsed and executed.
+*/
