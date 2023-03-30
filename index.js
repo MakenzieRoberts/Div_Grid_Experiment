@@ -83,6 +83,8 @@ const imgSrc = "../images/book2.png";
 // const imgSrc = "../images/test.png";
 const cellWidth = 20; /* (px) - For 1 to 1 scale, set both to 1 */
 const cellHeight = 20; /* (px) */
+const canvas = document.getElementById("canvas");
+const context = canvas.getContext("2d");
 
 /* ************************************************************************** */
 /*                    👂 DOMContentLoaded Event Listener 👂                   */
@@ -90,9 +92,6 @@ const cellHeight = 20; /* (px) */
 
 window.addEventListener("DOMContentLoaded", async (event) => {
 	console.log("DOM content loaded.");
-
-	const canvas = document.getElementById("canvas");
-	const context = canvas.getContext("2d");
 
 	await loadImage(imgSrc).then((image) => {
 		drawImage(canvas, context, image);
