@@ -10,18 +10,26 @@
 
 		/* ************************** 📝 Quick To-Do List 📝 *********************** /*
 
-		!TODO : 	Identify possible performance improvements...
+		!TODO :     Create a main "controller" function that calls the other functions
 
-		            (?) Could save load time on large images by performing some tasks on a backend or
-		            in a web worker?: 
-					(https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
+		!TODO : 	🌟 PERFORMANCE 🌟  - Prevent accessing dom unessecarily. If you need to loop, put all the elements it inside an array and loop through that instead.
+										- Could save load time on large images by performing some tasks on a backend or
+		            					  in a web worker?: 
+									      (https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
+										- Identify the most time-consuming tasks and see if they can be moved to a web worker
+										- See if there are data structures that can be used to improve performance
+										- See if I can use any faster data types (eg. Uint32Array/Uint8Array)
+										- https://hacks.mozilla.org/2011/12/faster-canvas-pixel-manipulation-with-typed-arrays/
 
-		!TODO :     🌟 FEATURE 🌟   - Animation on-click (Turn the laptop screen on and
-		                            off in img2 on-click) 
+		!TODO :     🌟 POSSIBLE 🌟  - Allow for animations (gif, webp, etc.)
+		            🌟  FUTURE  🌟	  	- (?) https://konvajs.org/docs/sandbox/GIF_On_Canvas.html
+					🌟 FEATURES 🌟  - Indexing the image data and storing it in a database     	
+					
+		!TODO :     🌟 USE CASE 🌟  - Animation on-click (Turn the laptop screen on and
+		                            	off in img2 on-click) 
 
 		                            - Link door to another page containing a different room
-
-		!TODO :     Create a main "controller" function that calls the other functions
+		!TODO :     Create a main "controller" function that calls the other functions                  
 
 		!DONE :     If createGrid() and colourCodeGrid() can be removed from
 		            DOMContentLoaded listener
@@ -241,7 +249,7 @@ function createGrid(width, height) {
 }
 
 /* ************************************************************************** */
-/*     🌈 colourCodeGrid(): Add rainbow colour pattern to grid columns 🌈    */
+/* 🌈🌈🌈 colourCodeGrid(): Add rainbow colour pattern to grid columns 🌈🌈🌈
 /* ************************************************************************** */
 
 /* 	
@@ -252,14 +260,14 @@ function createGrid(width, height) {
 /* Colouring divs with rainbow pattern for easier identification */
 function colourCodeGrid(width) {
 	const numColumns = width;
-
-	// const allCells = document.querySelectorAll(`[class*="cell"]`);
+	const allCells = document.querySelectorAll(`[class*=cell]`);
 
 	let count = 1;
 	while (count < numColumns + 1) {
-		let classVar = `"c${count}"`;
-		const selectedCells = document.querySelectorAll(`[class$=${classVar}]`);
-		// let colourNum = 1;
+		const selectedCells = [...allCells].filter((cell) => {
+			return cell.classList.contains(`c${count}`);
+		});
+
 		selectedCells.forEach((element) => {
 			let colourNum = count;
 
@@ -315,7 +323,6 @@ function colourCodeGrid(width) {
 		count++;
 	}
 }
-
 /* ************************************************************************** */
 /*      🎨 applyExtractedColoursToGrid(): Add hex values to grid cells 🎨    */
 /* ************************************************************************** */
