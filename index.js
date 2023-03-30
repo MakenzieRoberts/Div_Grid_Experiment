@@ -260,6 +260,27 @@ function createGrid(width, height) {
 /* Colouring divs with rainbow pattern for easier identification */
 function colourCodeGrid(width) {
 	const numColumns = width;
+	/*
+		(?) I could remove with dom access here and put cells as a constant, but it only
+		works for this function and not others (Which I know has something to do with
+		scope/the order of the functions but I'm not sure what exactly. Maybe I have a
+		fundamental misunderstanding of how DOM access works. I assume the constants
+		access the DOM at the time of creation, and at the time of creation, cells doesn't
+		exist yet. - so the nodeList should be of no value to this function - only the
+		nodelist from after cells is created is of value to this function.... Right?)
+
+		After checking console.log(allCells.length);, it seems like even if I delete the
+		dom query for allcells in this function, this function is accessing it from a
+		broader scope - And it's only been accessed by other functions and inside the
+		domcontentloaded event listener, my guess is that it's being accessed from the
+		domcontentloaded event listener. If that's correct, it would mean that perhaps I
+		could use it to my advantage to query the dom for allcells right after they're
+		created, and then use that nodelist for all the other functions that use it
+		including this one. I could read about it, or I could play around with declaring
+		the scope as 'let' in the functions/dom to see which one breaks this function
+		(when it's without it's own dom query (below)).
+
+	 */
 	const allCells = document.querySelectorAll(`[class*=cell]`);
 
 	let count = 1;
@@ -327,6 +348,12 @@ function colourCodeGrid(width) {
 /*      🎨 applyExtractedColoursToGrid(): Add hex values to grid cells 🎨    */
 /* ************************************************************************** */
 
+/*
+	▶	Use Object.values instead of for...in loop: In the applyExtractedColoursToGrid
+	function, the code is looping over the imageData.channels object using a for...in
+	loop. It's generally faster to use the Object.values method to extract an array of
+	values from the object and then loop over that array.
+*/
 function applyExtractedColoursToGrid(rgbData) {
 	const allCells = document.querySelectorAll(`[class*="cell"]`);
 	allCells.forEach((element) => {
