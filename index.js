@@ -20,6 +20,9 @@
 										- See if there are data structures that can be used to improve performance
 										- See if I can use any faster data types (eg. Uint32Array/Uint8Array)
 										- https://hacks.mozilla.org/2011/12/faster-canvas-pixel-manipulation-with-typed-arrays/
+										- ❕❕❕ Chrome Canary Line-Level Profiler: https://developers.google.com/web/updates/2018/09/devtools#coverage
+																				 https://stackoverflow.com/questions/111368/how-do-you-performance-test-javascript-code
+																				 https://umaar.com/dev-tips/99-line-level-profiling/
 
 		!TODO :     🌟 POSSIBLE 🌟  - Allow for animations (gif, webp, etc.)
 		            🌟  FUTURE  🌟	  	- (?) https://konvajs.org/docs/sandbox/GIF_On_Canvas.html
@@ -79,10 +82,12 @@
 /* ************************************************************************** */
 
 // const imgSrc = "../images/gif1.gif";
-const imgSrc = "../images/book2.png";
+// const imgSrc = "../images/flowers_100x100.png";
+const imgSrc = "../images/flowers_164x258.png";
+// const imgSrc = "../images/avatar.png";
 // const imgSrc = "../images/test.png";
-const cellWidth = 20; /* (px) - For 1 to 1 scale, set both to 1 */
-const cellHeight = 20; /* (px) */
+const cellWidth = 5; /* (px) - For 1 to 1 scale, set both to 1 */
+const cellHeight = 5; /* (px) */
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 
@@ -104,9 +109,8 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 	let imageData = await extractImageData(canvas, context);
 
 	createGrid(imageData.width, imageData.height);
-	colourCodeGrid(imageData.width);
 
-	// imageData = null; /* Comment/Uncomment to test */
+	// imageData = null; /* Comment/Uncomment to test colourCodeGrid()*/
 
 	if (!imageData) {
 		colourCodeGrid();
@@ -288,7 +292,7 @@ function colourCodeGrid(width) {
 			return cell.classList.contains(`c${count}`);
 		});
 
-		selectedCells.forEach((element) => {
+		for (let i = 0; i < selectedCells.length; i++) {
 			let colourNum = count;
 
 			if (colourNum > 10) {
@@ -303,34 +307,34 @@ function colourCodeGrid(width) {
 			/* TODO: Why does this work up to 20???? */
 			switch (colourNum) {
 				case 1:
-					element.style.border = `1px solid blue`;
+					selectedCells[i].style.border = `1px solid blue`;
 					break;
 				case 2:
-					element.style.border = `1px solid aqua`;
+					selectedCells[i].style.border = `1px solid aqua`;
 					break;
 				case 3:
-					element.style.border = `1px solid green`;
+					selectedCells[i].style.border = `1px solid green`;
 					break;
 				case 4:
-					element.style.border = `1px solid lime`;
+					selectedCells[i].style.border = `1px solid lime`;
 					break;
 				case 5:
-					element.style.border = `1px solid yellow`;
+					selectedCells[i].style.border = `1px solid yellow`;
 					break;
 				case 6:
-					element.style.border = `1px solid orange`;
+					selectedCells[i].style.border = `1px solid orange`;
 					break;
 				case 7:
-					element.style.border = `1px solid red`;
+					selectedCells[i].style.border = `1px solid red`;
 					break;
 				case 8:
-					element.style.border = `1px solid pink`;
+					selectedCells[i].style.border = `1px solid pink`;
 					break;
 				case 9:
-					element.style.border = `1px solid magenta`;
+					selectedCells[i].style.border = `1px solid magenta`;
 					break;
 				case 10:
-					element.style.border = `1px solid purple`;
+					selectedCells[i].style.border = `1px solid purple`;
 					// colourNum = 1;
 					break;
 				default: {
@@ -339,7 +343,7 @@ function colourCodeGrid(width) {
 				}
 			}
 			colourNum++;
-		});
+		}
 		count++;
 	}
 }
@@ -355,14 +359,15 @@ function colourCodeGrid(width) {
 */
 function applyExtractedColoursToGrid(rgbData) {
 	const allCells = document.querySelectorAll(`[class*="cell"]`);
-	allCells.forEach((element) => {
-		const { r, g, b, a } = rgbData.shift();
+	for (let i = 0; i < rgbData.length; i++) {
+		/* !TODO: Could a queue be useful here? */
+		const { r, g, b, a } = rgbData[i];
 
 		const alphaRange = a / 255; // Convert alpha value to range of 0-1
 
-		console.log(a);
-		element.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${alphaRange})`;
-	});
+		// console.log(a);
+		allCells[i].style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${alphaRange})`;
+	}
 }
 
 /* ************************************************************************** */
