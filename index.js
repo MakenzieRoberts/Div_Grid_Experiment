@@ -10,19 +10,27 @@
 
 		/* ************************** 📝 Quick To-Do List 📝 *********************** /*
 
+		!TODO :     Allow user to upload their own image, then return the resulting grid's
+					html + css so the user can copy and paste it into their own project
+
 		!TODO :     Create a main "controller" function that calls the other functions
 
-		!TODO : 	🌟 PERFORMANCE 🌟  - Prevent accessing dom unessecarily. If you need to loop, put all the elements it inside an array and loop through that instead.
-										- Could save load time on large images by performing some tasks on a backend or
-		            					  in a web worker?: 
-									      (https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
-										- Identify the most time-consuming tasks and see if they can be moved to a web worker
-										- See if there are data structures that can be used to improve performance
-										- See if I can use any faster data types (eg. Uint32Array/Uint8Array)
-										- https://hacks.mozilla.org/2011/12/faster-canvas-pixel-manipulation-with-typed-arrays/
-										- ❕❕❕ Chrome Canary Line-Level Profiler: https://developers.google.com/web/updates/2018/09/devtools#coverage
-																				 https://stackoverflow.com/questions/111368/how-do-you-performance-test-javascript-code
-																				 https://umaar.com/dev-tips/99-line-level-profiling/
+		!TODO :     🌟 PERFORMANCE 🌟  - Prevent accessing dom unessecarily. If you need
+		                                to loop, put all the elements it inside an array
+		                                and loop through that instead. - Could save load
+		                                time on large images by performing some tasks on a
+		                                backend or in a web worker?:
+		                                (https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
+		                                - Identify the most time-consuming tasks and see
+		                                if they can be moved to a web worker - See if
+		                                there are data structures that can be used to
+		                                improve performance - See if I can use any faster
+		                                data types (eg. Uint32Array/Uint8Array) -
+		                                https://hacks.mozilla.org/2011/12/faster-canvas-pixel-manipulation-with-typed-arrays/
+		                                - ❕❕❕ Chrome Canary Line-Level Profiler:
+		                                https://developers.google.com/web/updates/2018/09/devtools#coverage
+		                                https://stackoverflow.com/questions/111368/how-do-you-performance-test-javascript-code
+		                                https://umaar.com/dev-tips/99-line-level-profiling/
 
 		!TODO :     🌟 POSSIBLE 🌟  - Allow for animations (gif, webp, etc.)
 		            🌟  FUTURE  🌟	  	- (?) https://konvajs.org/docs/sandbox/GIF_On_Canvas.html
@@ -83,11 +91,11 @@
 
 // const imgSrc = "../images/gif1.gif";
 // const imgSrc = "../images/flowers_100x100.png";
-const imgSrc = "../images/flowers_164x258.png";
+// const imgSrc = "../images/flowers_164x258.png";
 // const imgSrc = "../images/avatar.png";
-// const imgSrc = "../images/test.png";
-const cellWidth = 5; /* (px) - For 1 to 1 scale, set both to 1 */
-const cellHeight = 5; /* (px) */
+const imgSrc = "../images/img2.png";
+const cellWidth = 10; /* (px) - For 1 to 1 scale, set both to 1 */
+const cellHeight = 10; /* (px) */
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 
@@ -96,37 +104,164 @@ const context = canvas.getContext("2d");
 /* ************************************************************************** */
 
 window.addEventListener("DOMContentLoaded", async (event) => {
+	/*
+	This code is from my attempt to get image upload to work - and it does technically
+	work (although there's a weird bug that happens when uploading one image after
+	another, I think from not clearing the canvas?) - but it's messy and I can do better.  
+	*/
+	var imageLoader = document.getElementById("imageLoader");
+	imageLoader.addEventListener("change", handleImage, false);
+	function handleImage(e) {
+		e.preventDefault();
+		var reader = new FileReader();
+		reader.onload = function (event) {
+			var img = new Image();
+			img.onload = async function () {
+				// canvas.width = img.width;
+				// canvas.height = img.height;
+				// ctx.drawImage(img, 0, 0);
+				drawImage(canvas, context, img);
+				let imageData = await extractImageData(canvas, context);
+				console.log("imageData: ", imageData);
+				createGrid(imageData.width, imageData.height);
+				if (!imageData) {
+					colourCodeGrid();
+				} else {
+					/* TODO: In the future, make this toggle a class on and off instead. It's neater. */
+					const allCells = document.querySelectorAll(`[class*="cell"]`);
+					allCells.forEach((element) => {
+						element.style.border = `none`;
+						element.classList.remove("labelled");
+					});
+					// console.log("imageData: ", imageData);
+					// console.log("imageData.channels: ", imageData.channels);
+					applyExtractedColoursToGrid(imageData.channels);
+				}
+
+				// imageData = null; /* Comment/Uncomment to test colourCodeGrid()*/
+			};
+			img.src = event.target.result;
+		};
+		reader.readAsDataURL(e.target.files[0]);
+	}
 	console.log("DOM content loaded.");
 
-	await loadImage(imgSrc).then((image) => {
-		drawImage(canvas, context, image);
+	imageLoader.addEventListener("change", testEvent, false);
+	function testEvent(e) {
+		console.log("testEvent fired!");
+	}
+
+	// await loadImage(imgSrc).then((image) => {
+	// 	drawImage(canvas, context, image);
+	// });
+
+	// /* 🔺 Alternate code (leaving here for learning purposes) */
+	// // let image = await loadImage(imgSrc);
+	// // await drawImage(canvas, context, image);
+
+	// let imageData = await extractImageData(canvas, context);
+
+	// createGrid(imageData.width, imageData.height);
+
+	// // imageData = null; /* Comment/Uncomment to test colourCodeGrid()*/
+
+	// if (!imageData) {
+	// 	colourCodeGrid();
+	// } else {
+	// 	/* TODO: In the future, make this toggle a class on and off instead. It's neater. */
+	// 	const allCells = document.querySelectorAll(`[class*="cell"]`);
+	// 	allCells.forEach((element) => {
+	// 		element.style.border = `none`;
+	// 		element.classList.remove("labelled");
+	// 	});
+	// 	// console.log("imageData: ", imageData);
+	// 	// console.log("imageData.channels: ", imageData.channels);
+	// 	applyExtractedColoursToGrid(imageData.channels);
+	// }
+
+	/* ************************** Testing Sitemap Stuff ************************* */
+
+	// const theCell = document.getElementById("c8-r33");
+
+	// theCell.addEventListener("mouseover", (event) => {
+	// 	console.log("Hovering over cell");
+	// 	// Get the original element
+	// 	// const originalElement = document.querySelector(".original");
+
+	// 	// Create a new element
+	// 	const newElement = document.createElement("div");
+	// 	newElement.style.position = "absolute";
+
+	// 	// Copy the position and size of the original element
+	// 	const rect = theCell.getBoundingClientRect();
+	// 	newElement.style.left = rect.left + "px";
+	// 	newElement.style.top = rect.top + "px";
+	// 	newElement.style.width = "50px";
+	// 	newElement.style.height = "50px";
+	// 	newElement.style.backgroundColor = "red";
+	// 	newElement.style.zIndex = "999"; // Set a higher z-index than the original element
+
+	// 	// Add the new element to the DOM
+	// 	document.body.appendChild(newElement);
+	// });
+	// originalElement.addEventListener("mouseleave", () => {
+	// 	document.body.removeChild(newElement);
+	// });
+
+	const theCell = document.getElementById("c8-r33");
+
+	theCell.addEventListener("mouseenter", (event) => {
+		/*TODO: To group multiple cells together and then do this hover stuff, I'll have to insert them as children into a new parent element */
+		/* IMAGE MAP REFERENCE: https://codepen.io/makenzieroberts/pen/YzJzEjo */
+		/**yES I REALIZE THEY'RE CONFLICTING ROUTES  */
+		// Create a new element
+		const newElement = document.createElement("div");
+		newElement.classList.add("hovered");
+
+		// const hovered = document.getElementsByClassName("hovered");
+
+		// Q: How do i add class style to javascript?
+
+		// Copy the position and size of the original element
+		const rect = theCell.getBoundingClientRect();
+
+		console.log("rect: ", rect);
+		// Calculate the center of the original element
+		const centerX = rect.left + rect.width / 2;
+		const centerY = rect.top + rect.height / 2;
+
+		// Set the position of the new element to the center of the original element
+		newElement.style.left = centerX - 10 + "px"; // Subtract half the width of the new element
+		newElement.style.top = centerY - 10 + "px"; // Subtract half the height of the new element
+		// newElement.style.left = rect.left + "px";
+		// newElement.style.top = rect.top + "px";
+		newElement.style.width = "20px";
+		newElement.style.height = "20px";
+		newElement.style.backgroundColor = theCell.style.backgroundColor;
+		// newElement.style.width = rect.width + 'px';
+		// newElement.style.height = rect.height + 'px';
+
+		// Add the new element to the DOM
+		document.body.appendChild(newElement);
+
+		// // Add and remove a CSS class on hover and off hover
+		newElement.addEventListener("mouseleave", (event) => {
+			newElement.classList.remove("hovered");
+			newElement.classList.add("hidden");
+		});
 	});
 
-	/* 🔺 Alternate code (leaving here for learning purposes) */
-	// let image = await loadImage(imgSrc);
-	// await drawImage(canvas, context, image);
-
-	let imageData = await extractImageData(canvas, context);
-
-	createGrid(imageData.width, imageData.height);
-
-	// imageData = null; /* Comment/Uncomment to test colourCodeGrid()*/
-
-	if (!imageData) {
-		colourCodeGrid();
-	} else {
-		/* TODO: In the future, make this toggle a class on and off instead. It's neater. */
-		const allCells = document.querySelectorAll(`[class*="cell"]`);
-		allCells.forEach((element) => {
-			element.style.border = `none`;
-			element.classList.remove("labelled");
-		});
-		// console.log("imageData: ", imageData);
-		// console.log("imageData.channels: ", imageData.channels);
-		applyExtractedColoursToGrid(imageData.channels);
-	}
+	// newElement.addEventListener("mouseleave", (event) => {
+	// 	newElement.classList.remove("hovered");
+	// 	newElement.classList.add("hidden");
+	// });
+	/* ************************** Testing Sitemap Stuff ************************* */
 });
-
+const body = document.querySelector("body");
+body.addEventListener("click", (event) => {
+	console.log("click");
+	console.log(event.clientX);
+});
 /* ************************************************************************** */
 /*      ✏️ drawImage(): Draws original input image on screen ✏️    */
 /* ************************************************************************** */
@@ -532,67 +667,131 @@ var commands = [
 // 	}
 // }
 
-/* ************************************************************************** */
-/*           🤖 ChatGpt Performance Suggestions (March 29, 2023) 🤖          */
-/* ************************************************************************** */
+/* 
+   ************************************************************************** 
+           🤖 ChatGpt Performance Suggestions (March 29, 2023) 🤖          
+   ************************************************************************** 
 
-/*
+
     Here are some suggestions that may help improve performance in the code:
 
 	▶   Cache DOM elements: In the window.addEventListener("DOMContentLoaded") function,
-		the code is repeatedly accessing the DOM using document.getElementById and
-		document.querySelectorAll. To avoid doing this repeatedly, you can store these
-		elements in variables outside of the function so that they can be accessed when
-		needed without having to search the DOM again.
+	    the code is repeatedly accessing the DOM using document.getElementById and
+	    document.querySelectorAll. To avoid doing this repeatedly, you can store these
+	    elements in variables outside of the function so that they can be accessed when
+	    needed without having to search the DOM again.
 
-	▶	Use CSS classes instead of inline styles: In the if (!imageData) block, the code is
-		setting the style of all cells using element.style.border and
-		element.classList.remove. It's generally better to use CSS classes instead of
-		inline styles as it's easier to manage and manipulate styles. You can define a
-		class for the cell border and a class for the "labelled" state, and then add or
-		remove these classes from the elements as needed.
+	▶   Use CSS classes instead of inline styles: In the if (!imageData) block, the code
+	    is setting the style of all cells using element.style.border and
+	    element.classList.remove. It's generally better to use CSS classes instead of
+	    inline styles as it's easier to manage and manipulate styles. You can define a
+	    class for the cell border and a class for the "labelled" state, and then add or
+	    remove these classes from the elements as needed.
 
-	▶	Use requestAnimationFrame: The extractImageData function is looping over all the
-		pixels in the image to extract the RGBA values. This can be a time-consuming
-		operation, especially for large images. To avoid blocking the main thread, you can
-		break up the extraction into smaller chunks and use requestAnimationFrame to
-		perform the work in the background. This will allow the UI to remain responsive
-		while the extraction is taking place.
+	▶   Use requestAnimationFrame: The extractImageData function is looping over all the
+	    pixels in the image to extract the RGBA values. This can be a time-consuming
+	    operation, especially for large images. To avoid blocking the main thread, you can
+	    break up the extraction into smaller chunks and use requestAnimationFrame to
+	    perform the work in the background. This will allow the UI to remain responsive
+	    while the extraction is taking place.
 
-	▶	Use a worker thread: A more advanced technique for offloading expensive tasks like
-		image processing is to use a worker thread. Worker threads run in the background
-		and can perform operations in parallel to the main thread, which can improve
-		performance and responsiveness. You can create a new worker thread using the Worker
-		constructor and pass the image data to it for processing. Once the processing is
-		complete, the worker thread can send the results back to the main thread using the
-		postMessage method.
+	▶   Use a worker thread: A more advanced technique for offloading expensive tasks like
+	    image processing is to use a worker thread. Worker threads run in the background
+	    and can perform operations in parallel to the main thread, which can improve
+	    performance and responsiveness. You can create a new worker thread using the
+	    Worker constructor and pass the image data to it for processing. Once the
+	    processing is complete, the worker thread can send the results back to the main
+	    thread using the postMessage method.
 
-	▶	Use a smaller canvas: The canvas is being set to the exact size of the image, which
-		can be very large for high-resolution images. You can improve performance by using
-		a smaller canvas and scaling the image down to fit. This will reduce the number of
-		pixels that need to be processed and displayed on the screen.
+	▶   Use a smaller canvas: The canvas is being set to the exact size of the image,
+	    which can be very large for high-resolution images. You can improve performance by
+	    using a smaller canvas and scaling the image down to fit. This will reduce the
+	    number of pixels that need to be processed and displayed on the screen.
 
-	▶	Use Object.values instead of for...in loop: In the applyExtractedColoursToGrid
-		function, the code is looping over the imageData.channels object using a for...in
-		loop. It's generally faster to use the Object.values method to extract an array of
-		values from the object and then loop over that array.
+	▶   Use Object.values instead of for...in loop: In the applyExtractedColoursToGrid
+	    function, the code is looping over the imageData.channels object using a for...in
+	    loop. It's generally faster to use the Object.values method to extract an array of
+	    values from the object and then loop over that array.
 
-	▶	Use Array.from instead of querySelectorAll: In the colourCodeGrid function, the
-		code is using querySelectorAll to select all the grid cells and then looping over
-		them using forEach. It's generally faster to use the Array.from method to convert
-		the NodeList returned by querySelectorAll into an array and then loop over that
-		array.
+	▶   Use Array.from instead of querySelectorAll: In the colourCodeGrid function, the
+	    code is using querySelectorAll to select all the grid cells and then looping over
+	    them using forEach. It's generally faster to use the Array.from method to convert
+	    the NodeList returned by querySelectorAll into an array and then loop over that
+	    array.
 
-	▶	Use textContent instead of innerText: In the colourCodeGrid function, the code is
-		setting the text of the cell labels using the innerText property. It's generally
-		faster to use the textContent property instead as it doesn't parse HTML and is
-		therefore less expensive.
+	▶   Use textContent instead of innerText: In the colourCodeGrid function, the code is
+	    setting the text of the cell labels using the innerText property. It's generally
+	    faster to use the textContent property instead as it doesn't parse HTML and is
+	    therefore less expensive.
 
-	▶	Minimize unnecessary logging: The code contains several console.log statements that
-		may be slowing down performance. You can remove these statements or comment them
-		out when not needed.
+	▶   Minimize unnecessary logging: The code contains several console.log statements
+	    that may be slowing down performance. You can remove these statements or comment
+	    them out when not needed.
 
-	▶	Remove unnecessary comments: The code contains many comments that may not be needed
-		for the code to function properly. Removing these comments can improve performance
-		by reducing the amount of code that needs to be parsed and executed.
+	▶   Remove unnecessary comments: The code contains many comments that may not be
+	    needed for the code to function properly. Removing these comments can improve
+	    performance by reducing the amount of code that needs to be parsed and executed.
+
+
+   ************************************************************************** 
+                        🤖 ChatGpt Possible Use-Cases 🤖                     
+   ************************************************************************** 
+
+	Image editor:   
+	    One potential use case for your program could be an image editor where the user
+	    can upload an image and then edit it by clicking on specific divs to change their
+	    color. For example, a user could upload a photo of a person and then click on the
+	    divs representing the person's eyes to change their color. 
+
+ 	Color palette generator:    
+	    Your program could also be used to generate color palettes from images. By
+	    analysing the pixel colors of an image and extracting the most frequently
+	    occurring colors, your program could create a palette that could be used in other
+	    design projects. 
+
+ 	Interactive data visualization:     
+	    Another use case could be an interactive data visualization where the pixel colors
+	    are mapped to different data points. For example, you could create a heat map
+	    where the pixel colors represent different temperature ranges, or a map where the
+	    pixel colors represent different regions or countries. 
+
+ 	Game design:    
+	    Your program could also be used in game design, where the pixel colors represent
+	    different objects or characters in the game. For example, you could use your
+	    program to create a game where the player has to click on specific divs
+	    representing objects to complete a task. 
+
+ 	Artistic creations:     
+	    Finally, your program could be used to create artistic creations by generating
+	    patterns or designs based on the colors of an image. For example, you could use
+	    your program to create a series of abstract art pieces based on different
+	    photographs.
+
+	************************** Brainstorming Use-Cases **************************
+	
+	    ▶  Combining a colour palette generator with a game. Maybe the game could be to
+	    guess in order the most common colours in an image.
+
+	        Copilot Nonsense:
+				▶  	A game where you have to click on the divs in the order of the
+	        		colours in the image. 
+				▶  	A game where you have to click on the divs in the
+	        		order of the colours in the image, but the colours are scrambled. 
+				▶  	A game where you have to click on the divs in the order of the colours
+					in the image, but the colours are scrambled and the grid is scrambled.
+
+	    ▶ The art idea is cool, maybe i could use edge/shape detection to detect shapes,
+	    and then use its colours to like make abstract art vaguely inspired by the image
+
+	    ▶ Use the divs to make a pixel art version of the image in svg format, because of
+	    how I want to make svg pixel art but I can never get any of my svg programs to
+	    snap to a grid in  the way I'd like so the workflow is all bleh. This could
+	    automate that process and let me keep using ms paint... :) 
+		https://github.com/felixfbecker/dom-to-svg
+
+		
+
+
+
+
 */

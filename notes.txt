@@ -1,0 +1,475 @@
+
+
+# **************************************************************************** #
+#                                   My Notes                                   #
+# **************************************************************************** #
+
+
+# *************** Header Formatting (Alt + x / Shift + Alt + x *************** #
+
+▽ ▽ ▽ ****** ✨ Title ✨ ****** ▽ ▽ ▽
+△ △ △ ****** ✨ Title ✨ ****** △ △ △
+▽ *************** ✨ Notes ✨ ************** ▽
+
+# ******************************* Old Grid HTML ****************************** #
+
+		<div id="grid">
+      <div id="row-a">
+				<div class="a _1" id="a1"></div>
+				<div class="a _2" id="a2"></div>
+				<div class="a _3" id="a3"></div>
+				<div class="a _4" id="a4"></div>
+				<div class="a _5" id="a5"></div>
+				<div class="a _6" id="a6"></div>
+				<div class="a _7" id="a7"></div>
+				<div class="a _8" id="a8"></div>
+				<div class="a _9" id="a9"></div>
+				<div class="a _10" id="a10"></div>
+			</div>
+			<div id="row-b">
+				<div class="b _1" id="b1"></div>
+				<div class="b _2" id="b2"></div>
+				<div class="b _3" id="b3"></div>
+				<div class="b _4" id="b4"></div>
+				<div class="b _5" id="b5"></div>
+				<div class="b _6" id="b6"></div>
+				<div class="b _7" id="b7"></div>
+				<div class="b _8" id="b8"></div>
+				<div class="b _9" id="b9"></div>
+				<div class="b _10" id="b10"></div>
+			</div>
+			<div id="row-c">
+				<div class="c _1" id="c1"></div>
+				<div class="c _2" id="c2"></div>
+				<div class="c _3" id="c3"></div>
+				<div class="c _4" id="c4"></div>
+				<div class="c _5" id="c5"></div>
+				<div class="c _6" id="c6"></div>
+				<div class="c _7" id="c7"></div>
+				<div class="c _8" id="c8"></div>
+				<div class="c _9" id="c9"></div>
+				<div class="c _10" id="c10"></div>
+			</div>
+			<div id="row-d">
+				<div class="d _1" id="d1"></div>
+				<div class="d _2" id="d2"></div>
+				<div class="d _3" id="d3"></div>
+				<div class="d _4" id="d4"></div>
+				<div class="d _5" id="d5"></div>
+				<div class="d _6" id="d6"></div>
+				<div class="d _7" id="d7"></div>
+				<div class="d _8" id="d8"></div>
+				<div class="d _9" id="d9"></div>
+				<div class="d _10" id="d10"></div>
+			</div>
+			<div id="row-e">
+				<div class="e _1" id="e1"></div>
+				<div class="e _2" id="e2"></div>
+				<div class="e _3" id="e3"></div>
+				<div class="e _4" id="e4"></div>
+				<div class="e _5" id="e5"></div>
+				<div class="e _6" id="e6"></div>
+				<div class="e _7" id="e7"></div>
+				<div class="e _8" id="e8"></div>
+				<div class="e _9" id="e9"></div>
+				<div class="e _10" id="e10"></div>
+			</div>
+			<div id="row-f">
+				<div class="f _1" id="f1"></div>
+				<div class="f _2" id="f2"></div>
+				<div class="f _3" id="f3"></div>
+				<div class="f _4" id="f4"></div>
+				<div class="f _5" id="f5"></div>
+				<div class="f _6" id="f6"></div>
+				<div class="f _7" id="f7"></div>
+				<div class="f _8" id="f8"></div>
+				<div class="f _9" id="f9"></div>
+				<div class="f _10" id="f10"></div>
+			</div>
+			<div id="row-g">
+				<div class="g _1" id="g1"></div>
+				<div class="g _2" id="g2"></div>
+				<div class="g _3" id="g3"></div>
+				<div class="g _4" id="g4"></div>
+				<div class="g _5" id="g5"></div>
+				<div class="g _6" id="g6"></div>
+				<div class="g _7" id="g7"></div>
+				<div class="g _8" id="g8"></div>
+				<div class="g _9" id="g9"></div>
+				<div class="g _10" id="g10"></div>
+			</div>
+			<div id="row-h">
+				<div class="h _1" id="h1"></div>
+				<div class="h _2" id="h2"></div>
+				<div class="h _3" id="h3"></div>
+				<div class="h _4" id="h4"></div>
+				<div class="h _5" id="h5"></div>
+				<div class="h _6" id="h6"></div>
+				<div class="h _7" id="h7"></div>
+				<div class="h _8" id="h8"></div>
+				<div class="h _9" id="h9"></div>
+				<div class="h _10" id="h10"></div>
+			</div>
+			<div id="row-i">
+				<div class="i _1" id="i1"></div>
+				<div class="i _2" id="i2"></div>
+				<div class="i _3" id="i3"></div>
+				<div class="i _4" id="i4"></div>
+				<div class="i _5" id="i5"></div>
+				<div class="i _6" id="i6"></div>
+				<div class="i _7" id="i7"></div>
+				<div class="i _8" id="i8"></div>
+				<div class="i _9" id="i9"></div>
+				<div class="i _10" id="i10"></div>
+			</div>
+			<div id="row-j">
+				<div class="j _1" id="j1"></div>
+				<div class="j _2" id="j2"></div>
+				<div class="j _3" id="j3"></div>
+				<div class="j _4" id="j4"></div>
+				<div class="j _5" id="j5"></div>
+				<div class="j _6" id="j6"></div>
+				<div class="j _7" id="j7"></div>
+				<div class="j _8" id="j8"></div>
+				<div class="j _9" id="j9"></div>
+				<div class="j _10" id="j10"></div>
+			</div>
+		</div>
+
+
+# **************************************************************************** #
+#                                    CHATGPT                                   #
+# **************************************************************************** #
+To label each div using JavaScript, you can use the querySelectorAll method to select all the divs, and then loop through them, calculating the label for each one. Here's an example of how to do this:
+
+HTML:
+-----
+<div class="grid">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+
+JavaScript:
+-----------
+const grid = document.querySelector('.grid');
+const divs = grid.querySelectorAll('div');
+
+let colCounter = 1;
+for (let i = 0; i < divs.length; i++) {
+  const div = divs[i];
+  
+  // Add column label
+  if (i % 3 === 0) {
+    const label = String.fromCharCode(65 + (i / 3));
+    div.setAttribute('data-label', label);
+    colCounter++;
+  }
+  
+  // Add row label
+  if (i < 3) {
+    const label = i + 1;
+    div.setAttribute('data-label', label);
+  }
+}
+
+In this example, we first select the grid element and all the div elements inside it. We then loop through the divs array, adding the column and row labels to each one.
+
+To calculate the column label, we use the modulo operator to check if the index i is divisible by 3 (since there are 3 columns in the grid). If it is, we calculate the label by adding the Unicode value of "A" to i/3 (since we want to start with "A" and increment for each column). We then set the data-label attribute of the div to the calculated label, and increment colCounter so that we can use it for the next column.
+
+To calculate the row label, we simply check if the index i is less than 3 (since there are 3 rows in the grid). If it is, we use i+1 as the label (since we want to start with 1 and increment for each row).
+
+Note that we're using the setAttribute method to set the data-label attribute of each div, rather than adding a pseudo-element with CSS. This is because pseudo-elements can only be used to style elements, not to add content or attributes. By using data-label, we can still access the label in JavaScript and use it for styling if we need to.
+
+
+----------------------------------------------------------------------------------------------
+
+PROMPT:
+-------
+Are there any popular javascript or node dependencies that can help me analyze the pixels of an image? I want to get the information of each row of pixels from an image from left to right, so I can take each pixel, extract it's hex colour value, and store it in an array.
+
+ANSWER:
+-------
+Yes, there are several popular JavaScript and Node.js dependencies that can help you analyze the pixels of an image and extract their color values.
+
+One such library is called node-canvas, which is a popular Node.js library that provides a canvas-based API for drawing graphics and images. With node-canvas, you can create an image object, load an image file, and then use the getImageData() method to access the pixel data for each row of pixels from left to right.
+
+Here's an example code snippet that uses node-canvas to extract the hex color values for each pixel in an image:
+
+javascript
+
+  const { createCanvas, loadImage } = require('canvas');
+  const image = await loadImage('path/to/image.png');
+  const canvas = createCanvas(image.width, image.height);
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(image, 0, 0);
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const pixels = imageData.data;
+
+  const colors = [];
+
+  for (let i = 0; i < pixels.length; i += 4) {
+    const r = pixels[i];
+    const g = pixels[i + 1];
+    const b = pixels[i + 2];
+    const a = pixels[i + 3];
+    const hex = "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1
+
+> GETS CUT OFF HERE <
+Error in body stream
+
+
+----------------------------------------------------------------------------------------------
+
+PROMPT:
+-------
+The reason I need node-canvas specifically is because I need to extract the hex color values for each pixel in an image
+
+ANSWER:
+-------
+If you need to extract the hex color values for each pixel in an image, you can use the ImageData object and its associated methods in the HTML5 canvas API. Here's an example of how you can extract the hex color values for each pixel in an image using JavaScript:
+
+html
+
+    <canvas id="myCanvas"></canvas>
+
+javascript
+
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    const image = new Image();
+
+    image.onload = function() {
+      canvas.width = image.width;
+      canvas.height = image.height;
+      context.drawImage(image, 0, 0, image.width, image.height);
+      const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+      const pixels = imageData.data;
+      for (let i = 0; i < pixels.length; i += 4) {
+        const red = pixels[i];
+        const green = pixels[i + 1];
+        const blue = pixels[i + 2];
+        const alpha = pixels[i + 3];
+        const hexColor = rgbToHex(red, green, blue);
+        // Do something with the hex color value
+      }
+    };
+
+    image.src = 'path/to/image.png';
+
+    function rgbToHex(red, green, blue) {
+      const r = red.toString(16).padStart(2, '0');
+      const g = green.toString(16).padStart(2, '0');
+      const b = blue.toString(16).padStart(2, '0');
+      return '#' + r + g + b;
+    }
+
+In this example, we create a canvas element and load an image into it using the drawImage method. We then use the getImageData method to retrieve an ImageData object, which contains an array of pixel values. We loop through the pixel values and extract the red, green, and blue color values for each pixel. We then convert these RGB values to a hex color value using the rgbToHex function, which we define in the code. Finally, we can do something with the hex color value, such as logging it to the console or storing it in an array.
+
+Note that this code uses JavaScript and the HTML5 canvas API, and does not require the use of node-canvas.
+
+------------------------------------------------------------------------------------------------
+Yes, this code can be refactored into object-oriented code. Here is one possible implementation:
+
+	javascript
+
+	/* ************************************************************************** */
+	/*                            📐 Class Definitions 📐                        */
+	/* ************************************************************************** */
+
+	class ImageProcessor {
+		constructor(imgSrc, cellWidth, cellHeight, canvas, context) {
+			this.imgSrc = imgSrc;
+			this.cellWidth = cellWidth;
+			this.cellHeight = cellHeight;
+			this.canvas = canvas;
+			this.context = context;
+			this.imageData = null;
+		}
+
+		async processImage() {
+			await this.loadImage().then((image) => {
+				this.drawImage(image);
+			});
+
+			this.imageData = await this.extractImageData();
+
+			this.createGrid();
+			this.colourCodeGrid();
+		}
+
+		loadImage() {
+			return new Promise((resolve) => {
+				const image = new Image();
+				image.onload = () => {
+					resolve(image);
+				};
+				image.src = this.imgSrc;
+				console.log("loadImage() finished.");
+			});
+		}
+
+		drawImage(image) {
+			console.log(image.height + " " + image.width);
+
+			this.canvas.width = image.width;
+			this.canvas.height = image.height;
+
+			this.context.drawImage(image, 0, 0, image.width, image.height);
+		}
+
+		async extractImageData() {
+			const imageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
+
+			// Using Uint32Array to improve performance
+			const pixels = new Uint32Array(imageData.data);
+
+			let channels = [];
+			for (let i = 0; i < pixels.length; i += 4) {
+				const red = pixels[i];
+				const green = pixels[i + 1];
+				const blue = pixels[i + 2];
+				const alpha = pixels[i + 3];
+
+				channels.push({ r: red, g: green, b: blue, a: alpha });
+			}
+
+			let imageDataObj = {
+				width: imageData.width,
+				height: imageData.height,
+				channels: channels,
+			};
+
+			return imageDataObj;
+		}
+
+		createGrid() {
+			const numColumns = this.imageData.width;
+			const numRows = this.imageData.height;
+			const grid = document.createElement("div");
+			grid.id = "grid";
+			for (let i = 1; i <= numRows; i++) {
+				const row = document.createElement("div");
+				row.classList.add(`row-${i}`);
+				row.classList.add("row");
+				for (let j = 1; j <= numColumns; j++) {
+					const cell = document.createElement("div");
+					cell.classList.add(`cell-${j}-${i}`);
+					cell.classList.add("cell");
+					row.appendChild(cell);
+				}
+				grid.appendChild(row);
+			}
+			document.body.appendChild(grid);
+		}
+
+		colourCodeGrid() {
+			if (!this.imageData) {
+				const allCells = document.querySelectorAll(`[class*="cell"]`);
+				allCells.forEach((element) => {
+					element.style.border = `none`;
+					element.classList.remove("labelled");
+				});
+			} else {
+				const allCells = document.querySelectorAll(`[class*="cell"]`);
+				allCells.forEach((element) => {
+					const [_, col, row] = element.classList[0].split("-");
+					const index = (row - 1) * this.imageData.width + (col - 1);
+					const channel = this.imageData.channels[index];
+					element.style.backgroundColor = `rgba(${channel.r}, ${channel.g}, ${channel.b}, ${channel.a})`;
+					element.classList.add("labelled");
+				});
+			}
+		}
+	}
+
+	----------------------------------------------------------------------------------------
+
+Q: Could you show me the code for using a web worker for colourCodeGrid()?
+
+A: Sure! Here's an example of how you could use a web worker to speed up the colourCodeGrid() function:
+
+	javascript
+
+	function colourCodeGrid(width) {
+	if (typeof(Worker) !== "undefined") {
+		// Create a new web worker
+		const worker = new Worker("colourCodeGridWorker.js");
+
+		// Send a message to the worker with the necessary data
+		worker.postMessage({ width: width });
+
+		// Receive the data back from the worker
+		worker.onmessage = function(event) {
+		const cells = document.querySelectorAll(`[class*="cell"]`);
+		cells.forEach((cell) => {
+			cell.style.backgroundColor = event.data[cell.id];
+		});
+		};
+	} else {
+		// If web workers are not supported, do the work synchronously
+		const cells = document.querySelectorAll(`[class*="cell"]`);
+		cells.forEach((cell) => {
+		const x = Math.floor(cell.id / width);
+		const y = cell.id % width;
+		const pixelIndex = (x * width) + y;
+		const colorIndex = Math.floor(pixelIndex / 5);
+		cell.style.backgroundColor = palette[colorIndex];
+		});
+	}
+	}
+
+	This code checks if web workers are supported, and if so, creates a new web worker and sends a message to it with the necessary data (in this case, just the width of the grid). The worker performs the time-consuming task of calculating the color of each cell in the grid, and sends the data back to the main thread using the postMessage() method.
+
+	The main thread receives the data in the onmessage handler, and updates the background color of each cell accordingly.
+
+	Here's an example of what the colourCodeGridWorker.js file might look like:
+
+	scss
+
+	const palette = [  "#ffffff",  "#e4e4e4",  "#888888",  "#222222",  "#ff0044",  "#ff9900",  "#ffcc00",  "#44ff00",  "#00ffff",  "#0000ff",  "#9900ff",  "#ff00ff"];
+
+	function colorCodeCell(cellId, width) {
+	const x = Math.floor(cellId / width);
+	const y = cellId % width;
+	const pixelIndex = (x * width) + y;
+	const colorIndex = Math.floor(pixelIndex / 5);
+	return palette[colorIndex];
+	}
+
+	function colorCodeCells(startId, endId, width) {
+	const colors = {};
+	for (let i = startId; i < endId; i++) {
+		colors[i] = colorCodeCell(i, width);
+	}
+	return colors;
+	}
+
+	self.onmessage = function(event) {
+	const width = event.data.width;
+	const cellsPerWorker = 10000;
+	const numCells = width * width;
+	const numWorkers = Math.ceil(numCells / cellsPerWorker);
+	const promises = [];
+	for (let i = 0; i < numWorkers; i++) {
+		const startId = i * cellsPerWorker;
+		const endId = Math.min(startId + cellsPerWorker, numCells);
+		const promise = new Promise((resolve) => {
+		const colors = colorCodeCells(startId, endId, width);
+		resolve(colors);
+		});
+		promises.push(promise);
+	}
+	Promise.all(promises).then((results) => {
+		const colors = Object.assign({}, ...results);
+		self.postMessage(colors);
+	});
+	};
+
+	This file defines two functions: colorCodeCell() and colorCodeCells(), which are used to calculate the color of a single cell and a group of cells, respectively. The... (Cuts off)
