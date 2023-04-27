@@ -106,50 +106,67 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 
 	var imageLoader = document.getElementById("imageLoader");
 
-	imageLoader.addEventListener("change", handleImage, false);
-	function handleImage(e) {
+	// When the user uploads an image, a change is detected and the getImage function is called
+	imageLoader.addEventListener("change", getImage);
+
+	/*
+		getImage() reads the image file, creates a new image object, and when the image has loaded it emits an event containing the image data
+	*/
+	function getImage(e) {
 		e.preventDefault();
 		var reader = new FileReader();
 		reader.onload = function (event) {
 			var img = new Image();
 			img.onload = async function () {
-				drawImage(canvas, context, img);
-				emitter.emit("imageDrawn", { data: img });
+				// drawImage(canvas, context, img);
+				emitter.emit("imageLoaded", { data: img });
 			};
 			img.src = event.target.result;
 		};
 		reader.readAsDataURL(e.target.files[0]);
 	}
 
-	emitter.on("imageDrawn", async (payload) => {
-		console.log("Received event:", payload);
-		console.log("waitForDrawEvent fired!");
+	emitter.on("imageLoaded", async (payload) => {
+		console.log("Received event:", payload.data);
+
+		/* Draw image to the canvas, both to display it as a preview to the user and allow
+		extraction of image data from the canvas */
+		drawImage(canvas, context, payload.data);
+
+		/* Wait for extraction of image data from the canvas and store data */
 		let imageData = await extractImageData(canvas, context);
 		console.log("imageData: ", imageData);
 
+		/* Remove any previous grid if it exists */
 		if (document.contains(document.getElementById("grid"))) {
 			document.getElementById("grid").remove();
 		}
 
+		/* Create a grid of cells with the image's exact width and height (1 cell = 1 pixel) */
 		createGrid(imageData.width, imageData.height);
 
+		/* This if-statement should never fire and is old code from when I created the
+		colourCodeGrid function to make it easier to identify individual cells, with the
+		intention of making it easier to turn the div grid into a sort of pixel-art image
+		map, which could animate and hyperlink certain cells that make sense for the image
+		(eg. clicking any cell that makes up a pixel-art lamp could trigger an animation
+		of other cells to represent the lamp turning on and off). Is it kind of silly and
+		needlessly expensive to make an image map using <1000 tiny divs? Absolutely. But
+		I'm going to do it anyway */
 		if (!imageData) {
-			colourCodeGrid(); // TODO: Make this a toggle
+			colourCodeGrid(); //  TODO: In the future, make this toggle a class on and off instead. It's neater.
 		} else {
-			/* TODO: In the future, make this toggle a class on and off instead. It's neater. */
 			const allCells = document.querySelectorAll(`[class*="cell"]`);
 			allCells.forEach((element) => {
 				element.style.border = `none`;
 				element.classList.remove("labelled");
 			});
-			// console.log("imageData: ", imageData);
-			// console.log("imageData.channels: ", imageData.channels);
 			applyExtractedColoursToGrid(imageData.channels);
 		}
 	});
 
 	/* ************************************************************************** */
-	/*           🧪  Testing Experimental Sitemap Generation Stuff  🧪           */
+	/*                 🧪  Testing Experimental Sitemap Stuff  🧪                */
 	/* ************************************************************************** */
 
 	// 	const theCell = document.getElementById("c8-r33");
@@ -157,7 +174,6 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 	// 	theCell.addEventListener("mouseenter", (event) => {
 	// 		/*TODO: To group multiple cells together and then do this hover stuff, I'll have to insert them as children into a new parent element */
 	// 		/* IMAGE MAP REFERENCE: https://codepen.io/makenzieroberts/pen/YzJzEjo */
-	// 		/**yES I REALIZE THEY'RE CONFLICTING ROUTES  */
 	// 		// Create a new element
 	// 		const newElement = document.createElement("div");
 	// 		newElement.classList.add("hovered");
@@ -218,18 +234,19 @@ function drawImage(canvas, context, image) {
 
 /* ************************************************************************** */
 /*    	    ⏳ loadImage(): Loads image for use in other functions ⏳         */
+/*     (OLD) This function is no longer used now that images are uploaded     */
 /* ************************************************************************** */
 
-function loadImage(imgSrc) {
-	return new Promise((resolve) => {
-		const image = new Image();
-		image.onload = () => {
-			resolve(image);
-		};
-		image.src = imgSrc;
-		console.log("loadImage() finished.");
-	});
-}
+// function loadImage(imgSrc) {
+// 	return new Promise((resolve) => {
+// 		const image = new Image();
+// 		image.onload = () => {
+// 			resolve(image);
+// 		};
+// 		image.src = imgSrc;
+// 		console.log("loadImage() finished.");
+// 	});
+// }
 
 /* ************************************************************************** */
 /*    						⛏️ extractImageData() ⛏️ 					     */
@@ -337,7 +354,7 @@ function colourCodeGrid(width) {
 	const numColumns = width;
 	/*
 		(Unimportant Curiosity)
-		
+
 		(?) I could remove with dom access here and put cells as a constant, but it only
 		works for this function and not others (Which I know has something to do with
 		scope/the order of the functions but I'm not sure what exactly. Maybe I have a
