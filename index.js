@@ -10,6 +10,7 @@
 
 		/* ************************** 📝 Quick To-Do List 📝 *********************** /*
 
+		!TODO : 	Turn colourCodeGrid into a toggle option
 		!TODO :     Allow user to upload their own image, then return the resulting grid's
 					html + css so the user can copy and paste it into their own project
 
@@ -89,11 +90,6 @@
 /*                         🧱 Variables & Constants 🧱                       */
 /* ************************************************************************** */
 
-// const imgSrc = "../images/gif1.gif";
-// const imgSrc = "../images/flowers_100x100.png";
-// const imgSrc = "../images/flowers_164x258.png";
-// const imgSrc = "../images/avatar.png";
-const imgSrc = "../images/img2.png";
 const cellWidth = 10; /* (px) - For 1 to 1 scale, set both to 1 */
 const cellHeight = 10; /* (px) */
 const canvas = document.getElementById("canvas");
@@ -105,13 +101,11 @@ const context = canvas.getContext("2d", { willReadFrequently: true });
 
 window.addEventListener("DOMContentLoaded", async (event) => {
 	console.log("DOM content loaded.");
+
 	const emitter = new EventEmitter();
-	/*
-	This code is from my attempt to get image upload to work - and it does technically
-	work (although there's a weird bug that happens when uploading one image after
-	another, I think from not clearing the canvas?) - but it's messy and I can do better.  
-	*/
+
 	var imageLoader = document.getElementById("imageLoader");
+
 	imageLoader.addEventListener("change", handleImage, false);
 	function handleImage(e) {
 		e.preventDefault();
@@ -119,59 +113,28 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 		reader.onload = function (event) {
 			var img = new Image();
 			img.onload = async function () {
-				// canvas.width = img.width;
-				// canvas.height = img.height;
-				// ctx.drawImage(img, 0, 0);
 				drawImage(canvas, context, img);
 				emitter.emit("imageDrawn", { data: img });
-				// imageData = null; /* Comment/Uncomment to test colourCodeGrid()*/
 			};
 			img.src = event.target.result;
 		};
 		reader.readAsDataURL(e.target.files[0]);
 	}
 
-	// let imageData = async () => {
-	// 	console.log("imageData fired!");
-	// 	let data = await extractImageData(canvas, context);
-	// 	return data;
-	// };
-	// let imageData = await extractImageData(canvas, context);
-
-	// window.addEventListener("imageData", imageData);
-
-	//			imageLoader.addEventListener("change", imageData);
-	// canvas.on("path:created", function (event) {
-	// 	// TODO: See if this works with jquery
-	// 	//log the svg path  info
-	// 	console.log(event.path.path);
-	// 	console.log("canvas event fired!");
-	// });
 	emitter.on("imageDrawn", async (payload) => {
 		console.log("Received event:", payload);
 		console.log("waitForDrawEvent fired!");
 		let imageData = await extractImageData(canvas, context);
 		console.log("imageData: ", imageData);
-		// function testEvent(e) {
-		// 	console.log("testEvent fired!");
-		// }
 
-		// imageLoader.addEventListener("change", testEvent, false);
-		// function testEvent(e) {
-		// 	console.log("testEvent fired!");
-		// }
-		console.log(
-			"document.getElementById(grid): ",
-			document.getElementById("grid")
-		);
 		if (document.contains(document.getElementById("grid"))) {
 			document.getElementById("grid").remove();
 		}
+
 		createGrid(imageData.width, imageData.height);
 
-		// createGrid(imageData.width, imageData.height);
 		if (!imageData) {
-			colourCodeGrid();
+			colourCodeGrid(); // TODO: Make this a toggle
 		} else {
 			/* TODO: In the future, make this toggle a class on and off instead. It's neater. */
 			const allCells = document.querySelectorAll(`[class*="cell"]`);
@@ -185,161 +148,63 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 		}
 	});
 
-	// await emitter.on("imageDrawn", (payload) => {
-	// 	console.log("Received event:", payload);
-	// 	return payload;
-	// // });
-	// waitForDrawEvent.then(async (payload) => {
-	// 	console.log("waitForDrawEvent fired!");
-	// 	let imageData = await extractImageData(canvas, context);
-	// 	console.log("imageData: ", imageData);
-	// 	// function testEvent(e) {
-	// 	// 	console.log("testEvent fired!");
-	// 	// }
+	/* ************************************************************************** */
+	/*           🧪  Testing Experimental Sitemap Generation Stuff  🧪           */
+	/* ************************************************************************** */
 
-	// 	// imageLoader.addEventListener("change", testEvent, false);
-	// 	// function testEvent(e) {
-	// 	// 	console.log("testEvent fired!");
-	// 	// }
-	// 	console.log(
-	// 		"document.getElementById(grid): ",
-	// 		document.getElementById("grid")
-	// 	);
-	// 	if (document.contains(document.getElementById("grid"))) {
-	// 		document.getElementById("grid").remove();
-	// 	} else {
-	// 		createGrid(imageData.width, imageData.height);
-	// 	}
-	// 	// createGrid(imageData.width, imageData.height);
-	// 	if (!imageData) {
-	// 		colourCodeGrid();
-	// 	} else {
-	// 		/* TODO: In the future, make this toggle a class on and off instead. It's neater. */
-	// 		const allCells = document.querySelectorAll(`[class*="cell"]`);
-	// 		allCells.forEach((element) => {
-	// 			element.style.border = `none`;
-	// 			element.classList.remove("labelled");
+	// 	const theCell = document.getElementById("c8-r33");
+
+	// 	theCell.addEventListener("mouseenter", (event) => {
+	// 		/*TODO: To group multiple cells together and then do this hover stuff, I'll have to insert them as children into a new parent element */
+	// 		/* IMAGE MAP REFERENCE: https://codepen.io/makenzieroberts/pen/YzJzEjo */
+	// 		/**yES I REALIZE THEY'RE CONFLICTING ROUTES  */
+	// 		// Create a new element
+	// 		const newElement = document.createElement("div");
+	// 		newElement.classList.add("hovered");
+
+	// 		// const hovered = document.getElementsByClassName("hovered");
+
+	// 		// Q: How do i add class style to javascript?
+
+	// 		// Copy the position and size of the original element
+	// 		const rect = theCell.getBoundingClientRect();
+
+	// 		console.log("rect: ", rect);
+	// 		// Calculate the center of the original element
+	// 		const centerX = rect.left + rect.width / 2;
+	// 		const centerY = rect.top + rect.height / 2;
+
+	// 		// Set the position of the new element to the center of the original element
+	// 		newElement.style.left = centerX - 10 + "px"; // Subtract half the width of the new element
+	// 		newElement.style.top = centerY - 10 + "px"; // Subtract half the height of the new element
+	// 		// newElement.style.left = rect.left + "px";
+	// 		// newElement.style.top = rect.top + "px";
+	// 		newElement.style.width = "20px";
+	// 		newElement.style.height = "20px";
+	// 		newElement.style.backgroundColor = theCell.style.backgroundColor;
+	// 		// newElement.style.width = rect.width + 'px';
+	// 		// newElement.style.height = rect.height + 'px';
+
+	// 		// Add the new element to the DOM
+	// 		document.body.appendChild(newElement);
+
+	// 		// // Add and remove a CSS class on hover and off hover
+	// 		newElement.addEventListener("mouseleave", (event) => {
+	// 			newElement.classList.remove("hovered");
+	// 			newElement.classList.add("hidden");
 	// 		});
-	// 		// console.log("imageData: ", imageData);
-	// 		// console.log("imageData.channels: ", imageData.channels);
-	// 		applyExtractedColoursToGrid(imageData.channels);
-	// 	}
-	// });
-
-	//-------------------------------------
-	// await loadImage(imgSrc).then((image) => {
-	// 	drawImage(canvas, context, image);
-	// });
-
-	// /* 🔺 Alternate code (leaving here for learning purposes) */
-	// // let image = await loadImage(imgSrc);
-	// // await drawImage(canvas, context, image);
-
-	// let imageData = await extractImageData(canvas, context);
-
-	// createGrid(imageData.width, imageData.height);
-
-	// // imageData = null; /* Comment/Uncomment to test colourCodeGrid()*/
-
-	// if (!imageData) {
-	// 	colourCodeGrid();
-	// } else {
-	// 	/* TODO: In the future, make this toggle a class on and off instead. It's neater. */
-	// 	const allCells = document.querySelectorAll(`[class*="cell"]`);
-	// 	allCells.forEach((element) => {
-	// 		element.style.border = `none`;
-	// 		element.classList.remove("labelled");
 	// 	});
-	// 	// console.log("imageData: ", imageData);
-	// 	// console.log("imageData.channels: ", imageData.channels);
-	// 	applyExtractedColoursToGrid(imageData.channels);
-	// }
-
-	/* ************************** Testing Sitemap Stuff ************************* */
-
-	// const theCell = document.getElementById("c8-r33");
-
-	// theCell.addEventListener("mouseover", (event) => {
-	// 	console.log("Hovering over cell");
-	// 	// Get the original element
-	// 	// const originalElement = document.querySelector(".original");
-
-	// 	// Create a new element
-	// 	const newElement = document.createElement("div");
-	// 	newElement.style.position = "absolute";
-
-	// 	// Copy the position and size of the original element
-	// 	const rect = theCell.getBoundingClientRect();
-	// 	newElement.style.left = rect.left + "px";
-	// 	newElement.style.top = rect.top + "px";
-	// 	newElement.style.width = "50px";
-	// 	newElement.style.height = "50px";
-	// 	newElement.style.backgroundColor = "red";
-	// 	newElement.style.zIndex = "999"; // Set a higher z-index than the original element
-
-	// 	// Add the new element to the DOM
-	// 	document.body.appendChild(newElement);
-	// });
-	// originalElement.addEventListener("mouseleave", () => {
-	// 	document.body.removeChild(newElement);
 	// });
 
-	const theCell = document.getElementById("c8-r33");
-
-	theCell.addEventListener("mouseenter", (event) => {
-		/*TODO: To group multiple cells together and then do this hover stuff, I'll have to insert them as children into a new parent element */
-		/* IMAGE MAP REFERENCE: https://codepen.io/makenzieroberts/pen/YzJzEjo */
-		/**yES I REALIZE THEY'RE CONFLICTING ROUTES  */
-		// Create a new element
-		const newElement = document.createElement("div");
-		newElement.classList.add("hovered");
-
-		// const hovered = document.getElementsByClassName("hovered");
-
-		// Q: How do i add class style to javascript?
-
-		// Copy the position and size of the original element
-		const rect = theCell.getBoundingClientRect();
-
-		console.log("rect: ", rect);
-		// Calculate the center of the original element
-		const centerX = rect.left + rect.width / 2;
-		const centerY = rect.top + rect.height / 2;
-
-		// Set the position of the new element to the center of the original element
-		newElement.style.left = centerX - 10 + "px"; // Subtract half the width of the new element
-		newElement.style.top = centerY - 10 + "px"; // Subtract half the height of the new element
-		// newElement.style.left = rect.left + "px";
-		// newElement.style.top = rect.top + "px";
-		newElement.style.width = "20px";
-		newElement.style.height = "20px";
-		newElement.style.backgroundColor = theCell.style.backgroundColor;
-		// newElement.style.width = rect.width + 'px';
-		// newElement.style.height = rect.height + 'px';
-
-		// Add the new element to the DOM
-		document.body.appendChild(newElement);
-
-		// // Add and remove a CSS class on hover and off hover
-		newElement.addEventListener("mouseleave", (event) => {
-			newElement.classList.remove("hovered");
-			newElement.classList.add("hidden");
-		});
-	});
-
-	// newElement.addEventListener("mouseleave", (event) => {
-	// 	newElement.classList.remove("hovered");
-	// 	newElement.classList.add("hidden");
+	// const body = document.querySelector("body");
+	// body.addEventListener("click", (event) => {
+	// 	console.log("click");
+	// 	console.log(event.clientX);
 	// });
-	/* ************************** Testing Sitemap Stuff ************************* */
 });
-const body = document.querySelector("body");
-body.addEventListener("click", (event) => {
-	console.log("click");
-	console.log(event.clientX);
-});
+
 /* ************************************************************************** */
-/*      ✏️ drawImage(): Draws original input image on screen ✏️    */
+/*            	   ✏️ drawImage(): Draws input image on screen ✏️            */
 /* ************************************************************************** */
 
 function drawImage(canvas, context, image) {
@@ -366,19 +231,16 @@ function loadImage(imgSrc) {
 	});
 }
 
-/* 
-   ************************************************************************** 
-/*     						⛏️ extractImageData() ⛏️ 			
-   ************************************************************************** 
-	Extracts RGBA values to array, returns object containing:
+/* ************************************************************************** */
+/*    						⛏️ extractImageData() ⛏️ 					     */
+/* ************************************************************************** */
+/*	Extracts RGBA values to array, returns object containing:
+		width    --> image.width, 
+		height   --> image.height, 
+		channels --> array of objects containing rgba values
 
-	width    --> image.width, 
-	height   --> image.height, 
-	channels --> array of objects containing rgba values
-	
-	channels format: [{ r: red, g: green, b: blue, a: alpha }, ...]
-   ************************************************************************** 
-*/
+	channels format: [{ r: red, g: green, b: blue, a: alpha }, ...]			  */
+/* ************************************************************************** */
 
 async function extractImageData(canvas, context) {
 	const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
@@ -420,7 +282,7 @@ async function extractImageData(canvas, context) {
 	// 	return "#" + r + g + b + a;
 	// }
 
-	/* TODO: Find a better name for this object */
+	/* TODO: When refactoring, find a better name for this object... putting the type in a variable name is kinda lame imo */
 	let imageDataObj = {
 		width: imageData.width,
 		height: imageData.height,
@@ -431,10 +293,9 @@ async function extractImageData(canvas, context) {
 }
 
 /* ************************************************************************** */
-/*      🏗️ createGrid(): Create grid & add formulaic class/id labels 🏗️      */
+/*            🏗️ createGrid(): Create grid & add class/id labels 🏗️          */
 /* ************************************************************************** */
 
-/* create the grid cells */
 function createGrid(width, height) {
 	const numColumns = width;
 	const numRows = height;
@@ -475,10 +336,12 @@ function createGrid(width, height) {
 function colourCodeGrid(width) {
 	const numColumns = width;
 	/*
+		(Unimportant Curiosity)
+		
 		(?) I could remove with dom access here and put cells as a constant, but it only
 		works for this function and not others (Which I know has something to do with
 		scope/the order of the functions but I'm not sure what exactly. Maybe I have a
-		fundamental misunderstanding of how DOM access works. I assume the constants
+		fundamental misunderstanding of how DOM access scope is operating. I assume the constants
 		access the DOM at the time of creation, and at the time of creation, cells doesn't
 		exist yet. - so the nodeList should be of no value to this function - only the
 		nodelist from after cells is created is of value to this function.... Right?)
@@ -661,26 +524,6 @@ var commands = [
 /*                              💼 Other Stuff 💼                             */
 /* ************************************************************************** */
 
-/*
-	┌————————————————————————————————————————————————————————————————————————————————————————————┐
-	│                                                                                            │
-	│  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  │
-	│  ░░░░█████╗░░█████╗░██████╗░██╗██╗░░░░░░█████╗░████████╗░░░░░░░██████╗░░░░░██╗░█████╗░░░░  │
-	│  ░░░██╔══██╗██╔══██╗██╔══██╗██║██║░░░░░██╔══██╗╚══██╔══╝░░░░░░██╔═══██╗░░░██╔╝██╔══██╗░░░  │
-	│  ░░░██║░░╚═╝██║░░██║██████╔╝██║██║░░░░░██║░░██║░░░██║░░░░░░░░░██║██╗██║░░██╔╝░███████║░░░  │
-	│  ░░░██║░░██╗██║░░██║██╔═══╝░██║██║░░░░░██║░░██║░░░██║░░░░░░░░░╚██████╔╝░██╔╝░░██╔══██║░░░  │
-	│  ░░░╚█████╔╝╚█████╔╝██║░░░░░██║███████╗╚█████╔╝░░░██║░░░░░░░░░░╚═██╔═╝░██╔╝░░░██║░░██║░░░  │
-	│  ░░░░╚════╝░░╚════╝░╚═╝░░░░░╚═╝╚══════╝░╚════╝░░░░╚═╝░░░░░░░░░░░░╚═╝░░░╚═╝░░░░╚═╝░░╚═╝░░░  │
-	│  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  │
-	└————————————————————————————————————————————————————————————————————————————————————————————┘
-
-	Q: What does %c do?
-	A: %c is a CSS placeholder. It allows you to apply CSS to the text that follows it. The second argument is a string of CSS rules.
-
-	Q: How do I initialize a node project?
-	A: npm init 
-*/
-
 /* ************************************************************************** */
 /*      🌈 Alt colourCodeGrid() that colours by row instead of column 🌈     */
 /* ************************************************************************** */
@@ -743,12 +586,10 @@ var commands = [
 // 	}
 // }
 
-/* 
-   ************************************************************************** 
-           🤖 ChatGpt Performance Suggestions (March 29, 2023) 🤖          
-   ************************************************************************** 
-
-
+/* ************************************************************************** */
+/*           🤖 ChatGpt Performance Suggestions (March 29, 2023) 🤖          */
+/* ************************************************************************** */
+/*
     Here are some suggestions that may help improve performance in the code:
 
 	▶   Cache DOM elements: In the window.addEventListener("DOMContentLoaded") function,
@@ -809,10 +650,10 @@ var commands = [
 	    performance by reducing the amount of code that needs to be parsed and executed.
 
 
-   ************************************************************************** 
-                        🤖 ChatGpt Possible Use-Cases 🤖                     
-   ************************************************************************** 
-
+/* ************************************************************************** */
+/*                        🤖 ChatGpt Possible Use-Cases 🤖                   */
+/* ************************************************************************** */
+/*
 	Image editor:   
 	    One potential use case for your program could be an image editor where the user
 	    can upload an image and then edit it by clicking on specific divs to change their
@@ -856,6 +697,8 @@ var commands = [
 				▶  	A game where you have to click on the divs in the order of the colours
 					in the image, but the colours are scrambled and the grid is scrambled.
 
+		▶ Slide puzzle generator? Meh, not really that interesting.
+
 	    ▶ The art idea is cool, maybe i could use edge/shape detection to detect shapes,
 	    and then use its colours to like make abstract art vaguely inspired by the image
 
@@ -864,10 +707,6 @@ var commands = [
 	    snap to a grid in  the way I'd like so the workflow is all bleh. This could
 	    automate that process and let me keep using ms paint... :) 
 		https://github.com/felixfbecker/dom-to-svg
-
-		
-
-
 
 
 */
