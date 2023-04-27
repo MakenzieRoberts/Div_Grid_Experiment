@@ -119,7 +119,31 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 			var img = new Image();
 			img.onload = async function () {
 				// drawImage(canvas, context, img);
-				emitter.emit("imageLoaded", { data: img });
+				// if (img.height < 100 && img.width < 100) {
+				// 	emitter.emit("imageLoaded", { data: img });
+				// } else {
+				// 	alert(
+				// 		"Image is too large, must be less than 100x100px or computer go brrr"
+				// 	);
+				// }
+
+				if (img.height < 100 && img.width < 100) {
+					emitter.emit("imageLoaded", { data: img });
+				} else {
+					if (
+						window.confirm(
+							"Image is too large, must be less than 100x100px or computer go brrrr.\n\nIf you'd like to proceed anyway and potentially freeze your browser, click OK.\n\nTo upload a different image, click Cancel."
+						)
+					) {
+						// window.open("exit.html", "Thanks for Visiting!");
+						emitter.emit("imageLoaded", { data: img });
+					}
+				}
+
+				// if (window.confirm("Are you sure you want computer to go brr?")) {
+				// 	// window.open("exit.html", "Thanks for Visiting!");
+				// 	emitter.emit("imageLoaded", { data: img });
+				// }
 			};
 			img.src = event.target.result;
 		};
