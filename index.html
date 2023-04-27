@@ -6,14 +6,16 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="style.css" />
 
+		<script src="https://unpkg.com/eventemitter3"></script>
 		<!-- "defer" makes the script act as if it was added to the bottom of body -->
 		<script src="index.js" defer></script>
+
 		<title>DIV-IF-FY</title>
 	</head>
 	<body>
 		<label>Image File:</label><br />
 		<input type="file" id="imageLoader" name="imageLoader" />
-		<canvas id="imageCanvas"></canvas>
+
 		<p style="padding: 0 0 20px 0">
 			░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░<br />
 			░░░░░█████╗░██████╗░██╗░██████╗░██╗███╗░░██╗░█████╗░██╗░░░░░░░<br />
@@ -25,7 +27,7 @@
 			░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░<br />
 		</p>
 
-		<canvas id="canvas"></canvas>
+		<canvas id="canvas" width="0" height="0"></canvas>
 
 		<p style="margin-top: 80px; padding: 20px">
 			░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░<br />

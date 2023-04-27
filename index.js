@@ -97,13 +97,15 @@ const imgSrc = "../images/img2.png";
 const cellWidth = 10; /* (px) - For 1 to 1 scale, set both to 1 */
 const cellHeight = 10; /* (px) */
 const canvas = document.getElementById("canvas");
-const context = canvas.getContext("2d");
+const context = canvas.getContext("2d", { willReadFrequently: true });
 
 /* ************************************************************************** */
 /*                    👂 DOMContentLoaded Event Listener 👂                   */
 /* ************************************************************************** */
 
 window.addEventListener("DOMContentLoaded", async (event) => {
+	console.log("DOM content loaded.");
+	const emitter = new EventEmitter();
 	/*
 	This code is from my attempt to get image upload to work - and it does technically
 	work (although there's a weird bug that happens when uploading one image after
@@ -121,36 +123,110 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 				// canvas.height = img.height;
 				// ctx.drawImage(img, 0, 0);
 				drawImage(canvas, context, img);
-				let imageData = await extractImageData(canvas, context);
-				console.log("imageData: ", imageData);
-				createGrid(imageData.width, imageData.height);
-				if (!imageData) {
-					colourCodeGrid();
-				} else {
-					/* TODO: In the future, make this toggle a class on and off instead. It's neater. */
-					const allCells = document.querySelectorAll(`[class*="cell"]`);
-					allCells.forEach((element) => {
-						element.style.border = `none`;
-						element.classList.remove("labelled");
-					});
-					// console.log("imageData: ", imageData);
-					// console.log("imageData.channels: ", imageData.channels);
-					applyExtractedColoursToGrid(imageData.channels);
-				}
-
+				emitter.emit("imageDrawn", { data: img });
 				// imageData = null; /* Comment/Uncomment to test colourCodeGrid()*/
 			};
 			img.src = event.target.result;
 		};
 		reader.readAsDataURL(e.target.files[0]);
 	}
-	console.log("DOM content loaded.");
 
-	imageLoader.addEventListener("change", testEvent, false);
-	function testEvent(e) {
-		console.log("testEvent fired!");
-	}
+	// let imageData = async () => {
+	// 	console.log("imageData fired!");
+	// 	let data = await extractImageData(canvas, context);
+	// 	return data;
+	// };
+	// let imageData = await extractImageData(canvas, context);
 
+	// window.addEventListener("imageData", imageData);
+
+	//			imageLoader.addEventListener("change", imageData);
+	// canvas.on("path:created", function (event) {
+	// 	// TODO: See if this works with jquery
+	// 	//log the svg path  info
+	// 	console.log(event.path.path);
+	// 	console.log("canvas event fired!");
+	// });
+	emitter.on("imageDrawn", async (payload) => {
+		console.log("Received event:", payload);
+		console.log("waitForDrawEvent fired!");
+		let imageData = await extractImageData(canvas, context);
+		console.log("imageData: ", imageData);
+		// function testEvent(e) {
+		// 	console.log("testEvent fired!");
+		// }
+
+		// imageLoader.addEventListener("change", testEvent, false);
+		// function testEvent(e) {
+		// 	console.log("testEvent fired!");
+		// }
+		console.log(
+			"document.getElementById(grid): ",
+			document.getElementById("grid")
+		);
+		if (document.contains(document.getElementById("grid"))) {
+			document.getElementById("grid").remove();
+		}
+		createGrid(imageData.width, imageData.height);
+
+		// createGrid(imageData.width, imageData.height);
+		if (!imageData) {
+			colourCodeGrid();
+		} else {
+			/* TODO: In the future, make this toggle a class on and off instead. It's neater. */
+			const allCells = document.querySelectorAll(`[class*="cell"]`);
+			allCells.forEach((element) => {
+				element.style.border = `none`;
+				element.classList.remove("labelled");
+			});
+			// console.log("imageData: ", imageData);
+			// console.log("imageData.channels: ", imageData.channels);
+			applyExtractedColoursToGrid(imageData.channels);
+		}
+	});
+
+	// await emitter.on("imageDrawn", (payload) => {
+	// 	console.log("Received event:", payload);
+	// 	return payload;
+	// // });
+	// waitForDrawEvent.then(async (payload) => {
+	// 	console.log("waitForDrawEvent fired!");
+	// 	let imageData = await extractImageData(canvas, context);
+	// 	console.log("imageData: ", imageData);
+	// 	// function testEvent(e) {
+	// 	// 	console.log("testEvent fired!");
+	// 	// }
+
+	// 	// imageLoader.addEventListener("change", testEvent, false);
+	// 	// function testEvent(e) {
+	// 	// 	console.log("testEvent fired!");
+	// 	// }
+	// 	console.log(
+	// 		"document.getElementById(grid): ",
+	// 		document.getElementById("grid")
+	// 	);
+	// 	if (document.contains(document.getElementById("grid"))) {
+	// 		document.getElementById("grid").remove();
+	// 	} else {
+	// 		createGrid(imageData.width, imageData.height);
+	// 	}
+	// 	// createGrid(imageData.width, imageData.height);
+	// 	if (!imageData) {
+	// 		colourCodeGrid();
+	// 	} else {
+	// 		/* TODO: In the future, make this toggle a class on and off instead. It's neater. */
+	// 		const allCells = document.querySelectorAll(`[class*="cell"]`);
+	// 		allCells.forEach((element) => {
+	// 			element.style.border = `none`;
+	// 			element.classList.remove("labelled");
+	// 		});
+	// 		// console.log("imageData: ", imageData);
+	// 		// console.log("imageData.channels: ", imageData.channels);
+	// 		applyExtractedColoursToGrid(imageData.channels);
+	// 	}
+	// });
+
+	//-------------------------------------
 	// await loadImage(imgSrc).then((image) => {
 	// 	drawImage(canvas, context, image);
 	// });
