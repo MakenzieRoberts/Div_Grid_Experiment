@@ -94,7 +94,7 @@ const cellWidth = 10; /* (px) - For 1 to 1 scale, set both to 1 */
 const cellHeight = 10; /* (px) */
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d", { willReadFrequently: true });
-
+const gridWrapper = document.getElementById("grid-wrapper");
 /* ************************************************************************** */
 /*                    👂 DOMContentLoaded Event Listener 👂                   */
 /* ************************************************************************** */
@@ -332,7 +332,7 @@ function createGrid(width, height) {
 		grid.appendChild(row);
 		row.style.gridTemplateColumns = `repeat(${numColumns}, auto)`;
 	}
-	document.body.appendChild(grid);
+	gridWrapper.appendChild(grid);
 	const allCells = document.querySelectorAll(`[class*="cell"]`);
 	allCells.forEach((element) => {
 		element.style.width = `${cellWidth}px`;
