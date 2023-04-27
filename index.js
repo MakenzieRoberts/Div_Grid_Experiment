@@ -156,12 +156,38 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 		if (!imageData) {
 			colourCodeGrid(); //  TODO: In the future, make this toggle a class on and off instead. It's neater.
 		} else {
+			/* Removes grid cells text labels (again, I was using this to make it easier
+			to identify individual cells) - Add this to colourcodegrid toggle */
 			const allCells = document.querySelectorAll(`[class*="cell"]`);
 			allCells.forEach((element) => {
 				element.style.border = `none`;
 				element.classList.remove("labelled");
 			});
+
 			applyExtractedColoursToGrid(imageData.channels);
+
+			/* Get grid html as a string and add it to the text area so the user can copy it */
+			let grid = document.getElementById("grid");
+			console.log("grid innerhtml: ", grid.innerHTML);
+			let gridHTML = grid.innerHTML;
+
+			/* For formatting I'm just editing the grid html text string for now, I'll do
+			this in a neater way later. !TODO */
+
+			/* Formatting HTML text (line breaks, indents) (more readable and makes user's
+			copy/paste easier and neater) */
+			gridHTML = gridHTML.replace(/(\);\">)/g, `);">\n`);
+			gridHTML = gridHTML.replace(/<\/div>/g, `<\/div>\n`);
+			gridHTML = gridHTML.replace(/<div class="cell/g, `\t<div class="cell`);
+			/* Adding all necessary inline styling */
+			gridHTML = gridHTML.replace(
+				/class="row" style="/g,
+				`class="row" style="display: grid; height: fit-content; width: fit-content; `
+			);
+			let textArea = document.getElementById("textarea");
+
+			textArea.value = gridHTML;
+			textArea.hidden = false;
 		}
 	});
 
