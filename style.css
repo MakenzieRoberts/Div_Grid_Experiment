@@ -43,20 +43,22 @@ body {
 } 
 */
 
+textarea {
+	margin: 24px;
+}
 .row {
 	display: grid;
-	/* grid-template-columns: auto auto auto auto auto auto auto auto auto auto; */
-	grid-template-rows: repeat(21, auto);
 	height: fit-content;
 	width: fit-content;
 	/* background-color: white; */ /* Don't uncomment this and then wonder why the alpha channel isn't working lmao 🤦‍♀️*/
 	/* padding-left: 20px; */
 }
 
+/* For grid colour-coding */
 .cell {
-	box-sizing: border-box !important; /* IMPORTANT - TAKES AWAY ADDED SPACE FROM BORDER (TAKES ITS WIDTH INTO ACCOUNT SO EACH CELL STAYS 20X20)*/
-	width: 20px;
-	height: 20px;
+	box-sizing: border-box !important;
+	width: 20px; /* Remove when toggle is added */
+	height: 20px; /* Remove when toggle is added */
 	border: 1px solid black;
 }
 
