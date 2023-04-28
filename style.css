@@ -36,14 +36,35 @@ body {
 	width: fit-content;
 	/* width: fit-content; */
 }
-
+#result-wrapper {
+	display: flex;
+	visibility: hidden;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
 /* 
 #grid {
 
 } 
 */
-
+input[type="file"] {
+	box-sizing: border-box;
+	width: 352px;
+	background-color: white;
+	padding: 4px;
+	border: 2px solid black;
+	border-radius: 8px;
+	margin: 24px;
+}
+input[type="file"]::file-selector-button {
+	color: white;
+	background-color: black;
+	border: 2px solid black;
+	border-radius: 5px;
+}
 textarea {
+	width: 344px;
 	margin: 24px;
 }
 .row {
