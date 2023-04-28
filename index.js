@@ -95,6 +95,7 @@ const cellHeight = 10; /* (px) */
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d", { willReadFrequently: true });
 const gridWrapper = document.getElementById("grid-wrapper");
+const resultWrapper = document.getElementById("result-wrapper");
 /* ************************************************************************** */
 /*                    👂 DOMContentLoaded Event Listener 👂                   */
 /* ************************************************************************** */
@@ -212,6 +213,8 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 
 			textArea.value = gridHTML;
 			textArea.hidden = false;
+
+			resultWrapper.style.visibility = "visible";
 		}
 	});
 
