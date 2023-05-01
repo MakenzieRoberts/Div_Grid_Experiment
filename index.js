@@ -9,10 +9,17 @@
 
 
 		/* ************************** 📝 Quick To-Do List 📝 *********************** /*
+		!TODO :     Dynamically adjust displayed div grid size based on image size as to
+		not overflow the page for large images (or maybe add a true-to-size display
+		option?)
 
-		!TODO : 	Turn colourCodeGrid into a toggle option
-		!TODO :     Allow user to upload their own image, then return the resulting grid's
-					html + css so the user can copy and paste it into their own project
+		!TODO :     Add a selector for div cell size (default=10?) 
+
+		!TODO :     Add a "copy to clipboard" button for the result grid
+
+		!TODO :     Turn colourCodeGrid into a toggle option !TODO :     Allow user to
+		upload their own image, then return the resulting grid's html + css so the user
+		can copy and paste it into their own project
 
 		!TODO :     Create a main "controller" function that calls the other functions
 
@@ -33,12 +40,12 @@
 		                                https://stackoverflow.com/questions/111368/how-do-you-performance-test-javascript-code
 		                                https://umaar.com/dev-tips/99-line-level-profiling/
 
-		!TODO :     🌟 POSSIBLE 🌟  - Allow for animations (gif, webp, etc.)
-		            🌟  FUTURE  🌟	  	- (?) https://konvajs.org/docs/sandbox/GIF_On_Canvas.html
-					🌟 FEATURES 🌟  - Indexing the image data and storing it in a database     	
-					
+		!TODO :     🌟 POSSIBLE 🌟  - Allow for animations (gif, webp, etc.) 🌟  FUTURE
+		            🌟      - (?) https://konvajs.org/docs/sandbox/GIF_On_Canvas.html 🌟
+		            FEATURES 🌟  - Indexing the image data and storing it in a database      
+
 		!TODO :     🌟 USE CASE 🌟  - Animation on-click (Turn the laptop screen on and
-		                            	off in img2 on-click) 
+		                                off in img2 on-click) 
 
 		                            - Link door to another page containing a different room
 		!TODO :     Create a main "controller" function that calls the other functions                  
@@ -73,16 +80,17 @@
 		            but can be removed from the extract hex function
 		            (single-responsibility principle)
 
-					image.addEventListener('load', function() {
-							console.log('Image loaded successfully!');
-							// Code to execute after image has loaded
-					});
+		            image.addEventListener('load', function() {
+		                    console.log('Image loaded successfully!');
+		                    // Code to execute after image has loaded
+		            });
 
 		!DONE :     Figure out how to handle images with transparency. See what hex is
 		            extracted on a fully transparent pixel.See if I can get the "a" value
 		            (opacity value) from rgbToHex(). 
-					
-		!DONE :     Test image opacity handling with an image with varying levels of opacity.
+
+		!DONE :     Test image opacity handling with an image with varying levels of
+		opacity.
 
 */
 
@@ -95,7 +103,8 @@ const cellHeight = 10; /* (px) */
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d", { willReadFrequently: true });
 const gridWrapper = document.getElementById("grid-wrapper");
-const resultWrapper = document.getElementById("result-wrapper");
+// const resultHeaders = document.getElementById("result-wrapper");
+const resultHeaders = document.getElementsByClassName("hidden");
 /* ************************************************************************** */
 /*                    👂 DOMContentLoaded Event Listener 👂                   */
 /* ************************************************************************** */
@@ -107,11 +116,13 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 
 	var imageLoader = document.getElementById("imageLoader");
 
-	// When the user uploads an image, a change is detected and the getImage function is called
+	// When the user uploads an image, a change is detected and the getImage function is
+	// called
 	imageLoader.addEventListener("change", getImage);
 
 	/*
-		getImage() reads the image file, creates a new image object, and when the image has loaded it emits an event containing the image data
+		getImage() reads the image file, creates a new image object, and when the image
+		has loaded it emits an event containing the image data
 	*/
 	function getImage(e) {
 		e.preventDefault();
@@ -119,13 +130,10 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 		reader.onload = function (event) {
 			var img = new Image();
 			img.onload = async function () {
-				// drawImage(canvas, context, img);
-				// if (img.height < 100 && img.width < 100) {
-				// 	emitter.emit("imageLoaded", { data: img });
-				// } else {
-				// 	alert(
-				// 		"Image is too large, must be less than 100x100px or computer go brrr"
-				// 	);
+				// drawImage(canvas, context, img); if (img.height < 100 && img.width <
+				// 100) { emitter.emit("imageLoaded", { data: img }); } else { alert(
+				// "Image is too large, must be less than 100x100px or computer go brrr"
+				//  );
 				// }
 
 				if (img.height < 100 && img.width < 100) {
@@ -133,7 +141,7 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 				} else {
 					if (
 						window.confirm(
-							"Image is too large, must be less than 100x100px or computer go brrrr.\n\nIf you'd like to proceed anyway and potentially freeze your browser, click OK.\n\nTo upload a different image, click Cancel."
+							`⚠️ WARNING ⚠️ You've uploaded a large image. If you try to DIV-IFY an image over 100 x 100px, computer may go brrrr. \n\nIf you'd like to proceed anyway (and potentially freeze your browser), click OK.\n\nTo upload a different image, click Cancel. `
 						)
 					) {
 						// window.open("exit.html", "Thanks for Visiting!");
@@ -141,9 +149,9 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 					}
 				}
 
-				// if (window.confirm("Are you sure you want computer to go brr?")) {
-				// 	// window.open("exit.html", "Thanks for Visiting!");
-				// 	emitter.emit("imageLoaded", { data: img });
+				// if (window.confirm("Are you sure you want computer to go brr?")) { //
+				//  window.open("exit.html", "Thanks for Visiting!");
+				//  emitter.emit("imageLoaded", { data: img });
 				// }
 			};
 			img.src = event.target.result;
@@ -167,7 +175,8 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 			document.getElementById("grid").remove();
 		}
 
-		/* Create a grid of cells with the image's exact width and height (1 cell = 1 pixel) */
+		/* Create a grid of cells with the image's exact width and height (1 cell = 1
+		pixel) */
 		createGrid(imageData.width, imageData.height);
 
 		/* This if-statement should never fire and is old code from when I created the
@@ -191,7 +200,8 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 
 			applyExtractedColoursToGrid(imageData.channels);
 
-			/* Get grid html as a string and add it to the text area so the user can copy it */
+			/* Get grid html as a string and add it to the text area so the user can copy
+			it */
 			let grid = document.getElementById("grid");
 			console.log("grid innerhtml: ", grid.innerHTML);
 			let gridHTML = grid.innerHTML;
@@ -212,9 +222,18 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 			let textArea = document.getElementById("textarea");
 
 			textArea.value = gridHTML;
-			textArea.hidden = false;
+			// textArea.hidden = false;
 
-			resultWrapper.style.visibility = "visible";
+			for (let i = 0; i < resultHeaders.length; i++) {
+				resultHeaders[i].hidden = false;
+				resultHeaders[i].classList.remove("collapse");
+			}
+
+			// resultHeaders[0].style.backgroundColor = "red";
+			// resultHeaders.forEach((element) => {
+			// 	element.style.back
+			// });
+			// resultHeaders.style.visibility = "visible";
 		}
 	});
 
@@ -224,51 +243,44 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 
 	// 	const theCell = document.getElementById("c8-r33");
 
-	// 	theCell.addEventListener("mouseenter", (event) => {
-	// 		/*TODO: To group multiple cells together and then do this hover stuff, I'll have to insert them as children into a new parent element */
-	// 		/* IMAGE MAP REFERENCE: https://codepen.io/makenzieroberts/pen/YzJzEjo */
-	// 		// Create a new element
-	// 		const newElement = document.createElement("div");
-	// 		newElement.classList.add("hovered");
+	// 	theCell.addEventListener("mouseenter", (event) => { /*TODO: To group multiple
+	// 	    cells together and then do this hover stuff, I'll have to insert them as
+	// 	    children into a new parent element */ /* IMAGE MAP REFERENCE:
+	// 	    https://codepen.io/makenzieroberts/pen/YzJzEjo */ // Create a new element
+	// 	    const newElement = document.createElement("div");
+	// 	    newElement.classList.add("hovered");
 
 	// 		// const hovered = document.getElementsByClassName("hovered");
 
 	// 		// Q: How do i add class style to javascript?
 
-	// 		// Copy the position and size of the original element
-	// 		const rect = theCell.getBoundingClientRect();
+	// 		// Copy the position and size of the original element const rect =
+	// 		theCell.getBoundingClientRect();
 
-	// 		console.log("rect: ", rect);
-	// 		// Calculate the center of the original element
-	// 		const centerX = rect.left + rect.width / 2;
-	// 		const centerY = rect.top + rect.height / 2;
+	// 		console.log("rect: ", rect); // Calculate the center of the original element
+	// 		const centerX = rect.left + rect.width / 2; const centerY = rect.top +
+	// 		rect.height / 2;
 
 	// 		// Set the position of the new element to the center of the original element
-	// 		newElement.style.left = centerX - 10 + "px"; // Subtract half the width of the new element
-	// 		newElement.style.top = centerY - 10 + "px"; // Subtract half the height of the new element
-	// 		// newElement.style.left = rect.left + "px";
-	// 		// newElement.style.top = rect.top + "px";
-	// 		newElement.style.width = "20px";
-	// 		newElement.style.height = "20px";
-	// 		newElement.style.backgroundColor = theCell.style.backgroundColor;
-	// 		// newElement.style.width = rect.width + 'px';
+	// 		newElement.style.left = centerX - 10 + "px"; // Subtract half the width of the
+	// 		new element newElement.style.top = centerY - 10 + "px"; // Subtract half the
+	// 		height of the new element // newElement.style.left = rect.left + "px"; //
+	// 		newElement.style.top = rect.top + "px"; newElement.style.width = "20px";
+	// 		newElement.style.height = "20px"; newElement.style.backgroundColor =
+	// 		theCell.style.backgroundColor; // newElement.style.width = rect.width + 'px';
 	// 		// newElement.style.height = rect.height + 'px';
 
-	// 		// Add the new element to the DOM
-	// 		document.body.appendChild(newElement);
+	// 		// Add the new element to the DOM document.body.appendChild(newElement);
 
 	// 		// // Add and remove a CSS class on hover and off hover
 	// 		newElement.addEventListener("mouseleave", (event) => {
-	// 			newElement.classList.remove("hovered");
-	// 			newElement.classList.add("hidden");
+	// 		newElement.classList.remove("hovered"); newElement.classList.add("hidden");
 	// 		});
 	// 	});
 	// });
 
-	// const body = document.querySelector("body");
-	// body.addEventListener("click", (event) => {
-	// 	console.log("click");
-	// 	console.log(event.clientX);
+	// const body = document.querySelector("body"); body.addEventListener("click", (event)
+	// => { console.log("click"); console.log(event.clientX);
 	// });
 });
 
@@ -290,26 +302,21 @@ function drawImage(canvas, context, image) {
 /*     (OLD) This function is no longer used now that images are uploaded     */
 /* ************************************************************************** */
 
-// function loadImage(imgSrc) {
-// 	return new Promise((resolve) => {
-// 		const image = new Image();
-// 		image.onload = () => {
-// 			resolve(image);
-// 		};
-// 		image.src = imgSrc;
-// 		console.log("loadImage() finished.");
-// 	});
+// function loadImage(imgSrc) { return new Promise((resolve) => { const image = new
+//  Image(); image.onload = () => { resolve(image);
+//      };
+//      image.src = imgSrc;
+//      console.log("loadImage() finished.");
+//  });
 // }
 
 /* ************************************************************************** */
-/*    						⛏️ extractImageData() ⛏️ 					     */
+/*    						⛏️ extractImageData() ⛏️                         */
 /* ************************************************************************** */
-/*	Extracts RGBA values to array, returns object containing:
-		width    --> image.width, 
-		height   --> image.height, 
-		channels --> array of objects containing rgba values
+/*	Extracts RGBA values to array, returns object containing: width    --> image.width,
+	    height   --> image.height, channels --> array of objects containing rgba values
 
-	channels format: [{ r: red, g: green, b: blue, a: alpha }, ...]			  */
+	channels format: [{ r: red, g: green, b: blue, a: alpha }, ...]           */
 /* ************************************************************************** */
 
 async function extractImageData(canvas, context) {
@@ -319,9 +326,9 @@ async function extractImageData(canvas, context) {
 	const pixels = new Uint32Array(imageData.data);
 
 	/*
-		Extraction goes to left to right for each row of pixels, starting at the top
-		left and moving down each row. That way it will correspond with the grid
-		construction perfectly.
+		Extraction goes to left to right for each row of pixels, starting at the top left
+		and moving down each row. That way it will correspond with the grid construction
+		perfectly.
 	*/
 	let channels = [];
 	for (let i = 0; i < pixels.length; i += 4) {
@@ -329,11 +336,9 @@ async function extractImageData(canvas, context) {
 		const green = pixels[i + 1];
 		const blue = pixels[i + 2];
 		const alpha = pixels[i + 3];
-		// console.log("red: ", red);
-		// console.log("green: ", green);
-		// console.log("blue: ", blue);
-		// console.log("alpha: ", alpha);
-		// const hexColor = rgbaToHex(red, green, blue, alpha);
+		// console.log("red: ", red); console.log("green: ", green); console.log("blue: ",
+		// blue); console.log("alpha: ", alpha); const hexColor = rgbaToHex(red, green,
+		// blue, alpha);
 
 		channels.push({ r: red, g: green, b: blue, a: alpha });
 	}
@@ -344,15 +349,14 @@ async function extractImageData(canvas, context) {
 		something in the future 
 	*/
 
-	// function rgbaToHex(red, green, blue, alpha) {
-	// 	const r = red.toString(16).padStart(2, "0");
-	// 	const g = green.toString(16).padStart(2, "0");
-	// 	const b = blue.toString(16).padStart(2, "0");
-	// 	const a = alpha.toString(16).padStart(2, "0");
-	// 	return "#" + r + g + b + a;
+	// function rgbaToHex(red, green, blue, alpha) { const r =
+	//  red.toString(16).padStart(2, "0"); const g = green.toString(16).padStart(2, "0");
+	//  const b = blue.toString(16).padStart(2, "0"); const a =
+	//  alpha.toString(16).padStart(2, "0"); return "#" + r + g + b + a;
 	// }
 
-	/* TODO: When refactoring, find a better name for this object... putting the type in a variable name is kinda lame imo */
+	/* TODO: When refactoring, find a better name for this object... putting the type in a
+	variable name is kinda lame imo */
 	let imageDataObj = {
 		width: imageData.width,
 		height: imageData.height,
@@ -411,10 +415,11 @@ function colourCodeGrid(width) {
 		(?) I could remove with dom access here and put cells as a constant, but it only
 		works for this function and not others (Which I know has something to do with
 		scope/the order of the functions but I'm not sure what exactly. Maybe I have a
-		fundamental misunderstanding of how DOM access scope is operating. I assume the constants
-		access the DOM at the time of creation, and at the time of creation, cells doesn't
-		exist yet. - so the nodeList should be of no value to this function - only the
-		nodelist from after cells is created is of value to this function.... Right?)
+		fundamental misunderstanding of how DOM access scope is operating. I assume the
+		constants access the DOM at the time of creation, and at the time of creation,
+		cells doesn't exist yet. - so the nodeList should be of no value to this function
+		- only the nodelist from after cells is created is of value to this function....
+		Right?)
 
 		After checking console.log(allCells.length);, it seems like even if I delete the
 		dom query for allcells in this function, this function is accessing it from a
@@ -443,9 +448,8 @@ function colourCodeGrid(width) {
 				colourNum = (colourNum % 10) + 1;
 			}
 
-			// console.log("--------------🔽--------------");
-			// console.inspect({ colourNum });
-			// console.inspect({ count });
+			// console.log("--------------🔽--------------"); console.inspect({ colourNum
+			// }); console.inspect({ count });
 			// console.log("--------------🔼--------------");
 
 			/* TODO: Why does this work up to 20???? */
@@ -496,7 +500,7 @@ function colourCodeGrid(width) {
 /* ************************************************************************** */
 
 /*
-	▶	Use Object.values instead of for...in loop: In the applyExtractedColoursToGrid
+	▶   Use Object.values instead of for...in loop: In the applyExtractedColoursToGrid
 	function, the code is looping over the imageData.channels object using a for...in
 	loop. It's generally faster to use the Object.values method to extract an array of
 	values from the object and then loop over that array.
@@ -519,8 +523,9 @@ function applyExtractedColoursToGrid(rgbData) {
 /* ************************************************************************** */
 
 /*
-    Fun console display so I don't lose my mind 😊 - I copied the original code for this and altered it to suit my needs
-    SOURCE: https://medium.com/@MrWhy/console-log-big-emoji-507cfe9a2e6f
+    Fun console display so I don't lose my mind 😊 - I copied the original code for this
+    and altered it to suit my needs SOURCE:
+    https://medium.com/@MrWhy/console-log-big-emoji-507cfe9a2e6f
 */
 
 /* Define your custom commands and emoji */
@@ -582,13 +587,10 @@ var commands = [
 })();
 
 /* Examples */
-// console.important("Fix immediately!");
-// console.issue("Fix this later...", 20);
-// console.note("Note to self...", 20);
-// console.inspect("Let's see...", 20);
-// console.damnit("Damnit!", 20);
-// console.idea("I have an idea!", 20);
-// console.todo("TODO: ", 20);
+// console.important("Fix immediately!"); console.issue("Fix this later...", 20);
+// console.note("Note to self...", 20); console.inspect("Let's see...", 20);
+// console.damnit("Damnit!", 20); console.idea("I have an idea!", 20); console.todo("TODO:
+// ", 20);
 
 /* ************************************************************************** */
 /*                              💼 Other Stuff 💼                             */
@@ -598,59 +600,54 @@ var commands = [
 /*      🌈 Alt colourCodeGrid() that colours by row instead of column 🌈     */
 /* ************************************************************************** */
 
-// function colourCodeGrid() {
-// 	const allCells = document.querySelectorAll(`[class*="cell"]`);
+// function colourCodeGrid() { const allCells =
+//  document.querySelectorAll(`[class*="cell"]`);
 
-// 	let count = 1;
-// 	while (count < numColumns + 1) {
-// 		let classVar = `"_${count}"`;
-// 		const selectedCells = document.querySelectorAll(`[class$=${classVar}]`);
-// 		let colourNum = 1;
-// 		selectedCells.forEach((element) => {
-// 			// var colourNum = count;
+// 	let count = 1; while (count < numColumns + 1) { let classVar = `"_${count}"`; const
+// 	selectedCells = document.querySelectorAll(`[class$=${classVar}]`); let colourNum = 1;
+// 	selectedCells.forEach((element) => { // var colourNum = count;
 
-// 			if (colourNum == 11) {
-// 				colourNum = 1;
+// 			if (colourNum == 11) { colourNum = 1;
 // 			}
 
-// 			switch (colourNum) {
-// 				case 1:
-// 					element.style.border = `1px solid blue`;
-// 					break;
-// 				case 2:
-// 					element.style.border = `1px solid aqua`;
-// 					break;
-// 				case 3:
-// 					element.style.border = `1px solid green`;
-// 					break;
-// 				case 4:
-// 					element.style.border = `1px solid lime`;
-// 					break;
-// 				case 5:
-// 					element.style.border = `1px solid yellow`;
-// 					break;
-// 				case 6:
-// 					element.style.border = `1px solid orange`;
-// 					break;
-// 				case 7:
-// 					element.style.border = `1px solid red`;
-// 					break;
-// 				case 8:
-// 					element.style.border = `1px solid pink`;
-// 					break;
-// 				case 9:
-// 					element.style.border = `1px solid magenta`;
-// 					break;
-// 				case 10:
-// 					element.style.border = `1px solid purple`;
-// 					colourNum = 1;
-// 					break;
-// 				default: {
-// 					console.log("default switch break executing");
-// 					break;
-// 				}
-// 			}
-// 			colourNum++;
+// 		    switch (colourNum) {
+// 		        case 1:
+// 		            element.style.border = `1px solid blue`;
+// 		            break;
+// 		        case 2:
+// 		            element.style.border = `1px solid aqua`;
+// 		            break;
+// 		        case 3:
+// 		            element.style.border = `1px solid green`;
+// 		            break;
+// 		        case 4:
+// 		            element.style.border = `1px solid lime`;
+// 		            break;
+// 		        case 5:
+// 		            element.style.border = `1px solid yellow`;
+// 		            break;
+// 		        case 6:
+// 		            element.style.border = `1px solid orange`;
+// 		            break;
+// 		        case 7:
+// 		            element.style.border = `1px solid red`;
+// 		            break;
+// 		        case 8:
+// 		            element.style.border = `1px solid pink`;
+// 		            break;
+// 		        case 9:
+// 		            element.style.border = `1px solid magenta`;
+// 		            break;
+// 		        case 10:
+// 		            element.style.border = `1px solid purple`;
+// 		            colourNum = 1;
+// 		            break;
+// 		        default: {
+// 		            console.log("default switch break executing");
+// 		            break;
+// 		        }
+// 		    }
+// 		    colourNum++;
 // 		});
 // 		count++;
 // 	}
@@ -755,19 +752,19 @@ var commands = [
 	    photographs.
 
 	************************** Brainstorming Use-Cases **************************
-	
+
 	    ▶  Combining a colour palette generator with a game. Maybe the game could be to
 	    guess in order the most common colours in an image.
 
 	        Copilot Nonsense:
-				▶  	A game where you have to click on the divs in the order of the
-	        		colours in the image. 
-				▶  	A game where you have to click on the divs in the
-	        		order of the colours in the image, but the colours are scrambled. 
-				▶  	A game where you have to click on the divs in the order of the colours
-					in the image, but the colours are scrambled and the grid is scrambled.
+	            ▶   A game where you have to click on the divs in the order of the
+	                colours in the image. 
+	            ▶   A game where you have to click on the divs in the
+	                order of the colours in the image, but the colours are scrambled. 
+	            ▶   A game where you have to click on the divs in the order of the colours
+	                in the image, but the colours are scrambled and the grid is scrambled.
 
-		▶ Slide puzzle generator? Meh, not really that interesting.
+	    ▶ Slide puzzle generator? Meh, not really that interesting.
 
 	    ▶ The art idea is cool, maybe i could use edge/shape detection to detect shapes,
 	    and then use its colours to like make abstract art vaguely inspired by the image
@@ -776,7 +773,7 @@ var commands = [
 	    how I want to make svg pixel art but I can never get any of my svg programs to
 	    snap to a grid in  the way I'd like so the workflow is all bleh. This could
 	    automate that process and let me keep using ms paint... :) 
-		https://github.com/felixfbecker/dom-to-svg
+	    https://github.com/felixfbecker/dom-to-svg
 
 
 */
