@@ -55,7 +55,7 @@
 				</div>
 			</form>
 
-			<p hidden class="ascii hidden" id="ascii-original">
+			<p hidden class="ascii collapsable collapsed" id="ascii-original">
 				░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░<br />
 				░░░░░░░░░█████╗░██████╗░██╗░██████╗░██╗███╗░░██╗░█████╗░██╗░░░░░░░░░░░<br />
 				░░░░░░░░██╔══██╗██╔══██╗██║██╔════╝░██║████╗░██║██╔══██╗██║░░░░░░░░░░░<br />
@@ -68,7 +68,7 @@
 
 			<canvas id="canvas" width="0" height="0"></canvas>
 
-			<p hidden class="ascii hidden" id="ascii-divified">
+			<p hidden class="ascii collapsable collapsed" id="ascii-divified">
 				░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░<br />
 				░░░░░░░██████╗░██╗██╗░░░██╗░░░░░░██╗███████╗██╗███████╗██████╗░░░░░░░░<br />
 				░░░░░░░██╔══██╗██║██║░░░██║░░░░░░██║██╔════╝██║██╔════╝██╔══██╗░░░░░░░<br />
@@ -81,7 +81,7 @@
 
 			<div id="grid-wrapper"></div>
 
-			<div id="textarea-wrapper" hidden class="collapse rainbow-wrapper hidden">
+			<div id="textarea-wrapper" hidden class="collapsable collapsed rainbow-wrapper hidden">
 				<textarea
 					id="textarea"
 					rows="10"
@@ -93,11 +93,20 @@
 			<!-- </div> -->
 		</div>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/fitty/2.2.6/fitty.min.js" integrity="sha512-KkWBcUQjpR0NMNLytOBHfEqSF0urYJMXGRU/dzQxa+HQ4zak1gRSoegRvRnUcCFWBPcDIlLU7tBY8o7+bIkvWA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-    fitty('#ascii-divify', {
-    minSize: 1,
-    maxSize: 50,
-});
-</script>
+	<script>
+	fitty("#ascii-divify", {
+	minSize: 1,
+	maxSize: 50
+	});
+	fitty("#ascii-original", {
+	minSize: 1,
+	maxSize: 50
+	});
+	fitty("#ascii-divified", {
+	minSize: 1,
+	maxSize: 50
+	});
+	//
+	</script>
 	</body>
 </html>

@@ -104,7 +104,7 @@ const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d", { willReadFrequently: true });
 const gridWrapper = document.getElementById("grid-wrapper");
 // const resultHeaders = document.getElementById("result-wrapper");
-const resultHeaders = document.getElementsByClassName("hidden");
+const resultHeaders = document.getElementsByClassName("collapsable");
 /* ************************************************************************** */
 /*                    👂 DOMContentLoaded Event Listener 👂                   */
 /* ************************************************************************** */
@@ -223,11 +223,18 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 
 			textArea.value = gridHTML;
 			// textArea.hidden = false;
+				console.log(resultHeaders)
 
-			for (let i = 0; i < resultHeaders.length; i++) {
-				resultHeaders[i].hidden = false;
-				resultHeaders[i].classList.remove("collapse");
-			}
+				for (let resultHeader of resultHeaders) {			console.log(resultHeader)
+					resultHeader.hidden = false;
+					resultHeader.classList.remove("collapsed");}
+			// for (let i = 0; i < resultHeaders.length + 1; i++) {
+			// 	console.log(resultHeaders[i])
+			// 	resultHeaders[i].hidden = false;
+			// 	resultHeaders[i].classList.remove("collapse");
+			
+				
+			// }
 
 			// resultHeaders[0].style.backgroundColor = "red";
 			// resultHeaders.forEach((element) => {

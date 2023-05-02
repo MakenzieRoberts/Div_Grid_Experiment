@@ -30,6 +30,12 @@ body {
 	width: 424px;
 	margin: 0 auto;
 }
+@media only screen and (max-width: 1000px) {
+	body {
+	width: 80vw;
+	padding: 0 10%;
+	}
+}
 
 #main-container {
 	align-items: center;
@@ -52,7 +58,7 @@ p#description {
 
 p.ascii {
 	font-size: 0.9em;
-	/* padding: 8% 0 2% 0; */
+	padding: 8% 0 2% 0;
 }
 
 .rainbow-wrapper {
@@ -166,7 +172,7 @@ textarea::-webkit-scrollbar-track {
 	text-transform: uppercase;
 }
 
-.collapse {
+.collapsed {
 	visibility: collapse;
 }
 
