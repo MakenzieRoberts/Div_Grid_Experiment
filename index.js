@@ -21,8 +21,6 @@
 		upload their own image, then return the resulting grid's html + css so the user
 		can copy and paste it into their own project
 
-		!TODO :     Create a main "controller" function that calls the other functions
-
 		!TODO :     🌟 PERFORMANCE 🌟  - Prevent accessing dom unessecarily. If you need
 		                                to loop, put all the elements it inside an array
 		                                and loop through that instead. - Could save load
@@ -103,8 +101,8 @@ const cellHeight = 10; /* (px) */
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d", { willReadFrequently: true });
 const gridWrapper = document.getElementById("grid-wrapper");
-// const resultHeaders = document.getElementById("result-wrapper");
 const resultHeaders = document.getElementsByClassName("collapsable");
+
 /* ************************************************************************** */
 /*                    👂 DOMContentLoaded Event Listener 👂                   */
 /* ************************************************************************** */
@@ -116,8 +114,8 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 
 	var imageLoader = document.getElementById("imageLoader");
 
-	// When the user uploads an image, a change is detected and the getImage function is
-	// called
+	/* When the user uploads an image, a change is detected and the getImage function is
+	called */
 	imageLoader.addEventListener("change", getImage);
 
 	/*
@@ -130,12 +128,6 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 		reader.onload = function (event) {
 			var img = new Image();
 			img.onload = async function () {
-				// drawImage(canvas, context, img); if (img.height < 100 && img.width <
-				// 100) { emitter.emit("imageLoaded", { data: img }); } else { alert(
-				// "Image is too large, must be less than 100x100px or computer go brrr"
-				//  );
-				// }
-
 				if (img.height < 100 && img.width < 100) {
 					emitter.emit("imageLoaded", { data: img });
 				} else {
@@ -148,11 +140,6 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 						emitter.emit("imageLoaded", { data: img });
 					}
 				}
-
-				// if (window.confirm("Are you sure you want computer to go brr?")) { //
-				//  window.open("exit.html", "Thanks for Visiting!");
-				//  emitter.emit("imageLoaded", { data: img });
-				// }
 			};
 			img.src = event.target.result;
 		};
@@ -179,118 +166,54 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 		pixel) */
 		createGrid(imageData.width, imageData.height);
 
-		/* This if-statement should never fire and is old code from when I created the
-		colourCodeGrid function to make it easier to identify individual cells, with the
-		intention of making it easier to turn the div grid into a sort of pixel-art image
-		map, which could animate and hyperlink certain cells that make sense for the image
-		(eg. clicking any cell that makes up a pixel-art lamp could trigger an animation
-		of other cells to represent the lamp turning on and off). Is it kind of silly and
-		needlessly expensive to make an image map using <1000 tiny divs? Absolutely. But
-		I'm going to do it anyway */
-		if (!imageData) {
-			colourCodeGrid(); //  TODO: In the future, make this toggle a class on and off instead. It's neater.
-		} else {
-			/* Removes grid cells text labels (again, I was using this to make it easier
-			to identify individual cells) - Add this to colourcodegrid toggle */
-			const allCells = document.querySelectorAll(`[class*="cell"]`);
-			allCells.forEach((element) => {
-				element.style.border = `none`;
-				element.classList.remove("labelled");
-			});
-
-			applyExtractedColoursToGrid(imageData.channels);
-
-			/* Get grid html as a string and add it to the text area so the user can copy
-			it */
-			let grid = document.getElementById("grid");
-			console.log("grid innerhtml: ", grid.innerHTML);
-			let gridHTML = grid.innerHTML;
-
-			/* For formatting I'm just editing the grid html text string for now, I'll do
-			this in a neater way later. !TODO */
-
-			/* Formatting HTML text (line breaks, indents) (more readable and makes user's
-			copy/paste easier and neater) */
-			gridHTML = gridHTML.replace(/(\);\">)/g, `);">\n`);
-			gridHTML = gridHTML.replace(/<\/div>/g, `<\/div>\n`);
-			gridHTML = gridHTML.replace(/<div class="cell/g, `\t<div class="cell`);
-			/* Adding all necessary inline styling */
-			gridHTML = gridHTML.replace(
-				/class="row" style="/g,
-				`class="row" style="display: grid; height: fit-content; width: fit-content; `
-			);
-			let textArea = document.getElementById("textarea");
-
-			textArea.value = gridHTML;
-			// textArea.hidden = false;
-				console.log(resultHeaders)
-
-				for (let resultHeader of resultHeaders) {			console.log(resultHeader)
-					resultHeader.hidden = false;
-					resultHeader.classList.remove("collapsed");}
-			// for (let i = 0; i < resultHeaders.length + 1; i++) {
-			// 	console.log(resultHeaders[i])
-			// 	resultHeaders[i].hidden = false;
-			// 	resultHeaders[i].classList.remove("collapse");
-			
-				
-			// }
-
-			// resultHeaders[0].style.backgroundColor = "red";
-			// resultHeaders.forEach((element) => {
-			// 	element.style.back
-			// });
-			// resultHeaders.style.visibility = "visible";
-		}
+		removeGridCellLabels();
+		applyExtractedColoursToGrid(imageData.channels);
+		addCopyableHtmlToTextarea();
+		unhideResultHeadersAndTextarea();
 	});
-
-	/* ************************************************************************** */
-	/*                 🧪  Testing Experimental Sitemap Stuff  🧪                */
-	/* ************************************************************************** */
-
-	// 	const theCell = document.getElementById("c8-r33");
-
-	// 	theCell.addEventListener("mouseenter", (event) => { /*TODO: To group multiple
-	// 	    cells together and then do this hover stuff, I'll have to insert them as
-	// 	    children into a new parent element */ /* IMAGE MAP REFERENCE:
-	// 	    https://codepen.io/makenzieroberts/pen/YzJzEjo */ // Create a new element
-	// 	    const newElement = document.createElement("div");
-	// 	    newElement.classList.add("hovered");
-
-	// 		// const hovered = document.getElementsByClassName("hovered");
-
-	// 		// Q: How do i add class style to javascript?
-
-	// 		// Copy the position and size of the original element const rect =
-	// 		theCell.getBoundingClientRect();
-
-	// 		console.log("rect: ", rect); // Calculate the center of the original element
-	// 		const centerX = rect.left + rect.width / 2; const centerY = rect.top +
-	// 		rect.height / 2;
-
-	// 		// Set the position of the new element to the center of the original element
-	// 		newElement.style.left = centerX - 10 + "px"; // Subtract half the width of the
-	// 		new element newElement.style.top = centerY - 10 + "px"; // Subtract half the
-	// 		height of the new element // newElement.style.left = rect.left + "px"; //
-	// 		newElement.style.top = rect.top + "px"; newElement.style.width = "20px";
-	// 		newElement.style.height = "20px"; newElement.style.backgroundColor =
-	// 		theCell.style.backgroundColor; // newElement.style.width = rect.width + 'px';
-	// 		// newElement.style.height = rect.height + 'px';
-
-	// 		// Add the new element to the DOM document.body.appendChild(newElement);
-
-	// 		// // Add and remove a CSS class on hover and off hover
-	// 		newElement.addEventListener("mouseleave", (event) => {
-	// 		newElement.classList.remove("hovered"); newElement.classList.add("hidden");
-	// 		});
-	// 	});
-	// });
-
-	// const body = document.querySelector("body"); body.addEventListener("click", (event)
-	// => { console.log("click"); console.log(event.clientX);
-	// });
 });
 
+function removeGridCellLabels() {
+	/* Removes grid cells text labels (again, I was using this to make it easier to
+	identify individual cells) - Add this to colourcodegrid toggle feature when complete */
+	const allCells = document.querySelectorAll(`[class*="cell"]`);
+	allCells.forEach((element) => {
+		element.style.border = `none`;
+		element.classList.remove("labelled");
+	});
+}
+
+function addCopyableHtmlToTextarea() {
+	/* Get grid html as a string and add it to the text area so the user can copy it */
+	let grid = document.getElementById("grid");
+
+	let gridHTML = grid.innerHTML;
+
+	/* For formatting I'm just editing the grid html text string for now, I'll do this in
+	a neater way later. !TODO */
+
+	/* Formatting HTML text (line breaks, indents) (more readable and makes user's
+	copy/paste easier and neater) */
+	gridHTML = gridHTML.replace(/(\);\">)/g, `);">\n`);
+	gridHTML = gridHTML.replace(/<\/div>/g, `<\/div>\n`);
+	gridHTML = gridHTML.replace(/<div class="cell/g, `\t<div class="cell`);
+	/* Adding all necessary inline styling */
+	gridHTML = gridHTML.replace(
+		/class="row" style="/g,
+		`class="row" style="display: grid; height: fit-content; width: fit-content; `
+	);
+	let textArea = document.getElementById("textarea");
+
+	textArea.value = gridHTML;
+}
+
+function unhideResultHeadersAndTextarea() {
+	for (let resultHeader of resultHeaders) {
+		console.log(resultHeader);
+		resultHeader.hidden = false;
+		resultHeader.classList.remove("collapsed");
+	}
+}
 /* ************************************************************************** */
 /*            	   ✏️ drawImage(): Draws input image on screen ✏️            */
 /* ************************************************************************** */
@@ -320,8 +243,10 @@ function drawImage(canvas, context, image) {
 /* ************************************************************************** */
 /*    						⛏️ extractImageData() ⛏️                         */
 /* ************************************************************************** */
-/*	Extracts RGBA values to array, returns object containing: width    --> image.width,
-	    height   --> image.height, channels --> array of objects containing rgba values
+/*	Extracts RGBA values to array, returns object containing: 
+// 		width    --> image.width,
+// 		height   --> image.height, 
+// 		channels --> array of objects containing rgba values
 
 	channels format: [{ r: red, g: green, b: blue, a: alpha }, ...]           */
 /* ************************************************************************** */
@@ -602,6 +527,22 @@ var commands = [
 /* ************************************************************************** */
 /*                              💼 Other Stuff 💼                             */
 /* ************************************************************************** */
+
+/* ********************* Original colourCodeGrid() setup ******************** */
+
+/* This if-statement is old code from when I created the colourCodeGrid function to make
+it easier to identify individual cells, with the intention of making it easier to turn the
+div grid into a sort of pixel-art image map, which could animate and hyperlink certain
+cells that make sense for the image (eg. clicking any cell that makes up a pixel-art lamp
+could trigger an animation of other cells to represent the lamp turning on and off). Is it
+kind of silly and needlessly expensive to make an image map using <1000 tiny divs?
+Absolutely. But I'm going to do it anyway */
+
+// if (!imageData) {
+// 	colourCodeGrid(); //  TODO: In the future, make this toggle a class on and off instead. It's neater.
+// } else {
+// 	//...
+// }
 
 /* ************************************************************************** */
 /*      🌈 Alt colourCodeGrid() that colours by row instead of column 🌈     */
