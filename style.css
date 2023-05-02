@@ -52,7 +52,7 @@ p#description {
 
 p.ascii {
 	font-size: 0.9em;
-	padding: 8% 0 2% 0;
+	/* padding: 8% 0 2% 0; */
 }
 
 .rainbow-wrapper {
