@@ -1,4 +1,4 @@
-# DIV-IFY
+# Div-ify
 
 ▷ [🧪 **Demo** (CodeSandbox)](https://tcoymc.csb.app/)
 
