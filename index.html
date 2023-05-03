@@ -10,11 +10,24 @@
 		<script src="https://unpkg.com/eventemitter3"></script>
 		<!-- "defer" makes the script act as if it was added to the bottom of body -->
 		<script src="index.js" defer></script>
-
 	</head>
 	<body>
 		<div id="main-container">
-			<p class="ascii" id="ascii-divify">
+			<!-- 
+				❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ 
+
+				!IMPORTANT !TODO: I totally forgot that ASCII art is not accessible for
+				                  screen-readers 😢. Unacceptable! Find a way around this
+				                  and reference web accessibility standards for guidance.
+
+				!REFERENCE: https://stackoverflow.com/questions/22676072/how-do-i-hide-ascii-art-from-screen-readers-and-other-at-using-aria-html5
+
+				!REFERENCE: https://html.spec.whatwg.org/dev/dom.html#wai-aria 
+
+				❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ ❗❗❗ 
+			-->
+
+			<p class="ascii" id="ascii-divify" aria-label="Image Div Grid Generator">
 				░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░<br />
 				░░░░░░░░░░░░██████╗░██╗██╗░░░██╗░░░░░░██╗███████╗██╗░░░██╗░░░░░░░░░░░░<br />
 				░░░░░░░░░░░░██╔══██╗██║██║░░░██║░░░░░░██║██╔════╝╚██╗░██╔╝░░░░░░░░░░░░<br />
@@ -55,7 +68,13 @@
 				</div>
 			</form>
 
-			<p hidden class="ascii collapsable collapsed" id="ascii-original">
+			<p
+				hidden
+				class="ascii collapsable collapsed"
+				id="ascii-original"
+				aria-label="Original Image"
+				alt="fkfk"
+			>
 				░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░<br />
 				░░░░░░░░░█████╗░██████╗░██╗░██████╗░██╗███╗░░██╗░█████╗░██╗░░░░░░░░░░░<br />
 				░░░░░░░░██╔══██╗██╔══██╗██║██╔════╝░██║████╗░██║██╔══██╗██║░░░░░░░░░░░<br />
@@ -68,7 +87,12 @@
 
 			<canvas id="canvas" width="0" height="0"></canvas>
 
-			<p hidden class="ascii collapsable collapsed" id="ascii-divified">
+			<p
+				hidden
+				class="ascii collapsable collapsed"
+				id="ascii-divified"
+				aria-label="Image Div Grid"
+			>
 				░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░<br />
 				░░░░░░░██████╗░██╗██╗░░░██╗░░░░░░██╗███████╗██╗███████╗██████╗░░░░░░░░<br />
 				░░░░░░░██╔══██╗██║██║░░░██║░░░░░░██║██╔════╝██║██╔════╝██╔══██╗░░░░░░░<br />
@@ -81,7 +105,11 @@
 
 			<div id="grid-wrapper"></div>
 
-			<div id="textarea-wrapper" hidden class="collapsable collapsed rainbow-wrapper hidden">
+			<div
+				id="textarea-wrapper"
+				hidden
+				class="collapsable collapsed rainbow-wrapper hidden"
+			>
 				<textarea
 					id="textarea"
 					rows="10"
@@ -92,21 +120,26 @@
 			</div>
 			<!-- </div> -->
 		</div>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/fitty/2.2.6/fitty.min.js" integrity="sha512-KkWBcUQjpR0NMNLytOBHfEqSF0urYJMXGRU/dzQxa+HQ4zak1gRSoegRvRnUcCFWBPcDIlLU7tBY8o7+bIkvWA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script>
-	fitty("#ascii-divify", {
-	minSize: 1,
-	maxSize: 50
-	});
-	fitty("#ascii-original", {
-	minSize: 1,
-	maxSize: 50
-	});
-	fitty("#ascii-divified", {
-	minSize: 1,
-	maxSize: 50
-	});
-	//
-	</script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/fitty/2.2.6/fitty.min.js"
+			integrity="sha512-KkWBcUQjpR0NMNLytOBHfEqSF0urYJMXGRU/dzQxa+HQ4zak1gRSoegRvRnUcCFWBPcDIlLU7tBY8o7+bIkvWA=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		></script>
+		<script>
+			fitty("#ascii-divify", {
+				minSize: 1,
+				maxSize: 50,
+			});
+			fitty("#ascii-original", {
+				minSize: 1,
+				maxSize: 50,
+			});
+			fitty("#ascii-divified", {
+				minSize: 1,
+				maxSize: 50,
+			});
+			//
+		</script>
 	</body>
 </html>

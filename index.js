@@ -9,9 +9,19 @@
 
 
 		/* ************************** 📝 Quick To-Do List 📝 *********************** /*
+		!TODO :     🌟 IDEA 🌟 -    Use this tool to create a image-to-emoji converter,
+									similar to http://www.image2emoji.com/ and https://emojimage.com/, except it would
+									be a pixel-perfect representation instead of using edge detection like the other
+									two, and it could handle images with transparency. I would have to simplify each
+									image into colours that can be represented by an emoji, OR actually instead of
+									literally altering the image's colour palette before I put it through Div-ify, I
+									could simply create a function that reads each rgba value and selects an emoji by
+									checking (switch-statement) what 🌟range🌟 of rgba values correspond to each emoji
+									and mapping it to an array (eg. between rgba(255, 0, 0, 1) & rgb(255, 128, 0)
+									would be a RED emoji).
 		!TODO :     Dynamically adjust displayed div grid size based on image size as to
-		not overflow the page for large images (or maybe add a true-to-size display
-		option?)
+					not overflow the page for large images (or maybe add a true-to-size display
+					option?)
 
 		!TODO :     Add a selector for div cell size (default=10?) 
 
@@ -38,14 +48,10 @@
 		                                https://stackoverflow.com/questions/111368/how-do-you-performance-test-javascript-code
 		                                https://umaar.com/dev-tips/99-line-level-profiling/
 
-		!TODO :     🌟 POSSIBLE 🌟  - Allow for animations (gif, webp, etc.) 🌟  FUTURE
-		            🌟      - (?) https://konvajs.org/docs/sandbox/GIF_On_Canvas.html 🌟
-		            FEATURES 🌟  - Indexing the image data and storing it in a database      
+		!TODO :     🌟POSSIBLE🌟FEATURES🌟 - Allow for animations (gif, webp, etc.) 🌟  FUTURE
+		            							- (?) https://konvajs.org/docs/sandbox/GIF_On_Canvas.html 🌟
+		             						    - Indexing the image data and storing it in a database      
 
-		!TODO :     🌟 USE CASE 🌟  - Animation on-click (Turn the laptop screen on and
-		                                off in img2 on-click) 
-
-		                            - Link door to another page containing a different room
 		!TODO :     Create a main "controller" function that calls the other functions                  
 
 		!DONE :     If createGrid() and colourCodeGrid() can be removed from
