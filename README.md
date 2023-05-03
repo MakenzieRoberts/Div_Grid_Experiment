@@ -1,6 +1,6 @@
 # ᎒᎒᎒ DIV-IFY ᎒᎒᎒
 
-## [🧪 Demo (CodeSandbox)](https://tcoymc.csb.app/)
+ [🧪 **Demo** (CodeSandbox) 🧪](https://tcoymc.csb.app/)
 
 
 ## 📝 Description
@@ -14,8 +14,5 @@ This project was a way of re-acquainting myself with vanilla JavaScript, followi
 Any future projects I create using this tool will be linked here for easy access. 😊 
 
 
-
-
-
-  -- *Makenzie*
+***-- Makenzie***
 
