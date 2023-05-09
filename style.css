@@ -1,13 +1,9 @@
-/*	
-		/* ************************************************************************** /*
-		/*                                ✨ Notes ✨                                /*
-		/* ************************************************************************** /*
+/* ———————————————————————————————————————————————————————————————————————————— */
+/*                                   ✨ Notes ✨                                
+/* ———————————————————————————————————————————————————————————————————————————— */
 
-		    ---     
-			---     
-			---    	
-
-		/* ************************** 📝 Quick To-Do List 📝 *********************** /*
+/* —————————————————————————— 📝 Quick To-Do List 📝 —————————————————————————— */
+/*
 		!TODO :     Create section containers and maintain consistent spacing between
 		            sections 
 
@@ -18,47 +14,29 @@
 
 */
 
+/* —————————————————————————————————— GENERAL ————————————————————————————————— */
+
 html {
-	background-color: #d6cdff;
+	background-color: #c2b4ff;
 	box-sizing: border-box;
 	font-family: "Courier New", Courier, monospace;
 	font-size: 0.7rem;
 	margin: 0 auto;
+	height: 100%;
 }
 
 body {
-	width: 424px;
-	margin: 0 auto;
-}
-@media only screen and (max-width: 1000px) {
-	body {
-	width: 80vw;
-	padding: 0 10%;
-	}
-}
-
-#main-container {
 	align-items: center;
 	box-sizing: border-box;
 	display: flex;
+	align-content: center;
 	flex-direction: column;
-	justify-content: center;
+	box-sizing: border-box;
+
+	width: clamp(500px, 36%, 60%);
+	/* margin: 0 24%; */
 	margin: 0 auto;
-	width: 100%;
-}
-
-#main-container > p {
-	text-align: center;
-}
-
-p#description {
-	font-size: 1.2em;
-	width: 100%;
-}
-
-p.ascii {
-	font-size: 0.9em;
-	padding: 8% 0 2% 0;
+	height: 100%;
 }
 
 .rainbow-wrapper {
@@ -66,7 +44,7 @@ p.ascii {
 	padding: 2px;
 	width: 100%;
 	background: linear-gradient(
-		90deg,
+		135deg,
 		rgba(255, 0, 0, 1) 0%,
 		rgba(255, 154, 0, 1) 10%,
 		rgba(208, 222, 33, 1) 20%,
@@ -74,47 +52,132 @@ p.ascii {
 		rgba(63, 218, 216, 1) 40%,
 		rgba(47, 201, 226, 1) 50%,
 		rgba(28, 127, 238, 1) 60%,
-		rgba(95, 21, 242, 1) 70%,
-		rgba(186, 12, 248, 1) 80%,
-		rgba(251, 7, 217, 1) 90%,
-		rgba(255, 0, 0, 1) 100%
+		rgb(62, 21, 242) 70%,
+		rgba(95, 21, 242, 1) 80%,
+		rgba(186, 12, 248, 1) 90%,
+		rgba(251, 7, 217, 1) 100%
 	);
 	border-radius: 10px;
 }
 
+p {
+	text-align: center;
+}
+
+/* ——————————————————————————— ASCII BANNERS/HEADERS —————————————————————————— */
+
+.banner {
+	width: 100%;
+	/* margin-bottom: 8%; */
+	/* border: 1px solid #8080808a; */
+	/* border-radius: 8px; */
+	/* padding: 0.5%; */
+	box-sizing: border-box;
+	/* box-shadow: 0px 0px 1px 1px #8080804d; */
+}
+.ascii-wrapper {
+	width: 100%;
+	text-align: center;
+}
+p.ascii {
+	font-size: 0.9em;
+	/* scale: 0.9; */
+	/* transform: scale(0.8); */
+	/* padding: 8% 0 2% 0; */
+}
+
+/* —————————————————————————————— MAIN CONTAINER —————————————————————————————— */
+
+#main-container {
+	align-items: center;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	/* justify-content: center; */
+	margin: 0 auto;
+	padding: 10%;
+	width: 100%;
+	height: 100%;
+	background-color: #f4f3fb;
+	overflow-y: auto;
+	box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.5);
+}
+
+/* ————————————————————————————————— SECTIONS ————————————————————————————————— */
+
+section {
+	text-align: center;
+	margin: 0 auto;
+	width: 100%;
+	box-sizing: border-box;
+	/* margin-bottom: 8%; */
+}
+
+.section-content {
+	margin: 10% 0;
+}
+
+/* First section looks nicer with a bit of extra breathing room */
+#section-1-content {
+	margin-bottom: 12%;
+}
+
+/* ————————————————————————————————— SECTION 1 ———————————————————————————————— */
+/*                       (Elements visible on page load)                        */
+/* ———————————————————————————————————————————————————————————————————————————— */
+p#description {
+	font-size: 1.2em;
+	/* width: 100%; */
+}
+
 #form-wrapper {
-	margin: 4% 0 0% 0;
+	margin-top: 8%; /* Slightly smaller than section margin */
 }
 input[type="file"] {
-	background-color: white;
+	background-color: #f4f3fb;
 	border-radius: 8px;
 	border: 1px solid black;
 	box-sizing: border-box;
 	box-sizing: border-box;
 	height: 100%;
-	padding: 4px;
+	padding: 1%;
 	width: 100%;
 }
 input[type="file"]::file-selector-button {
-	background-color: black;
+	background-color: rgb(17, 17, 17);
 	border-radius: 5px;
 	border: 2px solid black;
-	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.401);
+	box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.241);
 	color: white;
 	margin: 4px 10px 4px 4px;
 	padding: 2px 8px;
 }
 input[type="file"]::file-selector-button:active {
-	box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.268);
-	scale: 0.99;
+	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.401);
+	/* scale: 0.99; */
+
 	transform: translate(0px, 1px);
+}
+
+/* ——————————————————————————————— SECTION 2 & 3 —————————————————————————————— */
+/*    Sections hidden until grid creation ('Original' & 'Divified' Sections)    */
+/* ———————————————————————————————————————————————————————————————————————————— */
+
+.collapsible {
+	display: block;
+}
+
+.collapsed {
+	/* visibility: collapse ; */
+	display: none !important;
+	height: 0;
 }
 
 #textarea-wrapper {
 	align-items: center;
 	display: flex;
 	justify-content: center;
-	margin: 8%;
+	margin-top: 8%;
 }
 textarea {
 	border-radius: 8px;
@@ -139,31 +202,55 @@ textarea::-webkit-scrollbar-track {
 	border-top-right-radius: 8px;
 }
 
+/* ——————————————————————————————————— GRID ——————————————————————————————————— */
+
+#grid-wrapper {
+	/* scroll-snap-align: center; */
+	margin: 0 auto 10% auto;
+	width: 100%;
+}
+
 #grid {
-	scroll-snap-align: center;
-	margin: 0 auto;
+	/* scroll-snap-align: center; */
+	/* margin: 0 auto;
+	overflow: auto;
+	width: 100%; */
+	display: flex;
+	overflow: auto;
+	/* text-align: center; */
+	/* width: 25%; */
+	/* border: solid 1px red; */
+	/* margin: 0px auto 0px auto; */
+	/* overflow: hidden; */
+	/* scroll-snap-align: center; */
+	/* margin: 0 auto; */
+	/* overflow: auto; */
+	/* width: 100%; */
+	flex-direction: column;
+	/* justify-content: center; */
+	/* justify-items: center; */
+	/* align-items: center; */
+	/* margin: auto -50px; */
+	/* padding: -8% -12%; */
 }
 
 .row {
 	display: grid;
 	height: fit-content;
 	width: fit-content;
-	/* background-color: white; */ /* Don't uncomment this and then wonder why the alpha channel isn't working lmao 🤦‍♀️*/
 }
 
-/* For grid colour-coding */
+/* Grid Colour-Coding */
 .cell {
 	border: 1px solid black;
 	box-sizing: border-box !important;
-	height: 20px; /* Remove when selector is added */
-	width: 20px; /* Remove when selector is added */
 }
 
-/* !NOTE(content: attr(id);) - Could also use attr(class); */
+/* Grid Cell Labels*/
 .labelled:nth-child(1n):before {
-	/* font-weight: bold; */
 	align-items: center;
 	color: grey;
+	/* !NOTE(content: attr(id);) - Could also use attr(class); */
 	content: attr(id);
 	display: flex;
 	font-size: 6pt;
@@ -172,11 +259,47 @@ textarea::-webkit-scrollbar-track {
 	text-transform: uppercase;
 }
 
-.collapsed {
-	visibility: collapse;
+/* —————————————————————————————————— FOOTER —————————————————————————————————— */
+
+/* Footer(Full Page Width) */
+/*
+footer{ 
+	background-color: black;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	left: 0;
+}
+*/
+
+footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: black;
+	position: sticky;
+	bottom: 0;
+	height: 32px;
+	width: 100%;
+	overflow: hidden;
 }
 
-/* ***************************** Messing Around ***************************** */
+footer a {
+	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+		"Lucida Sans Unicode", "Geneva", Verdana, sans-serif;
+	color: #f4f3fb;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+footer a:hover {
+	text-decoration: underline;
+}
+footer img#github-logo {
+	box-sizing: border-box;
+	padding: 8px;
+	height: 100%;
+}
+/* —————————————————————————————— Messing Around —————————————————————————————— */
 
 /* #c8-r32:hover { */
 /* #c8-r33 {
@@ -211,3 +334,59 @@ textarea::-webkit-scrollbar-track {
 	z-index: 999 !important;
 	position: absolute !important;
 } */
+
+/* @media only screen and (max-width: 500px) {
+	body {
+		width: 100%;
+		height: 97.5%;
+		border: 10px solid #c2b4ff;
+	
+		margin: auto;
+
+	}
+	#main-container{
+
+		border-radius: 10px;;
+		border: 4px solid #f4f3fb;
+		padding-left: 4%;
+		padding-right: 4%;
+		
+	}
+	#main-container::-webkit-scrollbar{
+		margin:10px;
+		background-color: red;
+	}
+	footer{
+		position:absolute;
+	}
+} */
+
+@media only screen and (max-width: 1600px) {
+	#main-container {
+		padding-left: 8%;
+		padding-right: 8%;
+	}
+}
+
+@media only screen and (max-width: 500px) {
+	body {
+		width: 100%;
+		/* height: 97.5%; */
+		border: 10px solid #c2b4ff;
+
+		margin: auto;
+	}
+	#main-container {
+		border-top-right-radius: 10px;
+		border-top-left-radius: 10px;
+		border-top: 8px solid #f4f3fb;
+		/* padding-left: 4%;
+		padding-right: 4%; */
+	}
+
+	footer {
+		position: block;
+		border-bottom-right-radius: 10px;
+		border-bottom-left-radius: 10px;
+	}
+}
