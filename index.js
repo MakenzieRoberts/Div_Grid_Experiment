@@ -73,6 +73,11 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 		addCopyableHtmlToTextarea();
 
 		unhideResultHeadersAndTextarea();
+
+		const container = document.querySelector("#grid");
+		const centerEl = document.querySelector(".row");
+
+		container.scrollLeft = centerEl.offsetWidth / 2 - container.offsetWidth / 2;
 	});
 });
 
