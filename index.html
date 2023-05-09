@@ -13,6 +13,8 @@
 	</head>
 	<body>
 		<div id="main-container">
+			<section id="section-1">
+				<!-- <div class="ascii-wrapper"> -->
 
 				<img
 					class="banner"
@@ -20,39 +22,39 @@
 					src="./images/divify_banner.svg"
 					alt="Divify"
 				/>
+				<div class="section-content" id="section-1-content">
+					<p id="description">
+						This tool takes an image and creates a grid of coloured divs, with
+						each div representing one pixel. <br /><br />
+						HTML with inline-styling is then generated, which can be copied and
+						pasted into your project. <br /><br />
 
+						<strong
+							>⚠️ Please note that any image with dimensions greater than 100px
+							by 100px may slow down or crash your browser, as generating that
+							many divs is an expensive operation. This tool currently has no
+							limit on image size, so exercise caution.
+						</strong>
+					</p>
 
-			<p id="description">
-				This tool takes an image and creates a grid of coloured divs, with each
-				div representing one pixel. <br /><br />
-				HTML with inline-styling is then generated, which can be copied and
-				pasted into your project. <br /><br />
-
-				<strong
-					>⚠️ Please note that any image with dimensions greater than 100px by
-					100px may slow down or crash your browser, as generating that many
-					divs is an expensive operation. This tool currently has no limit on
-					image size, so exercise caution.
-				</strong>
-			</p>
-
-			<form
-				id="form-wrapper"
-				class="rainbow-wrapper"
-				method="post"
-				enctype="multipart/form-data"
-			>
-				<div>
-					<input
-						aria-label="Choose file to upload"
-						type="file"
-						id="imageLoader"
-						name="imageLoader"
-						accept="image/*"
-					/>
+					<form
+						id="form-wrapper"
+						class="rainbow-wrapper"
+						method="post"
+						enctype="multipart/form-data"
+					>
+						<input
+							aria-label="Choose file to upload"
+							type="file"
+							id="imageLoader"
+							name="imageLoader"
+							accept="image/*"
+						/>
+					</form>
 				</div>
-			</form>
+			</section>
 
+			<section id="section-2" class="collapsible collapsed">
 				<img
 					class="banner"
 					id="original-banner"
@@ -60,8 +62,12 @@
 					alt="Original Image"
 				/>
 
-			<canvas id="canvas" width="0" height="0"></canvas>
+				<div class="section-content" id="section-2-content">
+					<canvas id="canvas" width="0" height="0"></canvas>
+				</div>
+			</section>
 
+			<section id="section-3" class="collapsible collapsed">
 				<img
 					class="banner"
 					id="divified-banner"
@@ -69,43 +75,37 @@
 					alt="Processed Image"
 				/>
 
-			<div id="grid-wrapper"></div>
+				<div class="section-content" id="section-3-content">
+					<div id="grid-wrapper"></div>
 
-			<div
-				id="textarea-wrapper"
-				hidden
-				class="collapsable collapsed rainbow-wrapper hidden"
-			>
-				<textarea
-					id="textarea"
-					rows="10"
-					cols="50"
-					style="overflow-y: scroll; resize: none"
-					readonly
-				></textarea>
-			</div>
-			<!-- </div> -->
+					<div
+						id="textarea-wrapper"
+						hidden
+						class="rainbow-wrapper hidden collapsible collapsed"
+					>
+						<textarea
+							id="textarea"
+							rows="10"
+							cols="50"
+							style="overflow-y: scroll; resize: none"
+							readonly
+						></textarea>
+					</div>
+				</div>
+			</section>
 		</div>
-		<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/fitty/2.2.6/fitty.min.js"
-			integrity="sha512-KkWBcUQjpR0NMNLytOBHfEqSF0urYJMXGRU/dzQxa+HQ4zak1gRSoegRvRnUcCFWBPcDIlLU7tBY8o7+bIkvWA=="
-			crossorigin="anonymous"
-			referrerpolicy="no-referrer"
-		></script>
-		<script>
-			fitty("#ascii-divify", {
-				minSize: 1,
-				maxSize: 50,
-			});
-			fitty("#ascii-original", {
-				minSize: 1,
-				maxSize: 50,
-			});
-			fitty("#ascii-divified", {
-				minSize: 1,
-				maxSize: 50,
-			});
-			//
-		</script>
+
+		<footer>
+			<img
+				id="github-logo"
+				src="./images/github-mark-white.svg"
+				alt="GitHub Logo"
+			/>
+			<p>
+				<a href="https://www.github.com/makenzieroberts"
+					>github.com/makenzieroberts</a
+				>
+			</p>
+		</footer>
 	</body>
 </html>
