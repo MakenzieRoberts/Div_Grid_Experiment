@@ -64,6 +64,25 @@ p {
 	text-align: center;
 }
 
+/* ————————————————————————————————— SCROLLBAR ———————————————————————————————— */
+
+::-webkit-scrollbar {
+	width: 18px;
+	height: 18px;
+}
+::-webkit-scrollbar-thumb {
+	background-color: black;
+	border-radius: 4px !important;
+	box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5) !important;
+	border: 1px solid #f4f3fb;
+}
+::-webkit-scrollbar-track {
+	background-color: #d0d0d0;
+	border-radius: 4px;
+	/* margin: 4px; */
+	border: 1px solid #f4f3fb;
+}
+
 /* ——————————————————————————— ASCII BANNERS/HEADERS —————————————————————————— */
 
 .banner {
@@ -187,19 +206,6 @@ textarea {
 	outline-offset: -1px;
 	outline: 1px solid black;
 	width: 100%;
-}
-textarea::-webkit-scrollbar {
-	width: 16px;
-}
-textarea::-webkit-scrollbar-thumb {
-	background-color: black;
-	border-radius: 4px !important;
-	box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5) !important;
-}
-textarea::-webkit-scrollbar-track {
-	background-color: #e4e4e4;
-	border-bottom-right-radius: 8px;
-	border-top-right-radius: 8px;
 }
 
 /* ——————————————————————————————————— GRID ——————————————————————————————————— */
