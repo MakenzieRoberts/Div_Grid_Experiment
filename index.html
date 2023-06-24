@@ -76,20 +76,45 @@
 				/>
 
 				<div class="section-content" id="section-3-content">
+					<!-- Final coloured pixel art grid is placed inside grid-wrapper via javascript -->
 					<div id="grid-wrapper"></div>
-
-					<div
-						id="textarea-wrapper"
-						hidden
-						class="rainbow-wrapper hidden collapsible collapsed"
-					>
-						<textarea
-							id="textarea"
-							rows="10"
-							cols="50"
-							style="overflow-y: scroll; resize: none"
-							readonly
-						></textarea>
+					<!-- Copyable HTML for user -->
+					<div id="textareas-container">
+						<div id="html-textarea-wrapper">
+							<p
+								id="html-textarea-label"
+								class="textarea-label collapsible collapsed"
+							>
+								HTML
+							</p>
+							<div hidden class="rainbow-wrapper hidden collapsible collapsed">
+								<textarea
+									id="html-textarea"
+									rows="10"
+									cols="50"
+									style="overflow-y: scroll; resize: none"
+									readonly
+								></textarea>
+							</div>
+						</div>
+						<!-- Copyable CSS for user -->
+						<div id="css-textarea-wrapper">
+							<p
+								id="css-textarea-label"
+								class="textarea-label collapsible collapsed"
+							>
+								CSS
+							</p>
+							<div hidden class="rainbow-wrapper hidden collapsible collapsed">
+								<textarea
+									id="css-textarea"
+									rows="10"
+									cols="50"
+									style="overflow-y: scroll; resize: none"
+									readonly
+								></textarea>
+							</div>
+						</div>
 					</div>
 				</div>
 			</section>
