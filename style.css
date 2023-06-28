@@ -168,14 +168,14 @@ p#description {
 	/* width: 100%; */
 }
 
-#forms-container {
+#form-container {
 	margin-top: 8%; /* Slightly smaller than section margin */
-	display: grid;
-	grid-template-columns: 1fr 1.5fr;
-	column-gap: 2%;
 }
 form {
 	box-sizing: border-box;
+	display: grid;
+	grid-template-columns: 1fr 1.5fr;
+	column-gap: 2%;
 }
 input[type="file"] {
 	box-sizing: border-box;
@@ -221,6 +221,19 @@ input[type="number"] {
 }
 #number-form-elements input {
 	width: 40px;
+}
+button[type="submit"] {
+	box-sizing: border-box;
+	background-color: rgb(17, 17, 17);
+	border-radius: 5px;
+	border: 2px solid black;
+	box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.241);
+	color: white;
+	font-family: inherit;
+	height: 100%;
+	width: 100%;
+	margin-top: 2%;
+	padding: 1%;
 }
 
 /* ——————————————————————————————— SECTION 2 & 3 —————————————————————————————— */

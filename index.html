@@ -37,36 +37,48 @@
 						</strong>
 					</p>
 
-					<div id="forms-container">
-						<form id="cell-size-form" class="rainbow-wrapper-outside">
-							<div class="rainbow-wrapper-inside" id="number-form-elements">
-								<label for="quantity">Cell Size (px):</label>
+					<div id="form-container">
+						<form id="image-and-cell-size-form">
+							<div
+								id="cell-size-input-container"
+								class="rainbow-wrapper-outside"
+							>
+								<div class="rainbow-wrapper-inside" id="number-form-elements">
+									<label for="quantity">Cell Size (px):</label>
+									<input
+										type="number"
+										id="cell-size-input"
+										name="cell-size-input"
+										value="5"
+										min="1"
+										max="20"
+									/>
+									<!-- <input type="submit" /> -->
+								</div>
+							</div>
+							<div
+								class="rainbow-wrapper-outside"
+								id="image-input-container"
+								method="post"
+								enctype="multipart/form-data"
+							>
 								<input
-									type="number"
-									id="cell-size-input"
-									name="cell-size-input"
-									value="5"
-									min="1"
-									max="20"
+									class="rainbow-wrapper-inside"
+									aria-label="Choose file to upload"
+									type="file"
+									id="imageLoader"
+									name="imageLoader"
+									accept="image/*"
 								/>
-								<!-- <input type="submit" /> -->
 							</div>
 						</form>
-						<form
-							class="rainbow-wrapper-outside"
-							id="file-form"
-							method="post"
-							enctype="multipart/form-data"
+						<button
+							id="submit-button"
+							type="submit"
+							form="image-and-cell-size-form"
 						>
-							<input
-								class="rainbow-wrapper-inside"
-								aria-label="Choose file to upload"
-								type="file"
-								id="imageLoader"
-								name="imageLoader"
-								accept="image/*"
-							/>
-						</form>
+							Submit
+						</button>
 					</div>
 				</div>
 			</section>
