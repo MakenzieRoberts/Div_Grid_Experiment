@@ -5,6 +5,7 @@ const context = canvas.getContext("2d", { willReadFrequently: true });
 const gridWrapper = document.getElementById("grid-wrapper");
 const resultHeaders = document.getElementsByClassName("collapsible");
 const cellSizeInput = document.getElementById("cell-size-input");
+const submitButton = document.getElementById("submit-button");
 
 /* ——————————————————————— 👂 DOMContentLoaded Event Listener 👂 —————————————————————— */
 
@@ -17,7 +18,7 @@ just wants to preview different cell sizes for the same image. */
 window.addEventListener("DOMContentLoaded", async (event) => {
 	console.log("DOM content loaded.");
 
-	const emitter = new EventEmitter();
+	const imageEmitter = new EventEmitter();
 
 	var imageLoader = document.getElementById("imageLoader");
 
@@ -36,7 +37,7 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 			var img = new Image();
 			img.onload = async function () {
 				if (img.height < 100 && img.width < 100) {
-					emitter.emit("imageLoaded", { data: img });
+					imageEmitter.emit("imageLoaded", { data: img });
 				} else {
 					if (
 						window.confirm(
@@ -44,7 +45,7 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 						)
 					) {
 						// window.open("exit.html", "Thanks for Visiting!");
-						emitter.emit("imageLoaded", { data: img });
+						imageEmitter.emit("imageLoaded", { data: img });
 					}
 				}
 			};
@@ -53,39 +54,112 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 		reader.readAsDataURL(e.target.files[0]);
 	}
 
-	emitter.on("imageLoaded", async (payload) => {
-		console.log("Received event:", payload.data);
+	const allowSubmitEmitter = new EventEmitter();
 
-		/* Draw image to the canvas, both to display it as a preview to the user and allow
-		extraction of image data from the canvas */
-		drawImage(canvas, context, payload.data);
-
-		/* Wait for extraction of image data from the canvas and store data */
-		let imageData = await extractImageData(canvas, context);
-		console.log("imageData: ", imageData);
-
-		/* Remove any previous grid if it exists */
-		if (document.contains(document.getElementById("grid"))) {
-			document.getElementById("grid").remove();
-		}
-
-		/* Create a grid of cells with the image's exact width and height (1 cell = 1
-		pixel) */
-		createGrid(imageData.width, imageData.height);
-
-		removeGridCellLabels();
-
-		applyExtractedColoursToGrid(imageData.channels);
-
-		addCopyableHtmlToTextarea();
-		addCopyableCssToTextarea();
-		unhideResultHeadersAndTextarea();
-
-		const container = document.querySelector("#grid");
-		const centerEl = document.querySelector(".row");
-
-		container.scrollLeft = centerEl.offsetWidth / 2 - container.offsetWidth / 2;
+	let canSubmit = false;
+	imageEmitter.on("imageLoaded", async (payload) => {
+		canSubmit = true;
+		allowSubmitEmitter.emit("imageLoaded", payload);
 	});
+
+	let imgData = null;
+	allowSubmitEmitter.on("imageLoaded", async (payload) => {
+		imgData = payload;
+	});
+
+	submitButton.onclick = async (e) => {
+		e.preventDefault();
+
+		console.log("canSubmit: ", canSubmit);
+		console.log("payload: ", imgData);
+
+		if (canSubmit == true) {
+			console.log("Received event:", imgData.data);
+
+			/* Draw image to the canvas, both to display it as a preview to the user and allow
+			extraction of image data from the canvas */
+			drawImage(canvas, context, imgData.data);
+
+			/* Wait for extraction of image data from the canvas and store data */
+			let imageData = await extractImageData(canvas, context);
+			console.log("imageData: ", imageData);
+
+			/* Remove any previous grid if it exists */
+			if (document.contains(document.getElementById("grid"))) {
+				document.getElementById("grid").remove();
+			}
+
+			/* Create a grid of cells with the image's exact width and height (1 cell = 1
+			pixel) */
+			createGrid(imageData.width, imageData.height);
+
+			removeGridCellLabels();
+
+			applyExtractedColoursToGrid(imageData.channels);
+
+			addCopyableHtmlToTextarea();
+			addCopyableCssToTextarea();
+			unhideResultHeadersAndTextarea();
+
+			const container = document.querySelector("#grid");
+			const centerEl = document.querySelector(".row");
+
+			container.scrollLeft =
+				centerEl.offsetWidth / 2 - container.offsetWidth / 2;
+		} else {
+			console.log("canSubmit: ", canSubmit);
+			console.log("No image uploaded - Cannot submit.");
+			/* !TODO: add HTML for error message I can toggle in js "Must upload image before submitting", something like that */
+		}
+	};
+
+	// allowSubmitEmitter.on("imageLoaded", async (payload, canSubmit) => {
+	// 	console.log("emitter works");
+	// 	console.log("payload: ", payload);
+	// 	console.log("canSubmit: ", canSubmit);
+	// 	if (canSubmit == true) {
+	// 		submitButton.onclick = async (e) => {
+	// 			e.preventDefault();
+	// 			console.log("Submit button clicked.");
+	// 			console.log("canSubmit: ", canSubmit);
+
+	// 			// if (canSubmit == true) {
+	// 			console.log("Received event:", payload.data);
+
+	// 			/* Draw image to the canvas, both to display it as a preview to the user and allow
+	// 		extraction of image data from the canvas */
+	// 			drawImage(canvas, context, payload.data);
+
+	// 			/* Wait for extraction of image data from the canvas and store data */
+	// 			let imageData = await extractImageData(canvas, context);
+	// 			console.log("imageData: ", imageData);
+
+	// 			/* Remove any previous grid if it exists */
+	// 			if (document.contains(document.getElementById("grid"))) {
+	// 				document.getElementById("grid").remove();
+	// 			}
+
+	// 			/* Create a grid of cells with the image's exact width and height (1 cell = 1
+	// 		pixel) */
+	// 			createGrid(imageData.width, imageData.height);
+
+	// 			removeGridCellLabels();
+
+	// 			applyExtractedColoursToGrid(imageData.channels);
+
+	// 			addCopyableHtmlToTextarea();
+	// 			addCopyableCssToTextarea();
+	// 			unhideResultHeadersAndTextarea();
+
+	// 			const container = document.querySelector("#grid");
+	// 			const centerEl = document.querySelector(".row");
+
+	// 			container.scrollLeft =
+	// 				centerEl.offsetWidth / 2 - container.offsetWidth / 2;
+	// 		};
+	// 	} else {
+	// 	}
+	// });
 });
 
 /* —————————————————————————————— removeGridCellLabels() —————————————————————————————— */
