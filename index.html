@@ -37,20 +37,37 @@
 						</strong>
 					</p>
 
-					<form
-						id="form-wrapper"
-						class="rainbow-wrapper"
-						method="post"
-						enctype="multipart/form-data"
-					>
-						<input
-							aria-label="Choose file to upload"
-							type="file"
-							id="imageLoader"
-							name="imageLoader"
-							accept="image/*"
-						/>
-					</form>
+					<div id="forms-container">
+						<form id="cell-size-form" class="rainbow-wrapper-outside">
+							<div class="rainbow-wrapper-inside" id="number-form-elements">
+								<label for="quantity">Cell Size (px):</label>
+								<input
+									type="number"
+									id="cell-size-input"
+									name="cell-size-input"
+									value="5"
+									min="1"
+									max="20"
+								/>
+								<!-- <input type="submit" /> -->
+							</div>
+						</form>
+						<form
+							class="rainbow-wrapper-outside"
+							id="file-form"
+							method="post"
+							enctype="multipart/form-data"
+						>
+							<input
+								class="rainbow-wrapper-inside"
+								aria-label="Choose file to upload"
+								type="file"
+								id="imageLoader"
+								name="imageLoader"
+								accept="image/*"
+							/>
+						</form>
+					</div>
 				</div>
 			</section>
 
@@ -77,18 +94,24 @@
 
 				<div class="section-content" id="section-3-content">
 					<!-- Final coloured pixel art grid is placed inside grid-wrapper via javascript -->
-					<div id="grid-wrapper"></div>
+					<div class="rainbow-wrapper-outside">
+						<div class="rainbow-wrapper-inside" id="grid-wrapper"></div>
+					</div>
 					<!-- Copyable HTML for user -->
 					<div id="textareas-container">
-						<div id="html-textarea-wrapper">
+						<div id="html-textarea-wrapper" class="textarea-wrapper">
 							<p
 								id="html-textarea-label"
 								class="textarea-label collapsible collapsed"
 							>
 								HTML
 							</p>
-							<div hidden class="rainbow-wrapper hidden collapsible collapsed">
+							<div
+								hidden
+								class="rainbow-wrapper-outside hidden collapsible collapsed"
+							>
 								<textarea
+									class="rainbow-wrapper-inside"
 									id="html-textarea"
 									rows="10"
 									cols="50"
@@ -98,16 +121,20 @@
 							</div>
 						</div>
 						<!-- Copyable CSS for user -->
-						<div id="css-textarea-wrapper">
+						<div id="css-textarea-wrapper" class="textarea-wrapper">
 							<p
 								id="css-textarea-label"
 								class="textarea-label collapsible collapsed"
 							>
 								CSS
 							</p>
-							<div hidden class="rainbow-wrapper hidden collapsible collapsed">
+							<div
+								hidden
+								class="rainbow-wrapper-outside hidden collapsible collapsed"
+							>
 								<textarea
 									id="css-textarea"
+									class="rainbow-wrapper-inside"
 									rows="10"
 									cols="50"
 									style="overflow-y: scroll; resize: none"

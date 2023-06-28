@@ -39,7 +39,7 @@ body {
 	height: 100%;
 }
 
-.rainbow-wrapper {
+.rainbow-wrapper-outside {
 	align-items: center;
 	display: flex;
 	justify-content: center;
@@ -61,6 +61,17 @@ body {
 		rgba(251, 7, 217, 1) 100%
 	);
 	border-radius: 10px;
+}
+
+.rainbow-wrapper-inside {
+	border-radius: 8px !important;
+	border: 4px solid #f4f3fb !important;
+	box-sizing: border-box;
+	outline-offset: -1px !important;
+	outline: 1px solid black !important;
+	width: 100%;
+	height: 100%;
+	background-color: #f4f3fb;
 }
 
 p {
@@ -132,7 +143,7 @@ section {
 	margin: 0 auto;
 	width: 100%;
 	box-sizing: border-box;
-	margin: 2% 0;
+	/* margin: 2% 0; */
 	/* Section outline option: */
 	/*  	border-radius: 10px;
 			border: 20px solid transparent;
@@ -157,10 +168,17 @@ p#description {
 	/* width: 100%; */
 }
 
-#form-wrapper {
+#forms-container {
 	margin-top: 8%; /* Slightly smaller than section margin */
+	display: grid;
+	grid-template-columns: 1fr 1.5fr;
+	column-gap: 2%;
+}
+form {
+	box-sizing: border-box;
 }
 input[type="file"] {
+	box-sizing: border-box;
 	background-color: #f4f3fb;
 	border-radius: 8px;
 	border: 1px solid black;
@@ -169,21 +187,40 @@ input[type="file"] {
 	height: 100%;
 	padding: 1%;
 	width: 100%;
+	font-family: inherit;
 }
 input[type="file"]::file-selector-button {
+	box-sizing: border-box;
 	background-color: rgb(17, 17, 17);
 	border-radius: 5px;
 	border: 2px solid black;
 	box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.241);
 	color: white;
-	margin: 4px 10px 4px 4px;
+	margin-right: 4%;
 	padding: 2px 8px;
+	font-family: inherit;
+	height: 100%;
 }
 input[type="file"]::file-selector-button:active {
 	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.401);
 	/* scale: 0.99; */
 
 	transform: translate(0px, 1px);
+}
+
+input[type="number"] {
+	background-color: #f4f3fb;
+	border-radius: 4px;
+}
+
+#number-form-elements {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	column-gap: 4%;
+}
+#number-form-elements input {
+	width: 40px;
 }
 
 /* ——————————————————————————————— SECTION 2 & 3 —————————————————————————————— */
@@ -200,25 +237,40 @@ input[type="file"]::file-selector-button:active {
 	height: 0;
 }
 
-.textarea-label {
-	display: inline;
-	font-weight: bold;
-	font-size: 16pt;
-}
 #textareas-container {
 	align-items: center;
 	grid-template-columns: auto auto;
 	display: grid;
 	justify-content: center;
+	/* padding: 0 2%; */
 	margin-top: 8%;
+	column-gap: 2%;
 }
+
+.textarea-label {
+	display: inline;
+	font-weight: bold;
+	font-size: 16pt;
+}
+/* #html-textarea-wrapper {
+	margin-right: 2%;
+}
+#css-textarea-wrapper {
+	margin-left: 2%;
+} */
+
+.textarea-wrapper {
+	/* display: inline; */
+	/* margin: 0 2%; */
+}
+
 textarea {
-	border-radius: 8px;
-	border: 4px solid white;
-	box-sizing: border-box;
-	height: 240px;
-	outline-offset: -1px;
-	outline: 1px solid black;
+	/* border-radius: 8px;
+	border: 4px solid white; */
+	/* box-sizing: border-box; */
+	height: 320px;
+	/* outline-offset: -1px;
+	outline: 1px solid black; */
 	width: 100%;
 }
 
@@ -226,8 +278,9 @@ textarea {
 
 #grid-wrapper {
 	/* scroll-snap-align: center; */
-	margin: 0 auto 10% auto;
+	margin: 0 auto;
 	width: 100%;
+	background-color: white;
 }
 
 #grid {
@@ -258,6 +311,7 @@ textarea {
 	display: grid;
 	height: fit-content;
 	width: fit-content;
+	margin: 0 auto;
 }
 
 /* Grid Colour-Coding */

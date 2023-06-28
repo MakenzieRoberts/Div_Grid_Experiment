@@ -4,9 +4,16 @@ const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d", { willReadFrequently: true });
 const gridWrapper = document.getElementById("grid-wrapper");
 const resultHeaders = document.getElementsByClassName("collapsible");
+const cellSizeInput = document.getElementById("cell-size-input");
 
 /* ——————————————————————— 👂 DOMContentLoaded Event Listener 👂 —————————————————————— */
 
+/* !TODO:  create a submit button instead of processing image on-upload. Add a
+listener so every time that submit button is clicked, the grid is remade. Perhaps
+the functions that handle the grid creation should be put into their own function
+that the event listener can call over and over. This is a way around the fact that
+duplicate uploads dont trigger a grid re-make, which is an issue for a user who
+just wants to preview different cell sizes for the same image. */
 window.addEventListener("DOMContentLoaded", async (event) => {
 	console.log("DOM content loaded.");
 
@@ -388,8 +395,8 @@ function createGrid(width, height) {
 	gridWrapper.appendChild(grid);
 	const allCells = document.querySelectorAll(`[class*="cell"]`);
 	allCells.forEach((element) => {
-		element.style.width = `${cellWidth}px`;
-		element.style.height = `${cellHeight}px`;
+		element.style.width = `${cellSizeInput.value}px`;
+		element.style.height = `${cellSizeInput.value}px`;
 	});
 }
 
