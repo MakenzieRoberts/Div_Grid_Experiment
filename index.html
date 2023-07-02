@@ -40,23 +40,6 @@
 					<div id="form-container">
 						<form id="image-and-cell-size-form">
 							<div
-								id="cell-size-input-container"
-								class="rainbow-wrapper-outside"
-							>
-								<div class="rainbow-wrapper-inside" id="number-form-elements">
-									<label for="quantity">Cell Size (px):</label>
-									<input
-										type="number"
-										id="cell-size-input"
-										name="cell-size-input"
-										value="5"
-										min="1"
-										max="20"
-									/>
-									<!-- <input type="submit" /> -->
-								</div>
-							</div>
-							<div
 								class="rainbow-wrapper-outside"
 								id="image-input-container"
 								method="post"
@@ -71,6 +54,23 @@
 									accept="image/*"
 								/>
 							</div>
+							<div
+								id="cell-size-input-container"
+								class="rainbow-wrapper-outside"
+							>
+								<div class="rainbow-wrapper-inside" id="number-form-elements">
+									<label for="cell-size-input">Cell Size (px):</label>
+									<input
+										type="number"
+										id="cell-size-input"
+										name="cell-size-input"
+										value="5"
+										min="1"
+										max="20"
+									/>
+									<!-- <input type="submit" /> -->
+								</div>
+							</div>
 						</form>
 						<button
 							id="submit-button"
@@ -80,6 +80,36 @@
 							Submit
 						</button>
 					</div>
+
+					<!-- ————————————————————————————— Loading Icon —————————————————————————————— -->
+					<div id="loader-container" style="display: block">
+						<div id="loader" style="display: none">
+							<!-- Loading animation credit: https://loading.io/css/ -->
+							<div class="lds-default">
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+							</div>
+							<!-- —————————————————————— Alternate Loader Style HTML —————————————————————— 
+							<div class="lds-ring">
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+							</div>
+						    -->
+						</div>
+					</div>
+					<!-- ————————————————————————————————————————————————————————————————————————— -->
 				</div>
 			</section>
 

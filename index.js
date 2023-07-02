@@ -6,7 +6,8 @@ const gridWrapper = document.getElementById("grid-wrapper");
 const resultHeaders = document.getElementsByClassName("collapsible");
 const cellSizeInput = document.getElementById("cell-size-input");
 const submitButton = document.getElementById("submit-button");
-
+const loader = document.querySelector("#loader");
+const form = document.getElementById("image-and-cell-size-form");
 /* ——————————————————————— 👂 DOMContentLoaded Event Listener 👂 —————————————————————— */
 
 /* !TODO:  create a submit button instead of processing image on-upload. Add a
@@ -16,6 +17,7 @@ that the event listener can call over and over. This is a way around the fact th
 duplicate uploads dont trigger a grid re-make, which is an issue for a user who
 just wants to preview different cell sizes for the same image. */
 window.addEventListener("DOMContentLoaded", async (event) => {
+	// loader.style.display = "none";
 	console.log("DOM content loaded.");
 
 	const imageEmitter = new EventEmitter();
@@ -60,59 +62,105 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 	imageEmitter.on("imageLoaded", async (payload) => {
 		canSubmit = true;
 		allowSubmitEmitter.emit("imageLoaded", payload);
+		console.log("imageEmitter.on");
 	});
 
 	let imgData = null;
 	allowSubmitEmitter.on("imageLoaded", async (payload) => {
 		imgData = payload;
+		console.log("allowSubmitEmitter.on");
 	});
 
-	submitButton.onclick = async (e) => {
+	/* ———————————————————————————————————————————————————————————————————————————— */
+	// submitButton.onclick = async (e) => {
+	// 	e.preventDefault();
+	// 	console.log("Submit button clicked.");
+	// 	await showLoadingAnimation();
+	// };
+	form.onsubmit = async (e) => {
 		e.preventDefault();
+		/* This implementation deviates from a straightforward approach to
+		prioritize maximum user-friendliness when dealing with large image inputs.
 
-		console.log("canSubmit: ", canSubmit);
-		console.log("payload: ", imgData);
+		An issue arises when attempting to enable the loading animation within
+		this onsubmit function. Despite various attempts to incorporate
+		asynchronous operations and promises, the DOM fails to update in time
+		before invoking the main controller function, resulting in the page
+		freezing. Consequently, although the loading animation is technically set
+		to display:block, it remains invisible to the user due to the freeze. 
 
-		if (canSubmit == true) {
-			console.log("Received event:", imgData.data);
+		To address this, the activation of the loading animation is encapsulated
+		within a promise along with a timeout, allowing the DOM sufficient time to
+		update before the execution of main().
+		
+		I'll put a !TODO!LEARN here, because I'd like to investigate the
+		root cause behind the delayed DOM updates, despite using asynchronous
+		techniques and explore alternative approaches */
 
-			/* Draw image to the canvas, both to display it as a preview to the user and allow
-			extraction of image data from the canvas */
-			drawImage(canvas, context, imgData.data);
+		console.log("Form submitted.");
 
-			/* Wait for extraction of image data from the canvas and store data */
-			let imageData = await extractImageData(canvas, context);
-			console.log("imageData: ", imageData);
+		if (canSubmit === true) {
+			await new Promise((resolve, reject) => {
+				console.log("Promise executed.");
+				loader.style.display = "block";
+				setTimeout(() => {
+					resolve();
+				}, 1000);
+			});
 
-			/* Remove any previous grid if it exists */
-			if (document.contains(document.getElementById("grid"))) {
-				document.getElementById("grid").remove();
-			}
-
-			/* Create a grid of cells with the image's exact width and height (1 cell = 1
-			pixel) */
-			createGrid(imageData.width, imageData.height);
-
-			removeGridCellLabels();
-
-			applyExtractedColoursToGrid(imageData.channels);
-
-			addCopyableHtmlToTextarea();
-			addCopyableCssToTextarea();
-			unhideResultHeadersAndTextarea();
-
-			const container = document.querySelector("#grid");
-			const centerEl = document.querySelector(".row");
-
-			container.scrollLeft =
-				centerEl.offsetWidth / 2 - container.offsetWidth / 2;
+			await main();
 		} else {
-			console.log("canSubmit: ", canSubmit);
+			// console.log("canSubmit: ", canSubmit);
 			console.log("No image uploaded - Cannot submit.");
 			/* !TODO: add HTML for error message I can toggle in js "Must upload image before submitting", something like that */
 		}
-	};
 
+		loader.style.display = "none";
+		// });
+	};
+	/* ———————————————————————————————————————————————————————————————————————————— */
+
+	async function showLoadingAnimation() {
+		loader.style.display = "block";
+		console.log("loader.style.display: ", loader.style.display);
+		return true;
+	}
+	async function main() {
+		// console.log("Received event:", imgData.data);
+
+		// loader.style.display = "block";
+		console.log("loader.style.display: ", loader.style.display);
+
+		/* Draw image to the canvas, both to display it as a preview to the user and allow
+		extraction of image data from the canvas */
+		drawImage(canvas, context, imgData.data);
+
+		/* Wait for extraction of image data from the canvas and store data */
+		let imageData = await extractImageData(canvas, context);
+		// console.log("imageData: ", imageData);
+
+		/* Remove any previous grid if it exists */
+		if (document.contains(document.getElementById("grid"))) {
+			document.getElementById("grid").remove();
+		}
+		console.log("loader.style.display: ", loader.style.display);
+		/* Create a grid of cells with the image's exact width and height (1 cell = 1
+		pixel) */
+		createGrid(imageData.width, imageData.height);
+
+		removeGridCellLabels();
+
+		applyExtractedColoursToGrid(imageData.channels);
+		// loader.style.display = "none";
+		addCopyableHtmlToTextarea();
+		addCopyableCssToTextarea();
+		unhideResultHeadersAndTextarea();
+
+		const container = document.querySelector("#grid");
+		const centerEl = document.querySelector(".row");
+
+		container.scrollLeft = centerEl.offsetWidth / 2 - container.offsetWidth / 2;
+	}
 	// allowSubmitEmitter.on("imageLoaded", async (payload, canSubmit) => {
 	// 	console.log("emitter works");
 	// 	console.log("payload: ", payload);
@@ -228,10 +276,10 @@ function addCopyableHtmlToTextarea() {
 	projects, I'll make an effort to design my code in a way that is scalable and
 	efficient. */
 
-	console.log(gridClone.children);
+	// console.log(gridClone.children);
 
 	for (node of gridClone.children) {
-		console.log(node);
+		// console.log(node);
 		node.removeAttribute("style");
 		if (node.hasChildNodes()) {
 			for (child of node.children) {
@@ -398,6 +446,7 @@ function unhideResultHeadersAndTextarea() {
 /* ————————————————————— ✏️ drawImage(): Draws image to canvas ✏️ ————————————————————— */
 
 function drawImage(canvas, context, image) {
+	console.log("drawImage() called");
 	console.log(image.height + " " + image.width);
 
 	canvas.width = image.width;
@@ -416,6 +465,7 @@ function drawImage(canvas, context, image) {
 /* ———————————————————————————————————————————————————————————————————————————————————— */
 
 async function extractImageData(canvas, context) {
+	console.log("extractImageData() called");
 	const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
 
 	// Using Uint32Array to improve performance
@@ -448,6 +498,7 @@ async function extractImageData(canvas, context) {
 /* —————————————— 🏗️ createGrid(): Create grid & add class/id labels 🏗️ ————————————— */
 
 function createGrid(width, height) {
+	console.log("createGrid() called");
 	const numColumns = width;
 	const numRows = height;
 	const grid = document.createElement("div");
@@ -543,6 +594,7 @@ function colourCodeGrid(width) {
 /* ————————— 🎨 applyExtractedColoursToGrid(): Add hex values to grid cells 🎨 ———————— */
 
 function applyExtractedColoursToGrid(rgbData) {
+	console.log("applyExtractedColoursToGrid() called");
 	const allCells = document.querySelectorAll(`[class*="cell"]`);
 	for (let i = 0; i < rgbData.length; i++) {
 		/* !TODO: Could a queue be useful here? */
