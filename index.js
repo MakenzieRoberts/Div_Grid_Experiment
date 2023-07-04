@@ -8,14 +8,26 @@ const cellSizeInput = document.getElementById("cell-size-input");
 const submitButton = document.getElementById("submit-button");
 const loader = document.querySelector("#loader");
 const form = document.getElementById("image-and-cell-size-form");
-/* ——————————————————————— 👂 DOMContentLoaded Event Listener 👂 —————————————————————— */
+const noImageUploadedErrorMsg = document.getElementById(
+	"no-image-error-message"
+);
 
+/* ——————————————————————————————————— !TODO —————————————————————————————————— */
+/* !TODO: Add an extra container filled with a few pixel art images the user
+	can click on to upload so people who are just curious/employers who want a
+	quick demo can easily check out the app without having to find and upload
+	their own image. */
+/* ———————————————————————————————————————————————————————————————————————————— */
 /* !TODO:  create a submit button instead of processing image on-upload. Add a
-listener so every time that submit button is clicked, the grid is remade. Perhaps
-the functions that handle the grid creation should be put into their own function
-that the event listener can call over and over. This is a way around the fact that
-duplicate uploads dont trigger a grid re-make, which is an issue for a user who
-just wants to preview different cell sizes for the same image. */
+	listener so every time that submit button is clicked, the grid is remade.
+	Perhaps the functions that handle the grid creation should be put into their
+	own function that the event listener can call over and over. This is a way
+	around the fact that duplicate uploads dont trigger a grid re-make, which is
+	an issue for a user who just wants to preview different cell sizes for the
+	same image. */
+/* ———————————————————————————————————————————————————————————————————————————— */
+
+/* ——————————————————————— 👂 DOMContentLoaded Event Listener 👂 —————————————————————— */
 window.addEventListener("DOMContentLoaded", async (event) => {
 	// loader.style.display = "none";
 	console.log("DOM content loaded.");
@@ -38,12 +50,12 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 		reader.onload = function (event) {
 			var img = new Image();
 			img.onload = async function () {
-				if (img.height < 100 && img.width < 100) {
+				if (img.height < 200 && img.width < 200) {
 					imageEmitter.emit("imageLoaded", { data: img });
 				} else {
 					if (
 						window.confirm(
-							`⚠️ WARNING ⚠️ You've uploaded a large image. If you try to DIV-IFY an image over 100 x 100px, computer may go brrrr. \n\nIf you'd like to proceed anyway (and potentially freeze your browser), click OK.\n\nTo upload a different image, click Cancel. `
+							`⚠️ WARNING ⚠️ \n\nYou've uploaded a large image. The larger an image is, the longer it will take to load. \n\nIf you'd like to proceed, click OK.\n\nTo upload a different image, click Cancel and try again. `
 						)
 					) {
 						// window.open("exit.html", "Thanks for Visiting!");
@@ -103,15 +115,18 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 			await new Promise((resolve, reject) => {
 				console.log("Promise executed.");
 				loader.style.display = "block";
+				noImageUploadedErrorMsg.style.display = "none";
+				hideResultHeadersAndTextarea();
 				setTimeout(() => {
 					resolve();
-				}, 1000);
+				}, 100);
 			});
 
 			await main();
 		} else {
 			// console.log("canSubmit: ", canSubmit);
 			console.log("No image uploaded - Cannot submit.");
+			noImageUploadedErrorMsg.style.display = "block";
 			/* !TODO: add HTML for error message I can toggle in js "Must upload image before submitting", something like that */
 		}
 
@@ -443,6 +458,13 @@ function unhideResultHeadersAndTextarea() {
 	}
 }
 
+function hideResultHeadersAndTextarea() {
+	for (let resultHeader of resultHeaders) {
+		// console.log(resultHeader);
+		resultHeader.hidden = true;
+		resultHeader.classList.add("collapsed");
+	}
+}
 /* ————————————————————— ✏️ drawImage(): Draws image to canvas ✏️ ————————————————————— */
 
 function drawImage(canvas, context, image) {

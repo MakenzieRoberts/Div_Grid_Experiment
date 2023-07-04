@@ -9,18 +9,82 @@
 
 		!TODO :     Create constants for box width/height 
 
-		!TODO :     Make scroll snap y axis to center to account for large grid on narrow
-		            screen (scroll-snap-align: center;) 
+		!TODO :     Make scroll snap y axis to center to account for large grid on
+					narrow screen (scroll-snap-align: center;) 
 
+		!TODO : 	Create gradient mesh w/ linear gradient pastel palette 
+					(https://csshero.org/mesher/)
+		
+		!TODO :     For the rainbow and button wrappers use variables for common
+		            values to make it easier to change later on. e.g. border
+		            radius/border width.
+
+		!TODO:      — 	Consolidate elements with duplicate styling values into comma
+		            	separated selector lists. 
+		            — 	Use variables for common values (e.g. border- radius).
+		            	Form/Inputs/Buttons are good candidates for this at the
+		            	moment.
+					— 	Create new classes for elements that share common values.
+
+		!TODO :		Submit button shadow
+
+		!TODO :		Form grid minmax (for overflow auto)
+
+		!TODO :		Border radius formula for wrappers (rainbow, button...)
+
+		!TODO :     Remove height: 100% from file input button and vertically
+					center it somehow
+
+		!TODO :     Remove unnecessary attributes (e.g. font-size), & !important tags 
+
+		!TODO :		Tinker with active submit button anim & apply to all buttons
+
+		!TODO :		Darken form shadows
 */
+/* ————————————————————————————————— Reminders ———————————————————————————————— */
+/* 
+		!REMEMBER:  Alphabetize as you go (attributes & selectors).
 
+					Keyboard Shortcuts
+					——————————————————
+					CTRL + ALT + A   : Format into one single line
+					CTRL + SHIFT + A : Alphabetize 
+*/
 /* —————————————————————————————————— GENERAL ————————————————————————————————— */
 
 html {
+	background: radial-gradient(
+		#c2b4ff,
+		#c2b4ff 65%,
+		rgb(255, 178, 245) 70%,
+		rgba(221, 233, 217, 1),
+		rgba(146, 250, 215, 1),
+		rgb(100, 188, 232),
+		rgb(139, 178, 255) 80%,
+		#c2b4ff 85%,
+		#c2b4ff
+	);
+	background: radial-gradient(ellipse at top, #ababff, transparent),
+		radial-gradient(
+			ellipse at top right,
+
+			rgb(255, 178, 245),
+			rgba(221, 233, 217, 1),
+			rgb(130, 255, 213),
+			rgb(139, 178, 255),
+			transparent
+		),
+		radial-gradient(
+			ellipse at bottom left,
+
+			rgb(255, 178, 245),
+			transparent
+		);
+
 	background-color: #c2b4ff;
 	box-sizing: border-box;
 	font-family: "Courier New", Courier, monospace;
-	font-size: 0.7rem;
+	font-size: 14px;
 	margin: 0 auto;
 	height: 100%;
 }
@@ -39,26 +103,25 @@ body {
 	height: 100%;
 }
 
-.rainbow-wrapper-outside {
+p {
+	text-align: center;
+}
+
+/* ——————————————————————————— Old Version (Webcore) —————————————————————————— */
+/* .rainbow-wrapper-outside {
 	align-items: center;
 	display: flex;
 	justify-content: center;
 	box-sizing: border-box;
-	padding: 2px;
+	padding: 4px;
 	width: 100%;
 	background: linear-gradient(
-		135deg,
-		rgba(255, 0, 0, 1) 0%,
-		rgba(255, 154, 0, 1) 10%,
-		rgba(208, 222, 33, 1) 20%,
-		rgba(79, 220, 74, 1) 30%,
-		rgba(63, 218, 216, 1) 40%,
-		rgba(47, 201, 226, 1) 50%,
-		rgba(28, 127, 238, 1) 60%,
-		rgb(62, 21, 242) 70%,
-		rgba(95, 21, 242, 1) 80%,
-		rgba(186, 12, 248, 1) 90%,
-		rgba(251, 7, 217, 1) 100%
+		90deg,
+		rgb(255, 178, 245),
+		rgba(221, 233, 217, 1),
+		rgba(146, 250, 215, 1),
+		rgb(100, 188, 232),
+		rgb(139, 178, 255)
 	);
 	border-radius: 10px;
 }
@@ -72,10 +135,79 @@ body {
 	width: 100%;
 	height: 100%;
 	background-color: #f4f3fb;
+} */
+
+/* OG Pastel/Holo Palette (Before Simplification) */
+/* background: linear-gradient(
+		90deg,
+		rgb(255, 178, 245),
+		rgb(253, 154, 205), 
+		rgba(248, 202, 221, 1), 
+		rgba(221, 233, 217, 1),
+		rgba(146, 250, 215, 1),
+		rgb(118, 233, 241), 
+		rgb(100, 188, 232),
+		rgb(139, 178, 255)
+	); */
+
+/* OG Full Saturation Rainbow Palette (Too bright for this design)*/
+/* background: linear-gradient(
+		135deg,
+		rgba(255, 0, 0, 1) 0%,
+		rgba(255, 154, 0, 1) 10%,
+		rgba(208, 222, 33, 1) 20%,
+		rgba(79, 220, 74, 1) 30%,
+		rgba(63, 218, 216, 1) 40%,
+		rgba(47, 201, 226, 1) 50%,
+		rgba(28, 127, 238, 1) 60%,
+		rgb(62, 21, 242) 70%,
+		rgba(95, 21, 242, 1) 80%,
+		rgba(186, 12, 248, 1) 90%,
+		rgba(251, 7, 217, 1) 100%
+	); */
+/* ——————————————————————————— New Version (Modern) ——————————————————————————— */
+
+.rainbow-wrapper-outside {
+	align-items: center;
+	background: linear-gradient(
+		90deg,
+		rgb(255, 178, 245),
+		rgba(221, 233, 217, 1),
+		rgba(146, 250, 215, 1),
+		rgb(100, 188, 232),
+		rgb(139, 178, 255)
+	);
+	border-bottom: 1px solid #0000006f;
+	/* 
+	  Matching border radius formula:
+	  innerRadius + distance = outerRadius (I + D = O)
+
+	  Inner radius: 8px
+	  Distance: Outer padding = 8px
+	  			Inner border = 4px
+	*/
+	border-radius: 14px;
+	border-top: 1px solid rgba(255, 255, 255, 0.496);
+	box-sizing: border-box;
+	display: flex;
+	filter: drop-shadow(rgba(0, 0, 0, 0.6) 0px 0px 0.05em)
+		drop-shadow(rgba(0, 0, 0, 0.4) 0px 0px 0.1em);
+	justify-content: center;
+	padding: 8px; /* Controls thickness of rainbow border */
+	width: 100%;
 }
 
-p {
-	text-align: center;
+.rainbow-wrapper-inside {
+	background-color: #ffffff;
+	border-radius: 8px !important;
+	border: 4px solid #ffffff !important;
+	box-sizing: border-box;
+	filter: drop-shadow(0px 1px 2px #ffffff) drop-shadow(0px -1px 2px #ffffff)
+		drop-shadow(-1px 0px 2px #ffffff) drop-shadow(1px 0px 2px #ffffff);
+	height: 100%;
+	/* outline-offset: -1px !important;
+	outline: -1px solid black !important; */
+	width: 100%;
 }
 
 /* ————————————————————————————————— SCROLLBAR ———————————————————————————————— */
@@ -108,12 +240,16 @@ p {
 	box-sizing: border-box;
 	/* box-shadow: 0px 0px 1px 1px #8080804d; */
 }
+
+/* No longer needed */
 .ascii-wrapper {
 	width: 100%;
 	text-align: center;
 }
+
+/* No longer needed */
 p.ascii {
-	font-size: 0.9em;
+	font-size: 0.9rem;
 	/* scale: 0.9; */
 	/* transform: scale(0.8); */
 	/* padding: 8% 0 2% 0; */
@@ -164,8 +300,9 @@ section {
 /* ————————————————————————————————— SECTION 1 ———————————————————————————————— */
 /*                       (Elements visible on page load)                        */
 /* ———————————————————————————————————————————————————————————————————————————— */
+
 p#description {
-	font-size: 1.2em;
+	font-size: 1rem;
 	/* width: 100%; */
 }
 
@@ -175,47 +312,49 @@ p#description {
 form {
 	box-sizing: border-box;
 	display: grid;
-	grid-template-columns: 2.5fr 1fr;
-	column-gap: 2%;
+	grid-template-columns: 2.2fr 1fr;
+	column-gap: 8px;
+	margin-bottom: 2%;
 }
+form * {
+	font-size: 1rem !important;
+}
+
 input[type="file"] {
-	font-size: 1.1em;
-	box-sizing: border-box;
-	background-color: #f4f3fb;
+	background-color: #ffffff;
 	border-radius: 8px;
 	border: 1px solid black;
 	box-sizing: border-box;
 	box-sizing: border-box;
+	font-family: inherit;
 	height: 100%;
 	padding: 2%;
 	width: 100%;
-	font-family: inherit;
 }
 input[type="file"]::file-selector-button {
-	box-sizing: border-box;
 	background-color: rgb(17, 17, 17);
 	border-radius: 5px;
 	border: 2px solid black;
 	box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.291);
+	box-sizing: border-box;
 	color: white;
-	margin-right: 4%;
-	padding: 2px 8px;
 	font-family: inherit;
 	height: 100%;
+	margin-right: 4%;
+	padding: 2px 8px;
 }
 input[type="file"]::file-selector-button:active {
-	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.291);
 	/* scale: 0.99; */
-
+	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.291);
 	transform: translate(0px, 1px);
 }
 
 #number-form-elements {
-	display: flex;
+	/* column-gap: 4%; */
 	align-items: center;
+	display: flex;
 	justify-content: space-evenly;
-	column-gap: 4%;
-	padding: 4%;
+	padding: 0 4%;
 }
 #number-form-elements input {
 	width: 40px;
@@ -230,24 +369,84 @@ input[type="number"]::-webkit-outer-spin-button {
 	opacity: 1; /* Number input arrows always shown */
 }
 
-button[type="submit"] {
+/* 
+OUTSIDE {
+	border-bottom: 1px solid #0000006f;
+	border-top: 1px solid rgba(255, 255, 255, 0.496);
+	filter: drop-shadow(rgba(0, 0, 0, 0.6) 0px 0px 0.05em)
+		drop-shadow(rgba(0, 0, 0, 0.4) 0px 0px 0.1em);
+}
+*/
+
+#button-wrapper {
+	border-top: 1px solid rgba(255, 255, 255, 0.289); /* Top (Outer) */
+	border-bottom: 1px solid #4343436f; /* Bottom (Outer) */
+	border-radius: 6px;
 	box-sizing: border-box;
-	background-color: rgb(17, 17, 17);
+	/* filter: drop-shadow(rgba(0, 0, 0, 0.6) 0px 0px 0.05em)
+		drop-shadow(rgba(0, 0, 0, 0.4) 0px 2px 0.05em); */
+	/* outline-offset: 0px; */
+	/* outline: 1px solid rgb(26, 26, 26); */
+	outline-offset: 0.1em; /* For old version delete these and uncomment above in wrapper */
+	outline: 1px solid rgb(6, 6, 6); /* For old version delete these and uncomment above in wrapper */
+}
+button[type="submit"] {
+	background-color: rgb(19, 19, 19);
+	border: 2px solid #6c6c6c6f; /* Top (Inner) */
+	border-left: 2px solid #1c1c1c6f !important;
+	border-right: 2px solid #1c1c1c6f !important;
+	border-bottom: 2px solid #2e2e2e6f !important; /* Bottom (Inner) */
 	border-radius: 5px;
-	border: 2px solid black;
-	box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.291);
+	box-shadow: 0px 3px 1px 0px rgba(0, 0, 0, 0.564);
+	box-sizing: border-box;
 	color: white;
 	font-family: inherit;
-	width: 100%;
-	margin-top: 4%;
 	padding: 1%;
+	width: 100%;
+	outline-offset: 0.1em; /* For old version delete these and uncomment above in wrapper */
+	outline: 1px solid rgb(6, 6, 6); /* For old version delete these and uncomment above in wrapper */
+	filter: drop-shadow(rgba(0, 0, 0, 0.6) 0px 0px 0.05em)
+		drop-shadow(rgba(0, 0, 0, 0.4) 0px 3px 1px);
 }
 
-button[type="submit"]:active {
-	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.291);
-	/* scale: 0.99; */
-	transform: translate(0px, 1px);
+#button-wrapper:active {
+	outline: none;
 }
+button[type="submit"]:active {
+	/* scale: 0.99; */
+	/* box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.291); */
+
+	border-bottom: 2px solid #2e2e2e6f !important; /* Bottom (Inner) */
+	box-shadow: 0px -3px 1px 1px rgba(0, 0, 0, 0.43);
+	transform: translate(0px, 1px);
+	border-top: 2px solid #2e2e2e6f !important; /* Top (Inner) */
+	border-left: 2px solid #000000 !important; /* Left (Inner) */
+	border-right: 2px solid #000000 !important; /* Right (Inner) */
+	border-bottom: 3px solid #000000 !important; /* Bottom (Inner) */
+	filter: none;
+	outline-offset: -0.05em;
+	outline: 2px solid rgb(6, 6, 6);
+}
+
+/* ————————— Error Message - No Image File Uploaded On Submit Attempt ————————— */
+
+#no-image-error-message {
+	/* text-shadow: -1px -1px 2px #000, 1px -1px 2px #000, -1px 1px 2px #000,
+		1px 1px 2px #000; */
+	/* box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.848); */
+	box-sizing: border-box;
+	display: none;
+	/* background-color: rgb(167, 45, 20);
+	color: #f4f3fb; */
+	color: #bc073d;
+
+	padding: 2% 0;
+	font-size: 1rem;
+	font-weight: bold;
+	margin-top: 2%;
+	border-radius: 6px;
+}
+
 /* ——————————————————————————————— SECTION 2 & 3 —————————————————————————————— */
 /*    Sections hidden until grid creation ('Original' & 'Divified' Sections)    */
 /* ———————————————————————————————————————————————————————————————————————————— */
@@ -456,6 +655,7 @@ button[type="submit"]:active {
 	display: inline;
 	font-weight: bold;
 	font-size: 16pt;
+	position: relative;
 }
 /* #html-textarea-wrapper {
 	margin-right: 2%;

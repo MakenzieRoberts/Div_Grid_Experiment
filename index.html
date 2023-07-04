@@ -30,10 +30,9 @@
 						pasted into your project. <br /><br />
 
 						<strong
-							>⚠️ Please note that any image with dimensions greater than 100px
-							by 100px may slow down or crash your browser, as generating that
-							many divs is an expensive operation. This tool currently has no
-							limit on image size, so exercise caution.
+							>⚠️ Please note that any image with dimensions greater than 200px
+							× 200px may take a while to load. This tool currently has no limit
+							on image size, so exercise caution.
 						</strong>
 					</p>
 
@@ -72,13 +71,18 @@
 								</div>
 							</div>
 						</form>
-						<button
-							id="submit-button"
-							type="submit"
-							form="image-and-cell-size-form"
-						>
-							Submit
-						</button>
+						<p id="no-image-error-message">
+							❗ No file uploaded - Upload an image to continue.
+						</p>
+						<div id="button-wrapper">
+							<button
+								id="submit-button"
+								type="submit"
+								form="image-and-cell-size-form"
+							>
+								Submit
+							</button>
+						</div>
 					</div>
 
 					<!-- ————————————————————————————— Loading Icon —————————————————————————————— -->
@@ -120,7 +124,9 @@
 					src="./images/original_banner.svg"
 					alt="Original Image"
 				/>
-
+				<!-- !TODO: If a large image is uploaded, it will overflow. Put
+				the original image in it's own scrollbox, the same as for the grid
+				result.  -->
 				<div class="section-content" id="section-2-content">
 					<canvas id="canvas" width="0" height="0"></canvas>
 				</div>
