@@ -53,7 +53,7 @@
 /* —————————————————————————————————— GENERAL ————————————————————————————————— */
 
 html {
-	background: radial-gradient(
+	/* background: radial-gradient(
 		#c2b4ff,
 		#c2b4ff 65%,
 		rgb(255, 178, 245) 70%,
@@ -81,7 +81,18 @@ html {
 			transparent
 		);
 
-	background-color: #c2b4ff;
+	background-color: #c2b4ff; */
+	background-color: hsla(240, 100%, 87%, 1);
+
+	background-image: radial-gradient(
+			at 40% 20%,
+			hsla(307, 100%, 88%, 1) 0px,
+			transparent 50%
+		),
+		radial-gradient(at 80% 0%, hsla(104, 26%, 88%, 1) 0px, transparent 50%),
+		radial-gradient(at 0% 50%, hsla(159, 91%, 77%, 1) 0px, transparent 50%),
+		radial-gradient(at 80% 50%, hsla(199, 74%, 65%, 1) 0px, transparent 50%),
+		radial-gradient(at 0% 100%, hsla(219, 100%, 77%, 1) 0px, transparent 50%);
 	box-sizing: border-box;
 	font-family: "Courier New", Courier, monospace;
 	font-size: 14px;
@@ -187,27 +198,41 @@ p {
 	  			Inner border = 4px
 	*/
 	border-radius: 14px;
-	border-top: 1px solid rgba(255, 255, 255, 0.496);
+	/* border-top: 1px solid rgba(255, 255, 255, 0.496); */
 	box-sizing: border-box;
 	display: flex;
 	filter: drop-shadow(rgba(0, 0, 0, 0.6) 0px 0px 0.05em)
-		drop-shadow(rgba(0, 0, 0, 0.4) 0px 0px 0.1em);
+		drop-shadow(rgba(0, 0, 0, 0.298) 0px 1px 0.1em);
 	justify-content: center;
 	padding: 8px; /* Controls thickness of rainbow border */
 	width: 100%;
+	/* box-shadow: inset 0px 0px 0.1em 0.05em rgb(255, 255, 255); */
 }
 
 .rainbow-wrapper-inside {
 	background-color: #ffffff;
-	border-radius: 8px !important;
+	border-radius: 6px !important;
 	border: 4px solid #ffffff !important;
 	box-sizing: border-box;
-	filter: drop-shadow(0px 1px 2px #ffffff) drop-shadow(0px -1px 2px #ffffff)
-		drop-shadow(-1px 0px 2px #ffffff) drop-shadow(1px 0px 2px #ffffff);
+	/* filter: drop-shadow(0px 1px 2px #ffffff) drop-shadow(0px -1px 2px #ffffff)
+		drop-shadow(-1px 0px 2px #ffffff) drop-shadow(1px 0px 2px #ffffff); */
+	/* box-shadow: 0px 0px 0.5em 0.3em rgb(255, 255, 255); */
+	box-shadow: 0px 0px 0.1em 0.45em rgb(255, 255, 255);
 	height: 100%;
 	/* outline-offset: -1px !important;
 	outline: -1px solid black !important; */
 	width: 100%;
+	/* background: linear-gradient(
+		45deg,
+		white 20%,
+		rgba(255, 255, 255, 0.511),
+		rgba(255, 255, 255, 0.511),
+		white 40%,
+		white 50%,
+		rgba(255, 255, 255, 0.511),
+		rgba(255, 255, 255, 0.511),
+		white 70%
+	); */
 }
 
 /* ————————————————————————————————— SCROLLBAR ———————————————————————————————— */
@@ -225,7 +250,6 @@ p {
 ::-webkit-scrollbar-track {
 	background-color: #d0d0d0;
 	border-radius: 4px;
-	/* margin: 4px; */
 	border: 1px solid #f4f3fb;
 }
 
@@ -233,26 +257,7 @@ p {
 
 .banner {
 	width: 100%;
-	/* margin-bottom: 8%; */
-	/* border: 1px solid #8080808a; */
-	/* border-radius: 8px; */
-	/* padding: 0.5%; */
 	box-sizing: border-box;
-	/* box-shadow: 0px 0px 1px 1px #8080804d; */
-}
-
-/* No longer needed */
-.ascii-wrapper {
-	width: 100%;
-	text-align: center;
-}
-
-/* No longer needed */
-p.ascii {
-	font-size: 0.9rem;
-	/* scale: 0.9; */
-	/* transform: scale(0.8); */
-	/* padding: 8% 0 2% 0; */
 }
 
 /* —————————————————————————————— MAIN CONTAINER —————————————————————————————— */
@@ -321,113 +326,100 @@ form * {
 }
 
 input[type="file"] {
-	background-color: #ffffff;
-	border-radius: 8px;
-	border: 1px solid black;
-	box-sizing: border-box;
-	box-sizing: border-box;
+	/* background-color: #ffffff; */
+	/* border-radius: 8px; */
+	/* border: 1px solid black; */
+	/* box-sizing: border-box; */
 	font-family: inherit;
-	height: 100%;
-	padding: 2%;
-	width: 100%;
+	/* height: 100%; */
+	/* padding: 2%; */
+	/* width: 100%; */
+	/* text-align: center !important; */
+	/* vertical-align: middle !important; */
+	padding: 12px;
 }
-input[type="file"]::file-selector-button {
-	background-color: rgb(17, 17, 17);
-	border-radius: 5px;
-	border: 2px solid black;
-	box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.291);
-	box-sizing: border-box;
-	color: white;
-	font-family: inherit;
-	height: 100%;
-	margin-right: 4%;
-	padding: 2px 8px;
-}
-input[type="file"]::file-selector-button:active {
-	/* scale: 0.99; */
-	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.291);
-	transform: translate(0px, 1px);
-}
+
+/* !REFERENCE: Input Pseudo-Elements: https://www.tjvantoll.com/2013/04/15/list-of-pseudo-elements-to-style-form-controls/#input_file */
 
 #number-form-elements {
 	/* column-gap: 4%; */
 	align-items: center;
 	display: flex;
 	justify-content: space-evenly;
-	padding: 0 4%;
+	padding: 0 2%;
+	height: 56px;
+	box-sizing: border-box;
+	font-size: inherit;
+	padding: 0 12px;
+}
+#number-form-elements label {
+	margin: 0 8px 0 0;
+	padding: 0;
 }
 #number-form-elements input {
 	width: 40px;
 }
 input[type="number"] {
-	background-color: #f4f3fb;
+	/* background-color: #f4f3fb; */
 	border-radius: 4px;
 	border: 1px solid black;
+	padding: 2%;
+	margin-left: 2%;
+
+	/* font-weight: 600; */
 }
+
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
 	opacity: 1; /* Number input arrows always shown */
 }
 
-/* 
-OUTSIDE {
-	border-bottom: 1px solid #0000006f;
-	border-top: 1px solid rgba(255, 255, 255, 0.496);
-	filter: drop-shadow(rgba(0, 0, 0, 0.6) 0px 0px 0.05em)
-		drop-shadow(rgba(0, 0, 0, 0.4) 0px 0px 0.1em);
-}
-*/
-
 #button-wrapper {
-	border-top: 1px solid rgba(255, 255, 255, 0.289); /* Top (Outer) */
-	border-bottom: 1px solid #4343436f; /* Bottom (Outer) */
 	border-radius: 6px;
 	box-sizing: border-box;
-	/* filter: drop-shadow(rgba(0, 0, 0, 0.6) 0px 0px 0.05em)
-		drop-shadow(rgba(0, 0, 0, 0.4) 0px 2px 0.05em); */
-	/* outline-offset: 0px; */
-	/* outline: 1px solid rgb(26, 26, 26); */
-	outline-offset: 0.1em; /* For old version delete these and uncomment above in wrapper */
-	outline: 1px solid rgb(6, 6, 6); /* For old version delete these and uncomment above in wrapper */
+
+	padding: 0 0.1em;
 }
-button[type="submit"] {
-	background-color: rgb(19, 19, 19);
-	border: 2px solid #6c6c6c6f; /* Top (Inner) */
+
+button[type="submit"],
+input[type="file"]::file-selector-button {
+	/* background-color: rgb(19, 19, 19); */
+
+	border: 2px solid #7474746f;
 	border-left: 2px solid #1c1c1c6f !important;
 	border-right: 2px solid #1c1c1c6f !important;
-	border-bottom: 2px solid #2e2e2e6f !important; /* Bottom (Inner) */
+	border-bottom: 2px solid #2e2e2e6f !important;
 	border-radius: 5px;
-	box-shadow: 0px 3px 1px 0px rgba(0, 0, 0, 0.564);
+	box-shadow: 0px 3px 1px 0px rgba(0, 0, 0, 0.382);
 	box-sizing: border-box;
 	color: white;
 	font-family: inherit;
+	font-size: inherit;
+	/* outline-offset: 0.05em; */
+	outline: 1px solid rgb(21, 21, 21);
+	filter: drop-shadow(rgba(0, 0, 0, 0.724) 0px 0px 0.05em)
+		drop-shadow(rgba(0, 0, 0, 0.194) 0px 3px 1px);
+	background: linear-gradient(rgb(19, 19, 19), rgb(44, 44, 44));
+}
+
+button[type="submit"]:active,
+input[type="file"]::file-selector-button:active {
+	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.564);
+	filter: drop-shadow(rgba(0, 0, 0, 0.6) 0px 0px 0.05em)
+		drop-shadow(rgba(0, 0, 0, 0.4) 0px 1px 0.05em);
+	border-left-width: 0px;
+	border-right-width: 0px;
+	transform: translate(0px, 2px);
+}
+button[type="submit"] {
 	padding: 1%;
 	width: 100%;
-	outline-offset: 0.1em; /* For old version delete these and uncomment above in wrapper */
-	outline: 1px solid rgb(6, 6, 6); /* For old version delete these and uncomment above in wrapper */
-	filter: drop-shadow(rgba(0, 0, 0, 0.6) 0px 0px 0.05em)
-		drop-shadow(rgba(0, 0, 0, 0.4) 0px 3px 1px);
 }
-
-#button-wrapper:active {
-	outline: none;
+input[type="file"]::file-selector-button {
+	margin-right: 4%;
+	padding: 0 4%;
+	height: 100%;
 }
-button[type="submit"]:active {
-	/* scale: 0.99; */
-	/* box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.291); */
-
-	border-bottom: 2px solid #2e2e2e6f !important; /* Bottom (Inner) */
-	box-shadow: 0px -3px 1px 1px rgba(0, 0, 0, 0.43);
-	transform: translate(0px, 1px);
-	border-top: 2px solid #2e2e2e6f !important; /* Top (Inner) */
-	border-left: 2px solid #000000 !important; /* Left (Inner) */
-	border-right: 2px solid #000000 !important; /* Right (Inner) */
-	border-bottom: 3px solid #000000 !important; /* Bottom (Inner) */
-	filter: none;
-	outline-offset: -0.05em;
-	outline: 2px solid rgb(6, 6, 6);
-}
-
 /* ————————— Error Message - No Image File Uploaded On Submit Attempt ————————— */
 
 #no-image-error-message {

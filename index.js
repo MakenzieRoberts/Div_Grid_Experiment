@@ -11,6 +11,7 @@ const form = document.getElementById("image-and-cell-size-form");
 const noImageUploadedErrorMsg = document.getElementById(
 	"no-image-error-message"
 );
+const imageLoader = document.getElementById("image-loader");
 
 /* ——————————————————————————————————— !TODO —————————————————————————————————— */
 /* !TODO: Add an extra container filled with a few pixel art images the user
@@ -33,8 +34,6 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 	console.log("DOM content loaded.");
 
 	const imageEmitter = new EventEmitter();
-
-	var imageLoader = document.getElementById("imageLoader");
 
 	/* When the user uploads an image, a change is detected and the getImage function is
 	called */
