@@ -12,6 +12,7 @@
 		<script src="index.js" defer></script>
 	</head>
 	<body>
+		<!-- !TODO: add link next to grid preview that says like "see full" that opens in a new page, to accomodate really large images -->
 		<div id="main-container">
 			<section id="section-1">
 				<!-- <div class="ascii-wrapper"> -->
@@ -19,7 +20,7 @@
 				<img
 					class="banner"
 					id="divify-banner"
-					src="./images/divify_banner.svg"
+					src="./images/divify_banner2.svg"
 					alt="Divify"
 				/>
 				<div class="section-content" id="section-1-content">
@@ -84,26 +85,28 @@
 							</button>
 						</div>
 					</div>
+				</div>
+			</section>
 
-					<!-- ————————————————————————————— Loading Icon —————————————————————————————— -->
-					<div id="loader-container" style="display: block">
-						<div id="loader" style="display: none">
-							<!-- Loading animation credit: https://loading.io/css/ -->
-							<div class="lds-default">
-								<div></div>
-								<div></div>
-								<div></div>
-								<div></div>
-								<div></div>
-								<div></div>
-								<div></div>
-								<div></div>
-								<div></div>
-								<div></div>
-								<div></div>
-								<div></div>
-							</div>
-							<!-- —————————————————————— Alternate Loader Style HTML —————————————————————— 
+			<!-- ————————————————————————————— Loading Icon —————————————————————————————— -->
+			<div id="loader-container" style="display: none">
+				<div id="loader" style="display: none">
+					<!-- Loading animation credit: https://loading.io/css/ -->
+					<div class="lds-default">
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+					</div>
+					<!-- —————————————————————— Alternate Loader Style HTML —————————————————————— 
 							<div class="lds-ring">
 								<div></div>
 								<div></div>
@@ -111,17 +114,15 @@
 								<div></div>
 							</div>
 						    -->
-						</div>
-					</div>
-					<!-- ————————————————————————————————————————————————————————————————————————— -->
 				</div>
-			</section>
+			</div>
+			<!-- ————————————————————————————————————————————————————————————————————————— -->
 
 			<section id="section-2" class="collapsible collapsed">
 				<img
 					class="banner"
 					id="original-banner"
-					src="./images/original_banner.svg"
+					src="./images/original_banner2.svg"
 					alt="Original Image"
 				/>
 				<!-- !TODO: If a large image is uploaded, it will overflow. Put
@@ -136,7 +137,7 @@
 				<img
 					class="banner"
 					id="divified-banner"
-					src="./images/divified_banner.svg"
+					src="./images/divified_banner2.svg"
 					alt="Processed Image"
 				/>
 

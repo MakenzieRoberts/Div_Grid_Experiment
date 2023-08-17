@@ -7,6 +7,7 @@ const resultHeaders = document.getElementsByClassName("collapsible");
 const cellSizeInput = document.getElementById("cell-size-input");
 const submitButton = document.getElementById("submit-button");
 const loader = document.querySelector("#loader");
+const loaderContainer = document.getElementById("loader-container");
 const form = document.getElementById("image-and-cell-size-form");
 const noImageUploadedErrorMsg = document.getElementById(
 	"no-image-error-message"
@@ -113,6 +114,7 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 		if (canSubmit === true) {
 			await new Promise((resolve, reject) => {
 				console.log("Promise executed.");
+				loaderContainer.style.display = "block";
 				loader.style.display = "block";
 				noImageUploadedErrorMsg.style.display = "none";
 				hideResultHeadersAndTextarea();
@@ -130,6 +132,7 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 		}
 
 		loader.style.display = "none";
+		loaderContainer.style.display = "none";
 		// });
 	};
 	/* ———————————————————————————————————————————————————————————————————————————— */

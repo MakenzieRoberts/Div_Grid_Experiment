@@ -108,75 +108,16 @@ body {
 	flex-direction: column;
 	box-sizing: border-box;
 
-	width: clamp(500px, 36%, 60%);
+	width: clamp(500px, 30%, 60%);
 	/* margin: 0 24%; */
 	margin: 0 auto;
 	height: 100%;
+	box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.5);
 }
 
 p {
 	text-align: center;
 }
-
-/* ——————————————————————————— Old Version (Webcore) —————————————————————————— */
-/* .rainbow-wrapper-outside {
-	align-items: center;
-	display: flex;
-	justify-content: center;
-	box-sizing: border-box;
-	padding: 4px;
-	width: 100%;
-	background: linear-gradient(
-		90deg,
-		rgb(255, 178, 245),
-		rgba(221, 233, 217, 1),
-		rgba(146, 250, 215, 1),
-		rgb(100, 188, 232),
-		rgb(139, 178, 255)
-	);
-	border-radius: 10px;
-}
-
-.rainbow-wrapper-inside {
-	border-radius: 8px !important;
-	border: 4px solid #f4f3fb !important;
-	box-sizing: border-box;
-	outline-offset: -1px !important;
-	outline: 1px solid black !important;
-	width: 100%;
-	height: 100%;
-	background-color: #f4f3fb;
-} */
-
-/* OG Pastel/Holo Palette (Before Simplification) */
-/* background: linear-gradient(
-		90deg,
-		rgb(255, 178, 245),
-		rgb(253, 154, 205), 
-		rgba(248, 202, 221, 1), 
-		rgba(221, 233, 217, 1),
-		rgba(146, 250, 215, 1),
-		rgb(118, 233, 241), 
-		rgb(100, 188, 232),
-		rgb(139, 178, 255)
-	); */
-
-/* OG Full Saturation Rainbow Palette (Too bright for this design)*/
-/* background: linear-gradient(
-		135deg,
-		rgba(255, 0, 0, 1) 0%,
-		rgba(255, 154, 0, 1) 10%,
-		rgba(208, 222, 33, 1) 20%,
-		rgba(79, 220, 74, 1) 30%,
-		rgba(63, 218, 216, 1) 40%,
-		rgba(47, 201, 226, 1) 50%,
-		rgba(28, 127, 238, 1) 60%,
-		rgb(62, 21, 242) 70%,
-		rgba(95, 21, 242, 1) 80%,
-		rgba(186, 12, 248, 1) 90%,
-		rgba(251, 7, 217, 1) 100%
-	); */
-/* ——————————————————————————— New Version (Modern) ——————————————————————————— */
 
 .rainbow-wrapper-outside {
 	align-items: center;
@@ -189,39 +130,45 @@ p {
 		rgb(139, 178, 255)
 	);
 	border-bottom: 1px solid #0000006f;
+	border-top: 1px solid #00000023;
 	/* 
 	  Matching border radius formula:
-	  innerRadius + distance = outerRadius (I + D = O)
-
-	  Inner radius: 8px
-	  Distance: Outer padding = 8px
-	  			Inner border = 4px
+      	outerRadius = innerRadius + distance
+		
+	  Distance eg. 	Outer padding
+	  			  	Inner border
 	*/
-	border-radius: 14px;
+	border-radius: 12px;
 	/* border-top: 1px solid rgba(255, 255, 255, 0.496); */
 	box-sizing: border-box;
 	display: flex;
-	filter: drop-shadow(rgba(0, 0, 0, 0.6) 0px 0px 0.05em)
-		drop-shadow(rgba(0, 0, 0, 0.298) 0px 1px 0.1em);
+	filter: drop-shadow(rgba(0, 0, 0, 0.8) 0px 0px 0.05em)
+		drop-shadow(rgba(0, 0, 0, 0.3) 0px 2px 0.1em);
 	justify-content: center;
-	padding: 8px; /* Controls thickness of rainbow border */
+	padding: 7px; /* Controls thickness of rainbow border */
 	width: 100%;
 	/* box-shadow: inset 0px 0px 0.1em 0.05em rgb(255, 255, 255); */
+
+	/* animation: infinite-spinning 10s linear infinite; */
 }
 
 .rainbow-wrapper-inside {
+	/* background-color: #f6f5f8; */
 	background-color: #ffffff;
+	/* background: url(https://jkbfabrics.com/sites/default/files/Classic-Vinyl/Classic.Marshmallow.SCL-108.jpg); */
 	border-radius: 6px !important;
-	/* border: 4px solid #ffffff !important; */
+
+	border: 1px solid #f6f5f8 !important;
 	box-sizing: border-box;
 	/* filter: drop-shadow(0px 1px 2px #ffffff) drop-shadow(0px -1px 2px #ffffff)
 		drop-shadow(-1px 0px 2px #ffffff) drop-shadow(1px 0px 2px #ffffff); */
 	/* box-shadow: 0px 0px 0.5em 0.3em rgb(255, 255, 255); */
-	box-shadow: 0px 0px 0.1em 0.4em rgb(255, 255, 255);
+	box-shadow: 0px 0px 0.3em 0.3em #f6f5f8, inset 0px 0px 0.5em 0.1em #f6f5f8;
 	height: 100%;
 	/* outline-offset: -1px !important;
 	outline: -1px solid black !important; */
 	width: 100%;
+
 	/* background: linear-gradient(
 		45deg,
 		white 20%,
@@ -232,6 +179,32 @@ p {
 		rgba(255, 255, 255, 0.511),
 		rgba(255, 255, 255, 0.511),
 		white 70%
+	); */
+	/* background: linear-gradient(
+		45deg,
+		#f6f5f8,
+		#f6f5f8 20px,
+		rgba(255, 255, 255, 0.3),
+		#f6f5f8 35px,
+		#f6f5f8 40px,
+		rgb(255, 255, 255, 0.3),
+		#f6f5f8 55px,
+		#f6f5f8 60px,
+		rgb(255, 255, 255, 0.3),
+		#f6f5f8 75px
+	); */
+	/* background: linear-gradient(
+		45deg,
+		#f6f5f8,
+		#f6f5f8,
+		rgba(255, 255, 255, 1),
+		#f6f5f8,
+		#f6f5f8,
+		rgb(255, 255, 255, 1),
+		#f6f5f8,
+		#f6f5f8,
+		rgb(255, 255, 255, 1),
+		#f6f5f8
 	); */
 }
 
@@ -245,19 +218,25 @@ p {
 	background-color: black;
 	border-radius: 4px !important;
 	box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5) !important;
-	border: 1px solid #f4f3fb;
+	border: 1px solid #d0d0d0;
 }
 ::-webkit-scrollbar-track {
 	background-color: #d0d0d0;
 	border-radius: 4px;
-	border: 1px solid #f4f3fb;
+	border: 1px solid #d0d0d0;
 }
 
 /* ——————————————————————————— ASCII BANNERS/HEADERS —————————————————————————— */
+hr {
+	padding: 0;
+	margin: 0;
+}
 
 .banner {
-	width: 100%;
+	width: 85%;
+	height: auto;
 	box-sizing: border-box;
+	padding-bottom: 4%;
 }
 
 /* —————————————————————————————— MAIN CONTAINER —————————————————————————————— */
@@ -268,20 +247,32 @@ p {
 	display: flex;
 	flex-direction: column;
 	/* justify-content: center; */
-	margin: 0 auto;
-	padding: 6% 10%;
-	width: 100%;
+	/* margin-bottom: 4%; */
+	/* background-color: #f6f5f8b8; */
+
 	height: 100%;
-	background-color: #f6f5f8;
 	overflow-y: auto;
-	box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.5);
+	padding: 4%;
+	width: 100%;
+	transition: ease-out 1s;
+	background: rgba(255, 255, 255, 0.472);
+
+	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+	backdrop-filter: blur(5px);
+	-webkit-backdrop-filter: blur(5px);
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	/* background-image: url("https://img.freepik.com/premium-vector/holographic-neon-background_40163-55.jpg?w=2000"); */
 }
 
 /* ————————————————————————————————— SECTIONS ————————————————————————————————— */
 
 section {
+	box-shadow: 0 2px 0.4em 0.1em rgba(0, 0, 0, 0.223);
+	border-radius: 10px;
+	background-color: #f3f6f6;
 	text-align: center;
-	margin: 0 auto;
+
+	padding: 10%;
 	width: 100%;
 	box-sizing: border-box;
 	/* margin: 2% 0; */
@@ -289,11 +280,26 @@ section {
 	/*  	border-radius: 10px;
 			border: 20px solid transparent;
 			outline: 1px solid rgb(0, 0, 0); */
-	/* ... Maybe I could use it for the 2nd and 3rd sections only? Or one outline that visually groups sections 2 and 3 (input image preview + results)? */
-}
+	/* ... Maybe I could use it for the 2nd and 3rd sections only? Or one outline that visually groups sections 2 and 3 (input image preview + results)?
+	 */
+	/* height: 100%; */
+	/* background: rgba(255, 255, 255, 0.198); */
 
+	/* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
+
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	/* overflow: auto; */
+	height: 100%;
+	width: fit-content;
+}
+/* section:first-child {
+	height: 100%;
+} */
+section:not(:first-child) {
+	margin-top: 4%;
+}
 .section-content {
-	margin: 12% 0;
+	/* margin-top: 8%; */
 }
 
 /* First section looks nicer with a bit of extra breathing room */
@@ -318,8 +324,21 @@ form {
 	box-sizing: border-box;
 	display: grid;
 	grid-template-columns: 2.2fr 1fr;
-	column-gap: 8px;
-	margin-bottom: 2%;
+	/* 
+	The properties below (column-gap & margin-bottom) control the space [▞▞] between the form elements, including submit button.
+		Diagram:
+
+			┌ ——————————————————————— ┐▞┌ ———————————— ┐ 
+			│ [    ]  file selector   │▞│ cell size [] │
+			└ ――――——————————————————— ┘▞└ ――――———————— ┘
+			▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞
+			┌ ———————————————————————————————————————— ┐ 
+			│ 		   		submit button		       │
+			└ ――――———————————————————————————————————— ┘
+			
+    */
+	column-gap: 3.5%;
+	margin-bottom: 3.5%;
 }
 form * {
 	font-size: 1rem !important;
@@ -379,26 +398,27 @@ input[type="number"]::-webkit-outer-spin-button {
 	box-sizing: border-box;
 
 	padding: 0 0.1em;
+	/* !TODO: ^^^ see if this is still necessary */
 }
 
 button[type="submit"],
 input[type="file"]::file-selector-button {
 	/* background-color: rgb(19, 19, 19); */
 
-	border: 2px solid #7474746f;
+	border: 2px solid #4949496f;
 	border-left: 2px solid #1c1c1c6f !important;
 	border-right: 2px solid #1c1c1c6f !important;
-	border-bottom: 2px solid #2e2e2e6f !important;
+	border-bottom: 3px solid #2e2e2e6f !important;
 	border-radius: 5px;
-	box-shadow: 0px 3px 1px 0px rgba(0, 0, 0, 0.382);
+	box-shadow: 0px 3px 1px 0px rgba(0, 0, 0, 0.3);
 	box-sizing: border-box;
 	color: white;
 	font-family: inherit;
 	font-size: inherit;
 	/* outline-offset: 0.05em; */
-	outline: 1px solid rgb(21, 21, 21);
-	filter: drop-shadow(rgba(0, 0, 0, 0.724) 0px 0px 0.05em)
-		drop-shadow(rgba(0, 0, 0, 0.194) 0px 3px 1px);
+	outline: 1px solid rgb(27, 27, 27);
+	filter: drop-shadow(rgba(0, 0, 0, 0.333) 0px 1px 0.05em)
+		drop-shadow(rgba(0, 0, 0, 0.5) 0px 1px 0em);
 	background: linear-gradient(rgb(19, 19, 19), rgb(44, 44, 44));
 }
 
@@ -446,7 +466,7 @@ input[type="file"]::file-selector-button {
 /* ****************************** Loading Icon ****************************** */
 
 #loader-container {
-	margin-top: 12%; /* Matches `.section-content` margins to center loading animation between section 1 and 2 whitespace. */
+	margin-top: 6%; /* Matches `.section-content` margins to center loading animation between section 1 and 2 whitespace. */
 	/* border: 2px solid red; */
 	height: 100%;
 }
@@ -468,8 +488,10 @@ input[type="file"]::file-selector-button {
 	height: 6px;
 	border-radius: 50%;
 	animation: lds-default 1.2s linear infinite;
+	background: black;
+	box-shadow: 0 0 1px black;
 }
-.lds-default div:nth-child(1) {
+/* .lds-default div:nth-child(1) {
 	background: linear-gradient(0deg, rgba(251, 7, 217, 1), rgba(255, 0, 0, 1));
 }
 .lds-default div:nth-child(2) {
@@ -512,7 +534,7 @@ input[type="file"]::file-selector-button {
 }
 .lds-default div:nth-child(12) {
 	background: linear-gradient(30deg, rgb(201, 32, 119), rgba(251, 7, 217, 1));
-}
+} */
 
 .lds-default div:nth-child(1) {
 	animation-delay: 0s;
@@ -834,8 +856,8 @@ footer img#github-logo {
 
 @media only screen and (max-width: 1600px) {
 	#main-container {
-		padding-left: 8%;
-		padding-right: 8%;
+		padding-left: 4%;
+		padding-right: 4%;
 	}
 }
 
@@ -843,21 +865,71 @@ footer img#github-logo {
 	body {
 		width: 100%;
 		/* height: 97.5%; */
-		border: 10px solid #c2b4ff;
 
-		margin: auto;
+		/* margin: auto; */
 	}
 	#main-container {
-		border-top-right-radius: 10px;
-		border-top-left-radius: 10px;
-		border-top: 8px solid #f4f3fb;
+		/* border-top-right-radius: 10px;
+		border-top-left-radius: 10px; */
+		/* border-top: 8px solid #f4f3fb; */
 		/* padding-left: 4%;
 		padding-right: 4%; */
+		background-color: transparent;
+		transition: ease 0.5s;
+		border: none;
+	}
+	section {
+		/* height: 100%; */
+		/* transition: ease all 1s; */
+		/* animation: example 2s; */
+		/* height: 100%; */
+		background: #f3f6f6;
+
+		/* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
+		backdrop-filter: blur(5px);
+		-webkit-backdrop-filter: blur(5px);
+		border: 1px solid rgba(255, 255, 255, 0.3);
+		box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.5);
+		height: fit-content !important;
+	}
+	section:not(:last-child) {
+		/* margin-bottom: 0; */
 	}
 
 	footer {
 		position: block;
-		border-bottom-right-radius: 10px;
-		border-bottom-left-radius: 10px;
+		/* border-bottom-right-radius: 10px;
+		border-bottom-left-radius: 10px; */
 	}
 }
+
+/*
+Almost working height transition 
+section {
+	transition: height 2s ease;
+	height: 60%;
+}
+@media only screen and (max-width: 500px) {
+	body {
+	#main-container {
+		border-top-right-radius: 10px;
+		border-top-left-radius: 10px;
+
+		background-color: transparent;
+		transition: ease all 0.5s;
+	}
+	section {
+
+
+		height: 100%;
+	}
+	section:not(:last-child) {
+
+	}
+
+	footer {
+		position: block;
+
+	}
+}
+*/
