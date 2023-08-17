@@ -108,7 +108,7 @@ body {
 	flex-direction: column;
 	box-sizing: border-box;
 
-	width: clamp(500px, 30%, 60%);
+	width: clamp(500px, 36%, 60%);
 	/* margin: 0 24%; */
 	margin: 0 auto;
 	height: 100%;
@@ -289,7 +289,7 @@ section {
 
 	border: 1px solid rgba(255, 255, 255, 0.3);
 	/* overflow: auto; */
-	height: 100%;
+	height: max-content;
 	width: fit-content;
 }
 /* section:first-child {
@@ -861,7 +861,7 @@ footer img#github-logo {
 	}
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 550px) {
 	body {
 		width: 100%;
 		/* height: 97.5%; */
