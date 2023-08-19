@@ -51,7 +51,9 @@
 					CTRL + SHIFT + A : Alphabetize 
 */
 /* —————————————————————————————————— GENERAL ————————————————————————————————— */
-
+* {
+	box-sizing: border-box;
+}
 html {
 	/* background: radial-gradient(
 		#c2b4ff,
@@ -129,6 +131,8 @@ p {
 		rgb(100, 188, 232),
 		rgb(139, 178, 255)
 	);
+	/* background: url("https://img.freepik.com/premium-vector/holographic-neon-background_40163-55.jpg?w=2000");
+	background-size: cover; */
 	border-bottom: 1px solid #0000006f;
 	border-top: 1px solid #00000023;
 	/* 
@@ -233,7 +237,7 @@ hr {
 }
 
 .banner {
-	width: 85%;
+	width: 96%;
 	height: auto;
 	box-sizing: border-box;
 	padding-bottom: 4%;
@@ -272,7 +276,7 @@ section {
 	background-color: #f3f6f6;
 	text-align: center;
 
-	padding: 10%;
+	padding: 16%;
 	width: 100%;
 	box-sizing: border-box;
 	/* margin: 2% 0; */
@@ -282,26 +286,34 @@ section {
 			outline: 1px solid rgb(0, 0, 0); */
 	/* ... Maybe I could use it for the 2nd and 3rd sections only? Or one outline that visually groups sections 2 and 3 (input image preview + results)?
 	 */
-	/* height: 100%; */
+	height: fit-content;
 	/* background: rgba(255, 255, 255, 0.198); */
 
 	/* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
 
 	border: 1px solid rgba(255, 255, 255, 0.3);
 	/* overflow: auto; */
-	height: max-content;
+	/* height: max-content; */
 	/* width: fit-content; */
 }
-/* section:first-child {
+section:first-child {
+	/* height: 100%; */
+	/* height: clamp(fit-content, 100vh, fit-content); */
 	height: 100%;
-} */
+	display: table;
+	/* !TODO: Find out why display:table is magic... it let me make the div look like height 100% while still having the overflow control of fit-content*/
+}
 section:not(:first-child) {
 	margin-top: 4%;
 }
 .section-content {
 	/* margin-top: 8%; */
 }
-
+#section-1-content {
+	/* height: 100%;
+	max-height: 100%; */
+	max-height: min-content;
+}
 /* First section looks nicer with a bit of extra breathing room */
 
 /* #section-1-content {
@@ -861,7 +873,7 @@ footer img#github-logo {
 	}
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 525px) {
 	body {
 		width: 100%;
 		/* height: 97.5%; */
@@ -890,14 +902,19 @@ footer img#github-logo {
 		-webkit-backdrop-filter: blur(5px);
 		border: 1px solid rgba(255, 255, 255, 0.3);
 		box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.5);
-		height: fit-content !important;
+		height: fit-content;
+		/* transition: ease all 1s; */
+	}
+
+	.section-content {
+		/* height: fit-content; */
 	}
 	section:not(:last-child) {
 		/* margin-bottom: 0; */
 	}
 
 	footer {
-		position: block;
+		/* position: block; */
 		/* border-bottom-right-radius: 10px;
 		border-bottom-left-radius: 10px; */
 	}
