@@ -55,35 +55,6 @@
 	box-sizing: border-box;
 }
 html {
-	/* background: radial-gradient(
-		#c2b4ff,
-		#c2b4ff 65%,
-		rgb(255, 178, 245) 70%,
-		rgba(221, 233, 217, 1),
-		rgba(146, 250, 215, 1),
-		rgb(100, 188, 232),
-		rgb(139, 178, 255) 80%,
-		#c2b4ff 85%,
-		#c2b4ff
-	);
-	background: radial-gradient(ellipse at top, #ababff, transparent),
-		radial-gradient(
-			ellipse at top right,
-
-			rgb(255, 178, 245),
-			rgba(221, 233, 217, 1),
-			rgb(130, 255, 213),
-			rgb(139, 178, 255),
-			transparent
-		),
-		radial-gradient(
-			ellipse at bottom left,
-
-			rgb(255, 178, 245),
-			transparent
-		);
-
-	background-color: #c2b4ff; */
 	background-color: hsla(240, 100%, 87%, 1);
 
 	background-image: radial-gradient(
@@ -121,6 +92,16 @@ p {
 	text-align: center;
 }
 
+/* ———————————————————————————————————————————————————————————————————————————— */
+
+/* 
+	  Matching border radius formula:
+      	outerRadius = innerRadius + distance
+		
+	  Distance eg. 	Outer padding
+	  			  	Inner border
+	*/
+
 .rainbow-wrapper-outside {
 	align-items: center;
 	background: linear-gradient(
@@ -131,19 +112,9 @@ p {
 		rgb(100, 188, 232),
 		rgb(139, 178, 255)
 	);
-	/* background: url("https://img.freepik.com/premium-vector/holographic-neon-background_40163-55.jpg?w=2000");
-	background-size: cover; */
 	border-bottom: 1px solid #0000006f;
-	border-top: 1px solid #00000023;
-	/* 
-	  Matching border radius formula:
-      	outerRadius = innerRadius + distance
-		
-	  Distance eg. 	Outer padding
-	  			  	Inner border
-	*/
 	border-radius: 12px;
-	/* border-top: 1px solid rgba(255, 255, 255, 0.496); */
+	border-top: 1px solid #00000023;
 	box-sizing: border-box;
 	display: flex;
 	filter: drop-shadow(rgba(0, 0, 0, 0.8) 0px 0px 0.05em)
@@ -151,78 +122,32 @@ p {
 	justify-content: center;
 	padding: 7px; /* Controls thickness of rainbow border */
 	width: 100%;
-	/* box-shadow: inset 0px 0px 0.1em 0.05em rgb(255, 255, 255); */
-
-	/* animation: infinite-spinning 10s linear infinite; */
+	/* background: url("https://img.freepik.com/premium-vector/holographic-neon-background_40163-55.jpg?w=2000");
+	background-size: cover; */
 }
 
 .rainbow-wrapper-inside {
-	/* background-color: #f6f5f8; */
-	background-color: #ffffff;
 	/* background: url(https://jkbfabrics.com/sites/default/files/Classic-Vinyl/Classic.Marshmallow.SCL-108.jpg); */
+	background-color: #ffffff;
 	border-radius: 6px !important;
-
 	border: 1px solid #f6f5f8 !important;
-	box-sizing: border-box;
-	/* filter: drop-shadow(0px 1px 2px #ffffff) drop-shadow(0px -1px 2px #ffffff)
-		drop-shadow(-1px 0px 2px #ffffff) drop-shadow(1px 0px 2px #ffffff); */
-	/* box-shadow: 0px 0px 0.5em 0.3em rgb(255, 255, 255); */
 	box-shadow: 0px 0px 0.3em 0.3em #f6f5f8, inset 0px 0px 0.5em 0.1em #f6f5f8;
+	box-sizing: border-box;
 	height: 100%;
-	/* outline-offset: -1px !important;
-	outline: -1px solid black !important; */
 	width: 100%;
-
-	/* background: linear-gradient(
-		45deg,
-		white 20%,
-		rgba(255, 255, 255, 0.511),
-		rgba(255, 255, 255, 0.511),
-		white 40%,
-		white 50%,
-		rgba(255, 255, 255, 0.511),
-		rgba(255, 255, 255, 0.511),
-		white 70%
-	); */
-	/* background: linear-gradient(
-		45deg,
-		#f6f5f8,
-		#f6f5f8 20px,
-		rgba(255, 255, 255, 0.3),
-		#f6f5f8 35px,
-		#f6f5f8 40px,
-		rgb(255, 255, 255, 0.3),
-		#f6f5f8 55px,
-		#f6f5f8 60px,
-		rgb(255, 255, 255, 0.3),
-		#f6f5f8 75px
-	); */
-	/* background: linear-gradient(
-		45deg,
-		#f6f5f8,
-		#f6f5f8,
-		rgba(255, 255, 255, 1),
-		#f6f5f8,
-		#f6f5f8,
-		rgb(255, 255, 255, 1),
-		#f6f5f8,
-		#f6f5f8,
-		rgb(255, 255, 255, 1),
-		#f6f5f8
-	); */
 }
 
 /* ————————————————————————————————— SCROLLBAR ———————————————————————————————— */
 
 ::-webkit-scrollbar {
-	width: 18px;
 	height: 18px;
+	width: 18px;
 }
 ::-webkit-scrollbar-thumb {
 	background-color: black;
 	border-radius: 4px !important;
-	box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5) !important;
 	border: 1px solid #d0d0d0;
+	box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5) !important;
 }
 ::-webkit-scrollbar-track {
 	background-color: #d0d0d0;
@@ -232,15 +157,15 @@ p {
 
 /* ——————————————————————————— ASCII BANNERS/HEADERS —————————————————————————— */
 hr {
-	padding: 0;
 	margin: 0;
+	padding: 0;
 }
 
 .banner {
-	width: 96%;
-	height: auto;
 	box-sizing: border-box;
+	height: auto;
 	padding-bottom: 4%;
+	width: 96%;
 }
 
 /* —————————————————————————————— MAIN CONTAINER —————————————————————————————— */
@@ -250,75 +175,43 @@ hr {
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
-	/* justify-content: center; */
-	/* margin-bottom: 4%; */
-	/* background-color: #f6f5f8b8; */
-
 	height: 100%;
 	overflow-y: auto;
 	padding: 4%;
 	width: 100%;
 	transition: ease-out 1s;
 	background: rgba(255, 255, 255, 0.472);
-
 	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 	backdrop-filter: blur(5px);
 	-webkit-backdrop-filter: blur(5px);
 	border: 1px solid rgba(255, 255, 255, 0.3);
-	/* background-image: url("https://img.freepik.com/premium-vector/holographic-neon-background_40163-55.jpg?w=2000"); */
 }
 
 /* ————————————————————————————————— SECTIONS ————————————————————————————————— */
 
 section {
-	box-shadow: 0 2px 0.4em 0.1em rgba(0, 0, 0, 0.223);
-	border-radius: 10px;
 	background-color: #f3f6f6;
-	text-align: center;
-
-	padding: 16%;
-	width: 100%;
-	box-sizing: border-box;
-	/* margin: 2% 0; */
-	/* Section outline option: */
-	/*  	border-radius: 10px;
-			border: 20px solid transparent;
-			outline: 1px solid rgb(0, 0, 0); */
-	/* ... Maybe I could use it for the 2nd and 3rd sections only? Or one outline that visually groups sections 2 and 3 (input image preview + results)?
-	 */
-	height: fit-content;
-	/* background: rgba(255, 255, 255, 0.198); */
-
-	/* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
-
+	border-radius: 10px;
 	border: 1px solid rgba(255, 255, 255, 0.3);
-	/* overflow: auto; */
-	/* height: max-content; */
-	/* width: fit-content; */
+	box-shadow: 0 2px 0.4em 0.1em rgba(0, 0, 0, 0.223);
+	box-sizing: border-box;
+	height: fit-content;
+	padding: 16%;
+	text-align: center;
+	width: 100%;
 }
 section:first-child {
-	/* height: 100%; */
-	/* height: clamp(fit-content, 100vh, fit-content); */
-	height: 100%;
 	display: table;
+	height: 100%;
 	/* !TODO: Find out why display:table is magic... it let me make the div look like height 100% while still having the overflow control of fit-content*/
 }
 section:not(:first-child) {
 	margin-top: 4%;
 }
 .section-content {
-	/* margin-top: 8%; */
 }
 #section-1-content {
-	/* height: 100%;
-	max-height: 100%; */
-	max-height: min-content;
 }
-/* First section looks nicer with a bit of extra breathing room */
-
-/* #section-1-content {
-	margin-bottom: 8%;
-} */
 
 /* ————————————————————————————————— SECTION 1 ———————————————————————————————— */
 /*                       (Elements visible on page load)                        */
@@ -326,18 +219,14 @@ section:not(:first-child) {
 
 p#description {
 	font-size: 1rem;
-	/* width: 100%; */
 }
 
 #form-container {
 	margin-top: 8%; /* Slightly smaller than section margin */
 }
 form {
-	box-sizing: border-box;
-	display: grid;
-	grid-template-columns: 2.2fr 1fr;
 	/* 
-	The properties below (column-gap & margin-bottom) control the space [▞▞] between the form elements, including submit button.
+	The properties column-gap & margin-bottom control the space [▞▞] between the form elements, including submit button.
 		Diagram:
 
 			┌ ——————————————————————— ┐▞┌ ———————————— ┐ 
@@ -349,7 +238,10 @@ form {
 			└ ――――———————————————————————————————————— ┘
 			
     */
+	box-sizing: border-box;
 	column-gap: 3.5%;
+	display: grid;
+	grid-template-columns: 2.2fr 1fr;
 	margin-bottom: 3.5%;
 }
 form * {
@@ -357,31 +249,21 @@ form * {
 }
 
 input[type="file"] {
-	/* background-color: #ffffff; */
-	/* border-radius: 8px; */
-	/* border: 1px solid black; */
-	/* box-sizing: border-box; */
 	font-family: inherit;
-	/* height: 100%; */
-	/* padding: 2%; */
-	/* width: 100%; */
-	/* text-align: center !important; */
-	/* vertical-align: middle !important; */
 	padding: 12px;
 }
 
 /* !REFERENCE: Input Pseudo-Elements: https://www.tjvantoll.com/2013/04/15/list-of-pseudo-elements-to-style-form-controls/#input_file */
 
 #number-form-elements {
-	/* column-gap: 4%; */
 	align-items: center;
-	display: flex;
-	justify-content: space-evenly;
-	padding: 0 2%;
-	height: 56px;
 	box-sizing: border-box;
+	display: flex;
 	font-size: inherit;
+	height: 56px;
+	justify-content: space-evenly;
 	padding: 0 12px;
+	padding: 0 2%;
 }
 #number-form-elements label {
 	margin: 0 8px 0 0;
@@ -391,13 +273,10 @@ input[type="file"] {
 	width: 40px;
 }
 input[type="number"] {
-	/* background-color: #f4f3fb; */
 	border-radius: 4px;
 	border: 1px solid black;
-	padding: 2%;
 	margin-left: 2%;
-
-	/* font-weight: 600; */
+	padding: 2%;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -408,39 +287,34 @@ input[type="number"]::-webkit-outer-spin-button {
 #button-wrapper {
 	border-radius: 6px;
 	box-sizing: border-box;
-
-	padding: 0 0.1em;
-	/* !TODO: ^^^ see if this is still necessary */
+	padding: 0 0.05em; /* Adjusts submit button width to visually match form elements better. (Even though they are the same length, the button's dark colour makes it appear a bit larger, so this adjusts for that perceived difference) */
 }
 
 button[type="submit"],
 input[type="file"]::file-selector-button {
-	/* background-color: rgb(19, 19, 19); */
-
-	border: 2px solid #4949496f;
-	border-left: 2px solid #1c1c1c6f !important;
-	border-right: 2px solid #1c1c1c6f !important;
+	background: linear-gradient(rgb(19, 19, 19), rgb(44, 44, 44));
 	border-bottom: 3px solid #2e2e2e6f !important;
+	border-left: 2px solid #1c1c1c6f !important;
 	border-radius: 5px;
+	border-right: 2px solid #1c1c1c6f !important;
+	border: 2px solid #4949496f;
 	box-shadow: 0px 3px 1px 0px rgba(0, 0, 0, 0.3);
 	box-sizing: border-box;
 	color: white;
-	font-family: inherit;
-	font-size: inherit;
-	/* outline-offset: 0.05em; */
-	outline: 1px solid rgb(27, 27, 27);
 	filter: drop-shadow(rgba(0, 0, 0, 0.333) 0px 1px 0.05em)
 		drop-shadow(rgba(0, 0, 0, 0.5) 0px 1px 0em);
-	background: linear-gradient(rgb(19, 19, 19), rgb(44, 44, 44));
+	font-family: inherit;
+	font-size: inherit;
+	outline: 1px solid rgb(27, 27, 27);
 }
 
 button[type="submit"]:active,
 input[type="file"]::file-selector-button:active {
+	border-left-width: 0px;
+	border-right-width: 0px;
 	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.564);
 	filter: drop-shadow(rgba(0, 0, 0, 0.6) 0px 0px 0.05em)
 		drop-shadow(rgba(0, 0, 0, 0.4) 0px 1px 0.05em);
-	border-left-width: 0px;
-	border-right-width: 0px;
 	transform: translate(0px, 2px);
 }
 button[type="submit"] {
@@ -448,27 +322,21 @@ button[type="submit"] {
 	width: 100%;
 }
 input[type="file"]::file-selector-button {
+	height: 100%;
 	margin-right: 4%;
 	padding: 0 4%;
-	height: 100%;
 }
 /* ————————— Error Message - No Image File Uploaded On Submit Attempt ————————— */
 
 #no-image-error-message {
-	/* text-shadow: -1px -1px 2px #000, 1px -1px 2px #000, -1px 1px 2px #000,
-		1px 1px 2px #000; */
-	/* box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.848); */
+	border-radius: 6px;
 	box-sizing: border-box;
-	display: none;
-	/* background-color: rgb(167, 45, 20);
-	color: #f4f3fb; */
 	color: #bc073d;
-
-	padding: 2% 0;
+	display: none;
 	font-size: 1rem;
 	font-weight: bold;
 	margin-top: 2%;
-	border-radius: 6px;
+	padding: 2% 0;
 }
 
 /* ——————————————————————————————— SECTION 2 & 3 —————————————————————————————— */
@@ -478,9 +346,8 @@ input[type="file"]::file-selector-button {
 /* ****************************** Loading Icon ****************************** */
 
 #loader-container {
-	margin-top: 6%; /* Matches `.section-content` margins to center loading animation between section 1 and 2 whitespace. */
-	/* border: 2px solid red; */
 	height: 100%;
+	margin-top: 6%; /* Matches `.section-content` margins to center loading animation between section 1 and 2 whitespace. */
 }
 
 #loader {
@@ -489,19 +356,18 @@ input[type="file"]::file-selector-button {
 
 .lds-default {
 	display: inline-block;
+	height: 80px;
 	position: relative;
 	width: 80px;
-	height: 80px;
 }
 .lds-default div {
-	/* background: black; */
-	position: absolute;
-	width: 6px;
-	height: 6px;
-	border-radius: 50%;
 	animation: lds-default 1.2s linear infinite;
 	background: black;
+	border-radius: 50%;
 	box-shadow: 0 0 1px black;
+	height: 6px;
+	position: absolute;
+	width: 6px;
 }
 /* .lds-default div:nth-child(1) {
 	background: linear-gradient(0deg, rgba(251, 7, 217, 1), rgba(255, 0, 0, 1));
@@ -620,122 +486,53 @@ input[type="file"]::file-selector-button {
 	}
 }
 
-/* ———————————————————————— Alternate Loader Style CSS ———————————————————————— */
-/* .lds-ring {
-	display: inline-block;
-	position: relative;
-	width: 80px;
-	height: 80px;
-}
-.lds-ring div {
-	box-sizing: border-box;
-	display: block;
-	position: absolute;
-	width: 64px;
-	height: 64px;
-	margin: 8px;
-	border: 8px solid rgb(0, 178, 133);
-	border-radius: 50%;
-	animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-	border-color: rgb(0, 178, 133) transparent transparent transparent;
-}
-.lds-ring div:nth-child(1) {
-	animation-delay: -0.45s;
-}
-.lds-ring div:nth-child(2) {
-	animation-delay: -0.3s;
-}
-.lds-ring div:nth-child(3) {
-	animation-delay: -0.15s;
-}
-@keyframes lds-ring {
-	0% {
-		transform: rotate(0deg);
-	}
-	100% {
-		transform: rotate(360deg);
-	}
-} */
 /* ———————————————————————————————————————————————————————————————————————————— */
+
 .collapsible {
 	/* display: block; */ /* Uncomment this if there are any issues with collapsed/hidden elements*/
 }
 
 .collapsed {
-	/* visibility: collapse ; */
 	display: none !important;
 	height: 0;
 }
 
 #textareas-container {
 	align-items: center;
-	grid-template-columns: auto auto;
-	display: grid;
-	justify-content: center;
-	/* padding: 0 2%; */
-	margin-top: 8%;
 	column-gap: 2%;
+	display: grid;
+	grid-template-columns: auto auto;
+	justify-content: center;
+	margin-top: 8%;
 }
 
 .textarea-label {
 	display: inline;
-	font-weight: bold;
 	font-size: 16pt;
+	font-weight: bold;
 	position: relative;
 }
-/* #html-textarea-wrapper {
-	margin-right: 2%;
-}
-#css-textarea-wrapper {
-	margin-left: 2%;
-} */
 
 .textarea-wrapper {
-	/* display: inline; */
-	/* margin: 0 2%; */
 }
 
 textarea {
-	/* border-radius: 8px;
-	border: 4px solid white; */
-	/* box-sizing: border-box; */
 	height: 300px !important;
-	/* outline-offset: -1px;
-	outline: 1px solid black; */
 	width: 100%;
 }
 
 /* ——————————————————————————————————— GRID ——————————————————————————————————— */
 
 #grid-wrapper {
-	/* scroll-snap-align: center; */
+	background-color: white;
 	margin: 0 auto;
 	width: 100%;
-	background-color: white;
 }
 
 #grid {
-	/* scroll-snap-align: center; */
-	/* margin: 0 auto;
-	overflow: auto;
-	width: 100%; */
 	display: flex;
-	overflow: auto;
-	/* text-align: center; */
-	/* width: 25%; */
-	/* border: solid 1px red; */
-	/* margin: 0px auto 0px auto; */
-	/* overflow: hidden; */
-	/* scroll-snap-align: center; */
-	/* margin: 0 auto; */
-	/* overflow: auto; */
-	/* width: 100%; */
 	flex-direction: column;
-	/* justify-content: center; */
-	/* justify-items: center; */
-	/* align-items: center; */
-	/* margin: auto -50px; */
-	/* padding: -8% -12%; */
+	overflow: auto;
 }
 
 .row {
@@ -755,7 +552,6 @@ textarea {
 .labelled:nth-child(1n):before {
 	align-items: center;
 	color: grey;
-	/* !NOTE(content: attr(id);) - Could also use attr(class); */
 	content: attr(id);
 	display: flex;
 	font-size: 6pt;
@@ -763,19 +559,6 @@ textarea {
 	justify-content: center;
 	text-transform: uppercase;
 }
-
-/* —————————————————————————————————— FOOTER —————————————————————————————————— */
-
-/* Footer(Full Page Width) */
-/*
-footer{ 
-	background-color: black;
-	position: fixed;
-	bottom: 0;
-	width: 100%;
-	left: 0;
-}
-*/
 
 footer {
 	display: flex;
@@ -804,67 +587,6 @@ footer img#github-logo {
 	padding: 8px;
 	height: 100%;
 }
-/* —————————————————————————————— Messing Around —————————————————————————————— */
-
-/* #c8-r32:hover { */
-/* #c8-r33 {
-	position: relative;
-	display: inline-block;
-}
-#c8-r33:hover {
-	height: 50px !important;
-	width: 50px !important;
-}
-
-#c8-r33:hover:before {
-	transform: scale(1) !important;
-}
-
-#c8-r33:before {
-	content: "";
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 0;
-	height: 0;
-	background-color: rgba(255, 255, 255, 0.4);
-	border-radius: 50%;
-	transform: translate(-50%, -50%) scale(0);
-	transition: all 0.3s ease-out;
-	z-index: -1;
-} */
-
-/* .hovered {
-	scale: 1.5;
-	z-index: 999 !important;
-	position: absolute !important;
-} */
-
-/* @media only screen and (max-width: 500px) {
-	body {
-		width: 100%;
-		height: 97.5%;
-		border: 10px solid #c2b4ff;
-	
-		margin: auto;
-
-	}
-	#main-container{
-
-		border-radius: 10px;;
-		border: 4px solid #f4f3fb;
-		padding-left: 4%;
-		padding-right: 4%;
-		
-	}
-	#main-container::-webkit-scrollbar{
-		margin:10px;
-		background-color: red;
-	}
-	footer{
-		position:absolute;
-	}
-} */
 
 @media only screen and (max-width: 1600px) {
 	#main-container {
@@ -876,77 +598,25 @@ footer img#github-logo {
 @media only screen and (max-width: 525px) {
 	body {
 		width: 100%;
-		/* height: 97.5%; */
-
-		/* margin: auto; */
 	}
 	#main-container {
-		/* border-top-right-radius: 10px;
-		border-top-left-radius: 10px; */
-		/* border-top: 8px solid #f4f3fb; */
-		/* padding-left: 4%;
-		padding-right: 4%; */
 		background-color: transparent;
-		transition: ease 0.5s;
 		border: none;
+		transition: ease 0.5s;
 	}
 	section {
-		/* height: 100%; */
-		/* transition: ease all 1s; */
-		/* animation: example 2s; */
-		/* height: 100%; */
-		background: #f3f6f6;
-
-		/* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
-		backdrop-filter: blur(5px);
 		-webkit-backdrop-filter: blur(5px);
+		backdrop-filter: blur(5px);
+		background: #f3f6f6;
 		border: 1px solid rgba(255, 255, 255, 0.3);
 		box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.5);
 		height: fit-content;
-		/* transition: ease all 1s; */
 	}
 
 	.section-content {
-		/* height: fit-content; */
 	}
 	section:not(:last-child) {
-		/* margin-bottom: 0; */
 	}
-
 	footer {
-		/* position: block; */
-		/* border-bottom-right-radius: 10px;
-		border-bottom-left-radius: 10px; */
 	}
 }
-
-/*
-Almost working height transition 
-section {
-	transition: height 2s ease;
-	height: 60%;
-}
-@media only screen and (max-width: 500px) {
-	body {
-	#main-container {
-		border-top-right-radius: 10px;
-		border-top-left-radius: 10px;
-
-		background-color: transparent;
-		transition: ease all 0.5s;
-	}
-	section {
-
-
-		height: 100%;
-	}
-	section:not(:last-child) {
-
-	}
-
-	footer {
-		position: block;
-
-	}
-}
-*/
