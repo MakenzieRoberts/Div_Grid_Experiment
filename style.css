@@ -51,9 +51,13 @@
 					CTRL + SHIFT + A : Alphabetize 
 */
 /* —————————————————————————————————— GENERAL ————————————————————————————————— */
+
 * {
 	box-sizing: border-box;
+	font-smooth: always;
+	-webkit-font-smoothing: antialiased;
 }
+
 html {
 	background-color: hsla(240, 100%, 87%, 1);
 
@@ -102,7 +106,7 @@ p {
 	  			  	Inner border
 	*/
 
-.rainbow-wrapper-outside {
+.ograinbow {
 	align-items: center;
 	background: linear-gradient(
 		90deg,
@@ -118,25 +122,149 @@ p {
 	box-sizing: border-box;
 	display: flex;
 	filter: drop-shadow(rgba(0, 0, 0, 0.8) 0px 0px 0.05em)
-		drop-shadow(rgba(0, 0, 0, 0.3) 0px 2px 0.1em);
+		drop-shadow(rgba(0, 0, 0, 0.4) 0px 2px 0.1em);
 	justify-content: center;
-	padding: 7px; /* Controls thickness of rainbow border */
+	padding: 30px; /* Controls thickness of rainbow border */
 	width: 100%;
-	/* background: url("https://img.freepik.com/premium-vector/holographic-neon-background_40163-55.jpg?w=2000");
-	background-size: cover; */
+	/* background: url("https://ih1.redbubble.net/image.235112256.0369/flat,750x1000,075,f.u3.jpg"); */
+	background: url("https://img.freepik.com/premium-vector/holographic-neon-background_40163-55.jpg?w=2000");
+	/* background-size: 500px; */
+	/* background-position: center; */
+	background-size: 600px auto;
+	/* background-repeat: round; */
+	/* background-repeat: no-repeat; */
+	animation: move 250s ease-out infinite;
+	background-blend-mode: screen;
+	background-color: rgba(105, 0, 128, 0.204);
 }
 
-.rainbow-wrapper-inside {
+#ograinbow-wrapper-inside {
 	/* background: url(https://jkbfabrics.com/sites/default/files/Classic-Vinyl/Classic.Marshmallow.SCL-108.jpg); */
 	background-color: #ffffff;
 	border-radius: 6px !important;
 	border: 1px solid #f6f5f8 !important;
-	box-shadow: 0px 0px 0.3em 0.3em #f6f5f8, inset 0px 0px 0.5em 0.1em #f6f5f8;
+	box-shadow: 0px 0px 0.3em 0.45em #f6f5f8, inset 0px 0px 0.5em 0.1em #f6f5f8;
 	box-sizing: border-box;
 	height: 100%;
 	width: 100%;
 }
 
+/* ———————————————————————————————————— alt ——————————————————————————————————— */
+
+.rainbow-wrapper-outside {
+	align-items: center;
+	background: linear-gradient(
+		45deg,
+		hsla(219, 100%, 77%, 1) 0%,
+		hsla(219, 100%, 77%, 1) 40%,
+		rgb(255, 178, 245),
+		rgb(231, 233, 217),
+		rgba(146, 250, 215),
+		rgb(100, 188, 232),
+		hsla(219, 100%, 77%, 1) 70%,
+		hsla(219, 100%, 77%, 1) 100%
+	);
+	background-size: 500% 500%;
+	/* border-bottom: 1px solid #00000052; */
+	border-radius: 12px;
+	/* border-top: 1px solid #00000023; */
+	box-sizing: border-box;
+	display: flex;
+	filter: drop-shadow(rgba(0, 0, 0, 0.554) 0px 0px 0.1em)
+		drop-shadow(rgba(0, 0, 0, 0.4) 0px 2px 0.1em);
+	justify-content: center;
+	padding: 2px; /* Controls thickness of rainbow border */
+	width: 100%;
+	/* background: url("https://ih1.redbubble.net/image.235112256.0369/flat,750x1000,075,f.u3.jpg"); */
+	/* background: url("https://img.freepik.com/premium-vector/holographic-neon-background_40163-55.jpg?w=2000");
+	
+	background-size: 600px auto;
+
+	animation: move 100s ease-out infinite;
+	background-blend-mode: lighten;
+	background-color: hsl(195, 14%, 40%); */
+	/* animation: move 10s ease-out infinite; */
+	-webkit-animation: gradient 10s linear infinite;
+	-moz-animation: gradient 10s linear infinite;
+	animation: gradient 10s linear infinite;
+	background-blend-mode: hard-light;
+	background-color: hsl(0deg 0% 50.49%);
+}
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+@keyframes gradientMotion {
+	0% {
+		background-position: left;
+	}
+	/* 25% {
+		background-position: top right;
+	}
+	50% {
+		background-position: bottom right;
+	}
+	75% {
+		background-position: bottom left;
+	} */
+	100% {
+		background-position: right;
+	}
+}
+@-webkit-keyframes gradientMotion {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+@-moz-keyframes gradientMotion {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+/* @keyframes move {
+	0% {
+		background-position: center top;
+	}
+
+	50% {
+		background-position: center bottom;
+	}
+	100% {
+		background-position: center top;
+	}
+} */
+.rainbow-wrapper-inside {
+	/* background: url(https://jkbfabrics.com/sites/default/files/Classic-Vinyl/Classic.Marshmallow.SCL-108.jpg); */
+	background-color: #ffffff;
+	border-radius: 11px !important;
+	border: 1px solid rgb(255, 255, 255) !important;
+	/* box-shadow: inset 0px 0px 0.1em 0.1em #c9c9c9; */
+	box-sizing: border-box;
+	height: 100%;
+	width: 100%;
+}
+/* 
 /* ————————————————————————————————— SCROLLBAR ———————————————————————————————— */
 
 ::-webkit-scrollbar {
@@ -180,7 +308,7 @@ hr {
 	padding: 4%;
 	width: 100%;
 	transition: ease-out 1s;
-	background: rgba(255, 255, 255, 0.472);
+	background: rgba(255, 255, 255, 0.4);
 	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 	backdrop-filter: blur(5px);
 	-webkit-backdrop-filter: blur(5px);
@@ -205,10 +333,14 @@ section:first-child {
 	height: 100%;
 	/* !TODO: Find out why display:table is magic... it let me make the div look like height 100% while still having the overflow control of fit-content*/
 }
+
+/* Space between sections */
 section:not(:first-child) {
 	margin-top: 4%;
 }
-.section-content {
+
+.section-content:not(:first-child) {
+	margin-top: 8%;
 }
 #section-1-content {
 }
@@ -221,6 +353,7 @@ p#description {
 	font-size: 1rem;
 }
 
+/* !TODO: Add media query to stack form items vertically when screen is shrunk */
 #form-container {
 	margin-top: 8%; /* Slightly smaller than section margin */
 }
@@ -263,7 +396,6 @@ input[type="file"] {
 	height: 56px;
 	justify-content: space-evenly;
 	padding: 0 12px;
-	padding: 0 2%;
 }
 #number-form-elements label {
 	margin: 0 8px 0 0;
@@ -530,6 +662,7 @@ textarea {
 }
 
 #grid {
+	margin: 2%;
 	display: flex;
 	flex-direction: column;
 	overflow: auto;
