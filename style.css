@@ -66,12 +66,13 @@ html {
 			hsla(307, 100%, 88%, 1) 0px,
 			transparent 50%
 		),
-		radial-gradient(at 80% 0%, hsla(104, 26%, 88%, 1) 0px, transparent 50%),
+		radial-gradient(at 80% 0%, rgb(198, 248, 212) 0px, transparent 50%),
 		radial-gradient(at 0% 50%, hsla(159, 91%, 77%, 1) 0px, transparent 50%),
 		radial-gradient(at 80% 50%, hsla(199, 74%, 65%, 1) 0px, transparent 50%),
 		radial-gradient(at 0% 100%, hsla(219, 100%, 77%, 1) 0px, transparent 50%);
 	box-sizing: border-box;
-	font-family: "Courier New", Courier, monospace;
+	font-family: "Courier New", Courier;
+	/* font-family: "Courier New", Courier, monospace; */
 	font-size: 14px;
 	margin: 0 auto;
 	height: 100%;
@@ -155,14 +156,12 @@ p {
 	align-items: center;
 	background: linear-gradient(
 		45deg,
-		hsla(219, 100%, 77%, 1) 0%,
-		hsla(219, 100%, 77%, 1) 40%,
+		rgb(162, 170, 255) 10%,
 		rgb(255, 178, 245),
 		rgb(231, 233, 217),
 		rgba(146, 250, 215),
 		rgb(100, 188, 232),
-		hsla(219, 100%, 77%, 1) 70%,
-		hsla(219, 100%, 77%, 1) 100%
+		rgb(162, 170, 255) 90%
 	);
 	background-size: 500% 500%;
 	/* border-bottom: 1px solid #00000052; */
@@ -184,12 +183,13 @@ p {
 	background-blend-mode: lighten;
 	background-color: hsl(195, 14%, 40%); */
 	/* animation: move 10s ease-out infinite; */
-	-webkit-animation: gradient 10s linear infinite;
-	-moz-animation: gradient 10s linear infinite;
-	animation: gradient 10s linear infinite;
+	-webkit-animation: gradient 35s linear infinite;
+	-moz-animation: gradient 35s linear infinite;
+	animation: gradient 35s linear infinite;
 	background-blend-mode: hard-light;
 	background-color: hsl(0deg 0% 50.49%);
 }
+
 @keyframes gradient {
 	0% {
 		background-position: 0% 50%;
@@ -338,7 +338,10 @@ section:first-child {
 section:not(:first-child) {
 	margin-top: 4%;
 }
-
+.section-content {
+	animation: fadeIn 1s ease-in-out;
+	animation-fill-mode: forwards;
+}
 .section-content:not(:first-child) {
 	margin-top: 8%;
 }
@@ -353,11 +356,14 @@ p#description {
 	font-size: 1rem;
 }
 
+form {
+	margin-bottom: 3.5%;
+}
 /* !TODO: Add media query to stack form items vertically when screen is shrunk */
 #form-container {
 	margin-top: 8%; /* Slightly smaller than section margin */
 }
-form {
+form #user-upload-area {
 	/* 
 	The properties column-gap & margin-bottom control the space [▞▞] between the form elements, including submit button.
 		Diagram:
