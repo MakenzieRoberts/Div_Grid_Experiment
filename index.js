@@ -13,7 +13,7 @@ const noImageUploadedErrorMsg = document.getElementById(
 	"no-image-error-message"
 );
 const imageLoader = document.getElementById("image-loader");
-
+const demoImages = document.getElementsByClassName("demo-image");
 /* ——————————————————————————————————— !TODO —————————————————————————————————— */
 /* !TODO: Add an extra container filled with a few pixel art images the user
 	can click on to upload so people who are just curious/employers who want a
@@ -34,6 +34,59 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 	// loader.style.display = "none";
 	console.log("DOM content loaded.");
 
+	/* ————————————————————————————— Demo Image Stuff ————————————————————————————— */
+	const demoImageEmitter = new EventEmitter();
+	console.log("demoImages: ", demoImages);
+	for (let demoImage of demoImages) {
+		demoImage.addEventListener("click", handleDemoImageClick);
+	}
+
+	function handleDemoImageClick(e) {
+		//!TODO: Currently, demo image still gets send even after if it's deselected. need to figure out how to fix that. I need the warning image to show if no image is selected, and I don't want the image to be sent if it's not selected. The current emitter isn't working for that. Maybe make the submit emitter can do a check for if a demo-image is selected (and what one is), and if one is selected switch the image? That way I can just have the submit button do the check and switch the image if a demo image is selected. I'll try that.
+		//!TODO: When the demo image is deselected, send another event to the submit emitter to switch the image variable to null, and  have an if-statement to catch that null value which will then trigger the "no image selected" error message. So I'll have a variable who's content is determined by the payload of an event. If the payload is null, then send the error message. If it's an image, then send the image.
+		//!TODO: Whichever image option was selected last should be the one that is sent to the submit emitter. So if the user selects a demo image, then uploads their own image, then selects a different demo image, the second demo image should be the one that is sent. That also means, if an image is uploaded and a demo image is already selected, the demo image should be deselected.
+
+		e.preventDefault();
+		demoImageSelectedVisualFeedback(e);
+		imageLoader.value = null;
+		if (e.target.classList.contains("selected")) {
+			sendDemoImageToimageLoader(e);
+		}
+
+		function demoImageSelectedVisualFeedback(e) {
+			e.preventDefault();
+			if (e.target.classList.contains("selected")) {
+				e.target.classList.remove("selected");
+				imageEmitter.emit("imageLoaded", { data: null });
+				return;
+			}
+			if (!e.target.classList.contains("selected")) {
+				for (let demoImage of demoImages) {
+					demoImage.classList.remove("selected");
+				}
+				e.target.classList.add("selected");
+			}
+		}
+
+		function sendDemoImageToimageLoader(e) {
+			e.preventDefault();
+			console.log("🔴🔴🔴 demo image clicked 🔴🔴🔴");
+			console.log("e.target.src: ", e.target.src);
+			let demoImg = new Image();
+			demoImg.src = e.target.src;
+			console.log("e: ", e.target.classList);
+			// if (e.target.classList.contains("selected")) {
+			imageEmitter.emit("imageLoaded", { data: demoImg });
+			// }
+		}
+	}
+
+	function deselectAllDemoImages() {
+		for (let demoImage of demoImages) {
+			demoImage.classList.remove("selected");
+		}
+	}
+	/* ———————————————————————————————————————————————————————————————————————————— */
 	const imageEmitter = new EventEmitter();
 
 	/* When the user uploads an image, a change is detected and the getImage function is
@@ -54,6 +107,7 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 					imageEmitter.emit("imageLoaded", { data: img });
 				} else {
 					if (
+						//!TODO: I think I read somewhere that window.confirm shouldn't be used in actual production - look into that
 						window.confirm(
 							`⚠️ WARNING ⚠️ \n\nYou've uploaded a large image. The larger an image is, the longer it will take to load. \n\nIf you'd like to proceed, click OK.\n\nTo upload a different image, click Cancel and try again. `
 						)
@@ -64,6 +118,7 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 				}
 			};
 			img.src = event.target.result;
+			deselectAllDemoImages();
 		};
 		reader.readAsDataURL(e.target.files[0]);
 	}
@@ -72,14 +127,24 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 
 	let canSubmit = false;
 	imageEmitter.on("imageLoaded", async (payload) => {
-		canSubmit = true;
-		allowSubmitEmitter.emit("imageLoaded", payload);
-		console.log("imageEmitter.on");
+		//!TODO: I need to be able to toggle canSubmit on and off now due to the demo image selection, so maybe I can change the event payload to an object with a data property and a canSubmit property. Then I can send events with imageEmitter which set canSubmit to true or false depending on if the image is null or not. Then I can use that canSubmit value to determine if the submit button can be clicked or not. -- Wait, I can just use the payload.data value to determine if the submit button can be clicked or not. If it's null, then the submit button can't be clicked. If it's not null, then the submit button can be clicked. Maybe I just need an if-statement...
+		console.log("🟧🟧🟧 PAYLOAD 🟧🟧🟧 : ", payload);
+		if (payload.data === null) {
+			console.log("👻 received null payload");
+			canSubmit = false;
+		} else {
+			console.log("payload.data should be an img:  ", payload.data);
+			canSubmit = true;
+			console.log("canSubmit should be true: ", canSubmit);
+
+			allowSubmitEmitter.emit("imageLoaded", payload);
+		}
 	});
 
 	let imgData = null;
 	allowSubmitEmitter.on("imageLoaded", async (payload) => {
 		imgData = payload;
+		console.log("imgData: ", imgData);
 		console.log("allowSubmitEmitter.on");
 	});
 
@@ -90,6 +155,7 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 	// 	await showLoadingAnimation();
 	// };
 	form.onsubmit = async (e) => {
+		console.log("Form submitted. canSubmit = ", canSubmit);
 		e.preventDefault();
 		/* This implementation deviates from a straightforward approach to
 		prioritize maximum user-friendliness when dealing with large image inputs.

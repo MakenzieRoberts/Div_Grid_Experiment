@@ -17,13 +17,13 @@
 			<section id="section-1">
 				<!-- <div class="ascii-wrapper"> -->
 
-				<img
-					class="banner"
-					id="divify-banner"
-					src="./images/divify_banner2.svg"
-					alt="Divify"
-				/>
 				<div class="section-content" id="section-1-content">
+					<img
+						class="banner"
+						id="divify-banner"
+						src="./images/divify_banner2.svg"
+						alt="Divify"
+					/>
 					<p id="description">
 						This tool takes an image and creates a grid of coloured divs, with
 						each div representing one pixel. <br /><br />
@@ -36,43 +36,119 @@
 							on image size, so exercise caution.
 						</strong>
 					</p>
-
 					<div id="form-container">
+						<p><strong>Upload your own</strong></p>
 						<form id="image-and-cell-size-form">
-							<div
-								class="rainbow-wrapper-outside"
-								id="image-input-container"
-								method="post"
-								enctype="multipart/form-data"
-							>
-								<input
-									class="rainbow-wrapper-inside"
-									aria-label="Choose file to upload"
-									type="file"
-									id="image-loader"
-									name="image-loader"
-									accept="image/*"
-								/>
-							</div>
-							<div
-								id="cell-size-input-container"
-								class="rainbow-wrapper-outside"
-							>
-								<div class="rainbow-wrapper-inside" id="number-form-elements">
-									<label for="cell-size-input">Cell Size <em>(px)</em></label>
+							<span id="user-upload-area">
+								<div
+									class="rainbow-wrapper-outside"
+									id="image-input-container"
+									method="post"
+									enctype="multipart/form-data"
+								>
 									<input
-										type="number"
-										id="cell-size-input"
-										name="cell-size-input"
-										value="5"
-										min="1"
-										max="20"
+										class="rainbow-wrapper-inside"
+										aria-label="Choose file to upload"
+										type="file"
+										id="image-loader"
+										name="image-loader"
+										accept="image/*"
 									/>
-									<!-- <input type="submit" /> -->
+								</div>
+								<!-- <div
+									id="cell-size-input-container"
+									class="rainbow-wrapper-outside"
+								>
+									<div class="rainbow-wrapper-inside" id="number-form-elements">
+										<label for="cell-size-input">Cell Size <em>(px)</em></label>
+										<input
+											type="number"
+											id="cell-size-input"
+											name="cell-size-input"
+											value="5"
+											min="1"
+											max="20"
+										/>
+									</div>
+								</div> -->
+							</span>
+
+							<div id="or">
+								<p><strong>OR</strong></p>
+							</div>
+
+							<p><strong>Choose a demo image</strong></p>
+							<div id="demo-images-area">
+								<div
+									class="rainbow-wrapper-outside"
+									id=""
+									method=""
+									enctype="multipart/form-data"
+								>
+									<div id="demo-images-wrapper" class="rainbow-wrapper-inside">
+										<img
+											class="demo-image"
+											src="./images/demo_images/_cat.gif"
+											alt="Demo Image 1"
+										/>
+										<img
+											class="demo-image"
+											src="./images/demo_images/_moon.gif"
+											alt="Demo Image 2"
+										/>
+										<img
+											class="demo-image"
+											src="./images/demo_images/_tester.png"
+											alt="Demo Image 3"
+										/>
+										<img
+											class="demo-image"
+											src="./images/demo_images/book.png"
+											alt="Demo Image 4"
+										/>
+										<img
+											class="demo-image"
+											src="./images/demo_images/book2.png"
+											alt="Demo Image 5"
+										/>
+										<img
+											class="demo-image"
+											src="./images/demo_images/flowers_100x100.png"
+											alt="Demo Image 6"
+										/>
+
+										<img
+											class="demo-image"
+											src="./images/demo_images/img1.png"
+											alt="Demo Image 8"
+										/>
+									</div>
+								</div>
+							</div>
+							<p><strong>Select the cell size</strong></p>
+							<div>
+								<div
+									id="cell-size-input-container"
+									class="rainbow-wrapper-outside"
+								>
+									<div class="rainbow-wrapper-inside" id="number-form-elements">
+										<label for="cell-size-input"
+											>Image Grid Display Cell Size <em>(px)</em></label
+										>
+										<input
+											type="number"
+											id="cell-size-input"
+											name="cell-size-input"
+											value="5"
+											min="1"
+											max="20"
+										/>
+									</div>
 								</div>
 							</div>
 						</form>
 						<p id="no-image-error-message">
+							<!-- !TODO: Change this error msg to reflect the possible selection of a demo image -->
 							❗ No file uploaded - Upload an image to continue.
 						</p>
 						<div id="button-wrapper">
