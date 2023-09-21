@@ -14,6 +14,8 @@ const noImageUploadedErrorMsg = document.getElementById(
 );
 const imageLoader = document.getElementById("image-loader");
 const demoImages = document.getElementsByClassName("demo-image");
+const stepOneCircle = document.getElementById("step-one-circle");
+const orCircle = document.getElementById("or-circle");
 /* ——————————————————————————————————— !TODO —————————————————————————————————— */
 /* !TODO: Add an extra container filled with a few pixel art images the user
 	can click on to upload so people who are just curious/employers who want a
@@ -45,7 +47,7 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 		//!TODO: Currently, demo image still gets send even after if it's deselected. need to figure out how to fix that. I need the warning image to show if no image is selected, and I don't want the image to be sent if it's not selected. The current emitter isn't working for that. Maybe make the submit emitter can do a check for if a demo-image is selected (and what one is), and if one is selected switch the image? That way I can just have the submit button do the check and switch the image if a demo image is selected. I'll try that.
 		//!TODO: When the demo image is deselected, send another event to the submit emitter to switch the image variable to null, and  have an if-statement to catch that null value which will then trigger the "no image selected" error message. So I'll have a variable who's content is determined by the payload of an event. If the payload is null, then send the error message. If it's an image, then send the image.
 		//!TODO: Whichever image option was selected last should be the one that is sent to the submit emitter. So if the user selects a demo image, then uploads their own image, then selects a different demo image, the second demo image should be the one that is sent. That also means, if an image is uploaded and a demo image is already selected, the demo image should be deselected.
-
+		//!TODO: Remove/increase the cell size cap
 		e.preventDefault();
 		demoImageSelectedVisualFeedback(e);
 		imageLoader.value = null;
@@ -55,7 +57,10 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 
 		function demoImageSelectedVisualFeedback(e) {
 			e.preventDefault();
+			// stepOneCircle.classList.toggle("greyed-out");
 			if (e.target.classList.contains("selected")) {
+				orCircle.classList.toggle("greyed-out");
+				stepOneCircle.classList.toggle("greyed-out");
 				e.target.classList.remove("selected");
 				imageEmitter.emit("imageLoaded", { data: null });
 				return;
@@ -65,6 +70,8 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 					demoImage.classList.remove("selected");
 				}
 				e.target.classList.add("selected");
+				orCircle.classList.toggle("greyed-out");
+				stepOneCircle.classList.toggle("greyed-out");
 			}
 		}
 
@@ -84,6 +91,8 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 	function deselectAllDemoImages() {
 		for (let demoImage of demoImages) {
 			demoImage.classList.remove("selected");
+			orCircle.classList.add("greyed-out");
+			stepOneCircle.classList.remove("greyed-out");
 		}
 	}
 	/* ———————————————————————————————————————————————————————————————————————————— */

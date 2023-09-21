@@ -17,13 +17,13 @@
 			<section id="section-1">
 				<!-- <div class="ascii-wrapper"> -->
 
+				<img
+					class="banner"
+					id="divify-banner"
+					src="./images/divify_banner2.svg"
+					alt="Divify"
+				/>
 				<div class="section-content" id="section-1-content">
-					<img
-						class="banner"
-						id="divify-banner"
-						src="./images/divify_banner2.svg"
-						alt="Divify"
-					/>
 					<p id="description">
 						This tool takes an image and creates a grid of coloured divs, with
 						each div representing one pixel. <br /><br />
@@ -37,9 +37,15 @@
 						</strong>
 					</p>
 					<div id="form-container">
-						<p><strong>Upload your own</strong></p>
+						<!-- <p><strong>Upload your own</strong></p> -->
 						<form id="image-and-cell-size-form">
-							<span id="user-upload-area">
+							<div id="user-upload-area" class="form-component">
+								<p>
+									<strong
+										><span class="circle" id="step-one-circle">1</span> Upload
+										your own</strong
+									>
+								</p>
 								<div
 									class="rainbow-wrapper-outside"
 									id="image-input-container"
@@ -71,14 +77,15 @@
 										/>
 									</div>
 								</div> -->
-							</span>
-
-							<div id="or">
-								<p><strong>OR</strong></p>
 							</div>
 
-							<p><strong>Choose a demo image</strong></p>
-							<div id="demo-images-area">
+							<!-- prettier-ignore -->
+							<!-- <div class="circle"><span><p><strong>OR</strong></p></span></div> -->
+
+							<!-- <p><strong>Choose a demo image</strong></p> -->
+							<div class="form-component" id="demo-images-area">
+								<!-- prettier-ignore -->
+								<p><strong><span class="circle greyed-out" id="or-circle">OR</span> Choose a demo image</strong></p>
 								<div
 									class="rainbow-wrapper-outside"
 									id=""
@@ -125,8 +132,13 @@
 									</div>
 								</div>
 							</div>
-							<p><strong>Select the cell size</strong></p>
-							<div>
+							<!-- <p><strong>Select the cell size</strong></p> -->
+							<div class="form-component">
+								<p>
+									<strong
+										><span class="circle">2</span> Select the cell size</strong
+									>
+								</p>
 								<div
 									id="cell-size-input-container"
 									class="rainbow-wrapper-outside"
@@ -147,10 +159,7 @@
 								</div>
 							</div>
 						</form>
-						<p id="no-image-error-message">
-							<!-- !TODO: Change this error msg to reflect the possible selection of a demo image -->
-							❗ No file uploaded - Upload an image to continue.
-						</p>
+
 						<div id="button-wrapper">
 							<button
 								id="submit-button"
@@ -160,6 +169,10 @@
 								Submit
 							</button>
 						</div>
+						<p id="no-image-error-message">
+							<!-- !TODO: Change this error msg to reflect the possible selection of a demo image -->
+							❗ No image file uploaded or selected.
+						</p>
 					</div>
 				</div>
 			</section>
