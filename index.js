@@ -16,6 +16,10 @@ const imageLoader = document.getElementById("image-loader");
 const demoImages = document.getElementsByClassName("demo-image");
 const stepOneCircle = document.getElementById("step-one-circle");
 const orCircle = document.getElementById("or-circle");
+const mainContainer = document.getElementById("main-container");
+const sectionOne = document.getElementById("section-1");
+const sectionTwo = document.getElementById("section-2");
+const sectionThree = document.getElementById("section-3");
 /* ——————————————————————————————————— !TODO —————————————————————————————————— */
 /* !TODO: Add an extra container filled with a few pixel art images the user
 	can click on to upload so people who are just curious/employers who want a
@@ -44,13 +48,11 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 	}
 
 	function handleDemoImageClick(e) {
-		//!TODO: Currently, demo image still gets send even after if it's deselected. need to figure out how to fix that. I need the warning image to show if no image is selected, and I don't want the image to be sent if it's not selected. The current emitter isn't working for that. Maybe make the submit emitter can do a check for if a demo-image is selected (and what one is), and if one is selected switch the image? That way I can just have the submit button do the check and switch the image if a demo image is selected. I'll try that.
-		//!TODO: When the demo image is deselected, send another event to the submit emitter to switch the image variable to null, and  have an if-statement to catch that null value which will then trigger the "no image selected" error message. So I'll have a variable who's content is determined by the payload of an event. If the payload is null, then send the error message. If it's an image, then send the image.
-		//!TODO: Whichever image option was selected last should be the one that is sent to the submit emitter. So if the user selects a demo image, then uploads their own image, then selects a different demo image, the second demo image should be the one that is sent. That also means, if an image is uploaded and a demo image is already selected, the demo image should be deselected.
-		//!TODO: Remove/increase the cell size cap
 		e.preventDefault();
 		demoImageSelectedVisualFeedback(e);
+		// Reset the imageLoader's value
 		imageLoader.value = null;
+
 		if (e.target.classList.contains("selected")) {
 			sendDemoImageToimageLoader(e);
 		}
@@ -121,7 +123,6 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 							`⚠️ WARNING ⚠️ \n\nYou've uploaded a large image. The larger an image is, the longer it will take to load. \n\nIf you'd like to proceed, click OK.\n\nTo upload a different image, click Cancel and try again. `
 						)
 					) {
-						// window.open("exit.html", "Thanks for Visiting!");
 						imageEmitter.emit("imageLoaded", { data: img });
 					}
 				}
@@ -136,16 +137,11 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 
 	let canSubmit = false;
 	imageEmitter.on("imageLoaded", async (payload) => {
-		//!TODO: I need to be able to toggle canSubmit on and off now due to the demo image selection, so maybe I can change the event payload to an object with a data property and a canSubmit property. Then I can send events with imageEmitter which set canSubmit to true or false depending on if the image is null or not. Then I can use that canSubmit value to determine if the submit button can be clicked or not. -- Wait, I can just use the payload.data value to determine if the submit button can be clicked or not. If it's null, then the submit button can't be clicked. If it's not null, then the submit button can be clicked. Maybe I just need an if-statement...
-		console.log("🟧🟧🟧 PAYLOAD 🟧🟧🟧 : ", payload);
 		if (payload.data === null) {
 			console.log("👻 received null payload");
 			canSubmit = false;
 		} else {
-			console.log("payload.data should be an img:  ", payload.data);
 			canSubmit = true;
-			console.log("canSubmit should be true: ", canSubmit);
-
 			allowSubmitEmitter.emit("imageLoaded", payload);
 		}
 	});
@@ -191,6 +187,10 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 				console.log("Promise executed.");
 				loaderContainer.style.display = "block";
 				loader.style.display = "block";
+				loaderContainer.scrollIntoView({
+					behavior: "smooth",
+					block: "center",
+				});
 				noImageUploadedErrorMsg.style.display = "none";
 				hideResultSections();
 				setTimeout(() => {
@@ -199,16 +199,33 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 			});
 
 			await main();
-		} else {
-			// console.log("canSubmit: ", canSubmit);
+		}
+		if (canSubmit === false) {
+			hideResultSections();
 			console.log("No image uploaded - Cannot submit.");
 			noImageUploadedErrorMsg.style.display = "block";
-			/* !TODO: add HTML for error message I can toggle in js "Must upload image before submitting", something like that */
+			noImageUploadedErrorMsg.classList.add("shake");
+			setTimeout(function () {
+				//remove the class so animation can occur as many times as user triggers event, delay must be longer than the animation duration and any delay.
+				noImageUploadedErrorMsg.classList.remove("shake");
+			}, 500);
+			// noImageUploadedErrorMsg.classList.remove("shake");
+			if (sectionTwo.hidden === true) {
+				noImageUploadedErrorMsg.scrollIntoView({
+					behavior: "smooth",
+					block: "center",
+				});
+			}
+			if (sectionTwo.hidden === false) {
+				sectionOne.scrollIntoView({
+					behavior: "smooth",
+					block: "end",
+				});
+			}
 		}
 
 		loader.style.display = "none";
 		loaderContainer.style.display = "none";
-		// });
 	};
 	/* ———————————————————————————————————————————————————————————————————————————— */
 
@@ -243,63 +260,15 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 		removeGridCellLabels();
 
 		applyExtractedColoursToGrid(imageData.channels);
-		// loader.style.display = "none";
 		addCopyableHtmlToTextarea();
 		addCopyableCssToTextarea();
-		unhideResultHeadersAndTextarea();
+		unhideResultSections();
 
 		const container = document.querySelector("#grid");
 		const centerEl = document.querySelector(".row");
 
 		container.scrollLeft = centerEl.offsetWidth / 2 - container.offsetWidth / 2;
 	}
-	// allowSubmitEmitter.on("imageLoaded", async (payload, canSubmit) => {
-	// 	console.log("emitter works");
-	// 	console.log("payload: ", payload);
-	// 	console.log("canSubmit: ", canSubmit);
-	// 	if (canSubmit == true) {
-	// 		submitButton.onclick = async (e) => {
-	// 			e.preventDefault();
-	// 			console.log("Submit button clicked.");
-	// 			console.log("canSubmit: ", canSubmit);
-
-	// 			// if (canSubmit == true) {
-	// 			console.log("Received event:", payload.data);
-
-	// 			/* Draw image to the canvas, both to display it as a preview to the user and allow
-	// 		extraction of image data from the canvas */
-	// 			drawImage(canvas, context, payload.data);
-
-	// 			/* Wait for extraction of image data from the canvas and store data */
-	// 			let imageData = await extractImageData(canvas, context);
-	// 			console.log("imageData: ", imageData);
-
-	// 			/* Remove any previous grid if it exists */
-	// 			if (document.contains(document.getElementById("grid"))) {
-	// 				document.getElementById("grid").remove();
-	// 			}
-
-	// 			/* Create a grid of cells with the image's exact width and height (1 cell = 1
-	// 		pixel) */
-	// 			createGrid(imageData.width, imageData.height);
-
-	// 			removeGridCellLabels();
-
-	// 			applyExtractedColoursToGrid(imageData.channels);
-
-	// 			addCopyableHtmlToTextarea();
-	// 			addCopyableCssToTextarea();
-	// 			unhideResultHeadersAndTextarea();
-
-	// 			const container = document.querySelector("#grid");
-	// 			const centerEl = document.querySelector(".row");
-
-	// 			container.scrollLeft =
-	// 				centerEl.offsetWidth / 2 - container.offsetWidth / 2;
-	// 		};
-	// 	} else {
-	// 	}
-	// });
 });
 
 /* —————————————————————————————— removeGridCellLabels() —————————————————————————————— */
@@ -315,63 +284,12 @@ function removeGridCellLabels() {
 
 /* ———————————————————————————— addCopyableHtmlToTextarea() ——————————————————————————— */
 
-/* Old function that created HTML with inline styling so the user can copy it into
-their project. There are so many divs and so much HTML though that adding the
-inline styling literally makes vscode nearly crash on format because it's so much
-text. So in the new function below I'm removing all the inline styling from the
-html so it and the CSS can be completely separate. */
-function OldAddCopyableHtmlToTextareaWithInlineStyling() {
-	/* Get grid html as a string and add it to the text area so the user can copy it */
-	let grid = document.getElementById("grid");
-
-	let gridHTML = grid.innerHTML;
-
-	/* For formatting I'm just editing the grid html text string for now, I'll do this in
-	a neater way later. !TODO */
-
-	/* Formatting HTML text (line breaks, indents) (more readable and makes user's
-	copy/paste easier and neater) */
-	gridHTML = gridHTML.replace(/(\);\">)/g, `);">\n`);
-	gridHTML = gridHTML.replace(/<\/div>/g, `<\/div>\n`);
-	gridHTML = gridHTML.replace(/<div class="cell/g, `\t<div class="cell`);
-	/* Adding all necessary inline styling */
-	gridHTML = gridHTML.replace(
-		/class="row" style="/g,
-		`class="row" style="display: grid; height: fit-content; width: fit-content; `
-	);
-	let textArea = document.getElementById("html-textarea");
-
-	textArea.value = gridHTML;
-}
-
-/* New version of the function that has inline styling removed. Inline styling for
-so many divs is a complete mess, so I'm separating it into HTML and CSS for the
-user to copy. */
 function addCopyableHtmlToTextarea() {
 	/* Get grid html as a string and add it to the text area so the user can copy it */
 	let grid = document.getElementById("grid");
 	let gridClone = grid.cloneNode(true);
 
-	/* I'm grabbing the HTML from a clone of the actual grid HTML nodes used to
-	display the grid to the user. Removing all inline styling that was there to
-	properly display the grid. 
-
-	As I'm starting to separate the HTML from the CSS, I'm starting to realize
-	that I should probably go back to the grid generation function(s) and remove
-	all inline styling from my own grid display as well and just put it in my CSS,
-	maybe with the use of dynamically generating class names for each colour and
-	adding each colour class to their respective cell HTML. 
-
-	I should have done that in the beginning, and it was definitely a bad
-	design decision on my part, but at first this project was just a proof of
-	concept so I didn't worry about it. !REMEMBER - From now on, even for small experimental
-	projects, I'll make an effort to design my code in a way that is scalable and
-	efficient. */
-
-	// console.log(gridClone.children);
-
 	for (node of gridClone.children) {
-		// console.log(node);
 		node.removeAttribute("style");
 		if (node.hasChildNodes()) {
 			for (child of node.children) {
@@ -399,35 +317,29 @@ function addCopyableHtmlToTextarea() {
 
 function addCopyableCssToTextarea() {
 	/* My goal is to list the CSS in an efficient way, so if more than one cell has the same colour I want them listed with commas like: 
-		#c1-r1, #c2-r2{
-			background-colour: rgb(0,0,0,0);
-		}  
+			#c1-r1, #c2-r2{
+				background-colour: rgb(0,0,0,0);
+			} 
+
+	 !TODO: Maybe instead of having hundreds of css selectors due to the cell ids,
+	        I could add a class to each cell that represents the rgba values, eg.
+	        class="rgba-56-27-9" or something that can easily convert to a usable
+	        rgba value format. 
+
+	 !TODO: I'm noticing the CSS strings that are fully opaque leave out the alpha
+	        value instead of setting it to 1. So some cell ids only have 3 values
+	        (aka rgb not rgba). Just noting this in case an issue comes up later,
+	        but for now it seems to be working fine. 
 	*/
+
 	/* Get grid html as a string and add it to the text area so the user can copy it */
 	let gridNodeList = document.getElementById("grid");
 
 	let gridHTML = gridNodeList.innerHTML;
-	// console.log("gridHTML: ", gridHTML);
 
-	// console.log("grid: ", gridNodeList);
-	// console.log("grid.children: ", gridNodeList.children);
-	// console.log("grid.children[0]: ", gridNodeList.children[0]);
-	// console.log("grid.children[0].id: ", gridNodeList.children[0].id);
-	// console.log(
-	// 	"grid.children[0].className: ",
-	// 	gridNodeList.children[0].className
-	// );
-	// console.log(
-	// 	"grid.children[0].style: ",
-	// 	gridNodeList.children[0].style.cssText
-	// );
-
-	// console.log("gridnodelist childnodes: ", gridNodeList.childNodes);
 	let gridWrapperNodes = document.getElementById("grid-wrapper").childNodes;
-	// console.log("gridWrapperNodes: ", gridWrapperNodes);
-	/* ———————————————————————————————————————————————————————————————————————————— */
+
 	let rowNode = document.querySelector(".row");
-	// console.log("rowNode: ", rowNode.style.cssText);
 
 	/* General row styling */
 	let rowStyle = rowNode.style.cssText;
@@ -436,24 +348,14 @@ function addCopyableCssToTextarea() {
 	/* General cell styling */
 	let cellClassCssString = `.cell{height: ${cellHeight}px; width: ${cellWidth}px; border: none;}`;
 
-	/* Specific individual cell styling (actual cell colours making up the image)*/
-
 	let cellNodes = document.querySelectorAll(".cell");
-	// console.log("cellNodes: ", cellNodes);
-	// console.log("cellNodes length: ", cellNodes.length);
-
 	let cellIdBackgroundColours = {};
+	/* Specific individual cell styling (actual cell colours making up the image)*/
 	for (let i = 0; i < cellNodes.length; i++) {
-		// console.log("cellNodes[i]: ", cellNodes[i]);
-		// console.log("cellNodes[i].id: ", cellNodes[i].id);
-		// console.log("cellNodes[i].style: ", cellNodes[i].style.cssText);
-		// console.log("cellNodes[i].style: ", cellNodes[i].style.backgroundColor);
 		let cellId = cellNodes[i].id;
 
 		cellIdBackgroundColours["#" + cellId] = cellNodes[i].style.backgroundColor;
 	}
-
-	// console.log("cellIdBackgroundColours: ", cellIdBackgroundColours);
 
 	// Create a new object to store the duplicate values
 	const duplicateValues = {};
@@ -470,14 +372,11 @@ function addCopyableCssToTextarea() {
 		}
 	}
 
-	// console.log(duplicateValues);
-
 	let cellIdsBackgroundColourCssStrings = [];
 	// Iterate over the duplicateValues object
 	for (const key in duplicateValues) {
 		const value = duplicateValues[key];
 		let cssString = `${value}{background-color: ${key};}\n\n`;
-		// console.log("cssString: ", cssString);
 		/* !TODO: Now I just need to store this and format the whole CSS string to place into the textarea */
 		cellIdsBackgroundColourCssStrings.push(cssString);
 	}
@@ -485,41 +384,6 @@ function addCopyableCssToTextarea() {
 	let completeCssString = `${rowClassCssString}\n\n${cellClassCssString}\n\n${cellIdsBackgroundColourCssStrings.join(
 		""
 	)}`;
-
-	// console.log("completeCssString: ", completeCssString);
-
-	/* !TODO: Maybe instead of having hundreds of css selectors due to the cell
-	ids, I could add a class to each cell that represents the rgba values, eg.
-	class="rgba-56-27-9" or something that can easily convert to a usable rgba
-	value format. */
-
-	/* !TODO: I'm noticing the CSS strings that are fully opaque leave out the
-	alpha value instead of setting it to 1. So some cell ids only have 3 values
-	(aka rgb not rgba). Just noting this in case an issue comes up later, but for
-	now it seems to be working fine. */
-
-	/* ———————————————————————————————————————————————————————————————————————————— */
-	// for (let i = 0; i < gridWrapperNodes.length; i++) {
-	// 	console.log("TEST", i);
-	// 	console.log("gridNodeList[i]: ", gridWrapperNodes[i]);
-	// 	console.log("gridNodeList[i].id: ", gridWrapperNodes[i].id);
-	// 	console.log("gridNodeList[i].className: ", gridWrapperNodes[i].className);
-	// 	console.log("gridNodeList[i].style: ", gridWrapperNodes[i].style.cssText);
-	// }
-	/* For formatting I'm just editing the grid html text string for now, I'll do this in
-	a neater way later. !TODO */
-
-	// /* Formatting HTML text (line breaks, indents) (more readable and makes user's
-	// copy/paste easier and neater) */
-	// gridHTML = gridHTML.replace(/(\);\">)/g, `);">\n`);
-	// gridHTML = gridHTML.replace(/<\/div>/g, `<\/div>\n`);
-	// gridHTML = gridHTML.replace(/<div class="cell/g, `\t<div class="cell`);
-
-	// /* Adding all necessary inline styling */
-	// gridHTML = gridHTML.replace(
-	// 	/class="row" style="/g,
-	// 	`class="row" style="display: grid; height: fit-content; width: fit-content; `
-	// );
 
 	let textArea = document.getElementById("css-textarea");
 
@@ -616,72 +480,6 @@ function createGrid(width, height) {
 		element.style.width = `${cellSizeInput.value}px`;
 		element.style.height = `${cellSizeInput.value}px`;
 	});
-}
-
-/* ———————— 🌈 colourCodeGrid(): Add rainbow colour pattern to grid columns 🌈 ———————— */
-
-/* Colouring divs with rainbow pattern for easier identification */
-function colourCodeGrid(width) {
-	const numColumns = width;
-	/* 	
-		📖 Query Selector All Reference:
-		https://bobbyhadz.com/blog/javascript-get-element-by-id-contains
-    */
-	const allCells = document.querySelectorAll(`[class*=cell]`);
-
-	let count = 1;
-	while (count < numColumns + 1) {
-		const selectedCells = [...allCells].filter((cell) => {
-			return cell.classList.contains(`c${count}`);
-		});
-
-		for (let i = 0; i < selectedCells.length; i++) {
-			let colourNum = count;
-
-			if (colourNum > 10) {
-				colourNum = (colourNum % 10) + 1;
-			}
-
-			switch (colourNum) {
-				case 1:
-					selectedCells[i].style.border = `1px solid blue`;
-					break;
-				case 2:
-					selectedCells[i].style.border = `1px solid aqua`;
-					break;
-				case 3:
-					selectedCells[i].style.border = `1px solid green`;
-					break;
-				case 4:
-					selectedCells[i].style.border = `1px solid lime`;
-					break;
-				case 5:
-					selectedCells[i].style.border = `1px solid yellow`;
-					break;
-				case 6:
-					selectedCells[i].style.border = `1px solid orange`;
-					break;
-				case 7:
-					selectedCells[i].style.border = `1px solid red`;
-					break;
-				case 8:
-					selectedCells[i].style.border = `1px solid pink`;
-					break;
-				case 9:
-					selectedCells[i].style.border = `1px solid magenta`;
-					break;
-				case 10:
-					selectedCells[i].style.border = `1px solid purple`;
-					break;
-				default: {
-					console.log("default switch break executing");
-					break;
-				}
-			}
-			colourNum++;
-		}
-		count++;
-	}
 }
 
 /* ————————— 🎨 applyExtractedColoursToGrid(): Add hex values to grid cells 🎨 ———————— */
