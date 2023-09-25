@@ -9,7 +9,7 @@
 
 		<script src="https://unpkg.com/eventemitter3"></script>
 		<!-- "defer" makes the script act as if it was added to the bottom of body -->
-		<script src="index.js" defer></script>
+		<script defer src="index.js"></script>
 	</head>
 	<body>
 		<!-- !TODO: add link next to grid preview that says like "see full" that opens in a new page, to accomodate really large images -->
@@ -38,7 +38,7 @@
 					</p>
 					<div id="form-container">
 						<form id="image-and-cell-size-form">
-							<div id="user-upload-area" class="form-component">
+							<div class="form-component">
 								<p>
 									<strong
 										><span class="circle" id="step-one-circle">1</span> Upload
@@ -111,17 +111,13 @@
 									</div>
 								</div>
 							</div>
-							<!-- <p><strong>Select the cell size</strong></p> -->
 							<div class="form-component">
 								<p>
 									<strong
 										><span class="circle">2</span> Select the cell size</strong
 									>
 								</p>
-								<div
-									id="cell-size-input-container"
-									class="gradient-wrapper-outside"
-								>
+								<div class="gradient-wrapper-outside">
 									<div
 										class="gradient-wrapper-inside"
 										id="number-form-elements"

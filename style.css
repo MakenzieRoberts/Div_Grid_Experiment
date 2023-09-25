@@ -167,7 +167,6 @@ section {
 section:first-child {
 	display: table;
 	height: 100%;
-	scroll-margin-bottom: 16px;
 	/* !TODO: Find out why display:table is magic... it let me make the div look like height 100% while still having the overflow control of fit-content*/
 }
 
@@ -354,11 +353,12 @@ input[type="file"]::file-selector-button {
 	border-radius: 6px;
 	box-sizing: border-box;
 	color: #bc073d;
-	display: none;
+	/* display: none; */
 	font-weight: bold;
 	margin-top: 6%;
 	position: relative;
-	height: 0;
+	visibility: hidden;
+	/* height: 0; */
 }
 #no-image-error-message.shake {
 	animation: shake 2s linear;

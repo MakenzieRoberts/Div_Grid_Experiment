@@ -36,133 +36,133 @@ const sectionThree = document.getElementById("section-3");
 /* ———————————————————————————————————————————————————————————————————————————— */
 
 /* ——————————————————————— 👂 DOMContentLoaded Event Listener 👂 —————————————————————— */
-window.addEventListener("DOMContentLoaded", async (event) => {
-	// loader.style.display = "none";
-	console.log("DOM content loaded.");
+// window.addEventListener("DOMContentLoaded", async (event) => {
+// loader.style.display = "none";
+console.log("DOM content loaded.");
 
-	/* ————————————————————————————— Demo Image Stuff ————————————————————————————— */
-	const demoImageEmitter = new EventEmitter();
-	console.log("demoImages: ", demoImages);
-	for (let demoImage of demoImages) {
-		demoImage.addEventListener("click", handleDemoImageClick);
+/* ————————————————————————————— Demo Image Stuff ————————————————————————————— */
+const demoImageEmitter = new EventEmitter();
+console.log("demoImages: ", demoImages);
+for (let demoImage of demoImages) {
+	demoImage.addEventListener("click", handleDemoImageClick);
+}
+
+function handleDemoImageClick(e) {
+	e.preventDefault();
+	demoImageSelectedVisualFeedback(e);
+	// Reset the imageLoader's value
+	imageLoader.value = null;
+
+	if (e.target.classList.contains("selected")) {
+		sendDemoImageToimageLoader(e);
 	}
 
-	function handleDemoImageClick(e) {
+	function demoImageSelectedVisualFeedback(e) {
 		e.preventDefault();
-		demoImageSelectedVisualFeedback(e);
-		// Reset the imageLoader's value
-		imageLoader.value = null;
-
+		// stepOneCircle.classList.toggle("greyed-out");
 		if (e.target.classList.contains("selected")) {
-			sendDemoImageToimageLoader(e);
+			orCircle.classList.toggle("greyed-out");
+			stepOneCircle.classList.toggle("greyed-out");
+			e.target.classList.remove("selected");
+			imageEmitter.emit("imageLoaded", { data: null });
+			return;
 		}
-
-		function demoImageSelectedVisualFeedback(e) {
-			e.preventDefault();
-			// stepOneCircle.classList.toggle("greyed-out");
-			if (e.target.classList.contains("selected")) {
-				orCircle.classList.toggle("greyed-out");
-				stepOneCircle.classList.toggle("greyed-out");
-				e.target.classList.remove("selected");
-				imageEmitter.emit("imageLoaded", { data: null });
-				return;
+		if (!e.target.classList.contains("selected")) {
+			for (let demoImage of demoImages) {
+				demoImage.classList.remove("selected");
 			}
-			if (!e.target.classList.contains("selected")) {
-				for (let demoImage of demoImages) {
-					demoImage.classList.remove("selected");
-				}
-				e.target.classList.add("selected");
-				orCircle.classList.remove("greyed-out");
-				stepOneCircle.classList.add("greyed-out");
-			}
-		}
-
-		function sendDemoImageToimageLoader(e) {
-			e.preventDefault();
-			console.log("🔴🔴🔴 demo image clicked 🔴🔴🔴");
-			console.log("e.target.src: ", e.target.src);
-			let demoImg = new Image();
-			demoImg.src = e.target.src;
-			console.log("e: ", e.target.classList);
-			// if (e.target.classList.contains("selected")) {
-			imageEmitter.emit("imageLoaded", { data: demoImg });
-			// }
+			e.target.classList.add("selected");
+			orCircle.classList.remove("greyed-out");
+			stepOneCircle.classList.add("greyed-out");
 		}
 	}
 
-	function deselectAllDemoImages() {
-		for (let demoImage of demoImages) {
-			demoImage.classList.remove("selected");
-			orCircle.classList.add("greyed-out");
-			stepOneCircle.classList.remove("greyed-out");
-		}
+	function sendDemoImageToimageLoader(e) {
+		e.preventDefault();
+		console.log("🔴🔴🔴 demo image clicked 🔴🔴🔴");
+		console.log("e.target.src: ", e.target.src);
+		let demoImg = new Image();
+		demoImg.src = e.target.src;
+		console.log("e: ", e.target.classList);
+		// if (e.target.classList.contains("selected")) {
+		imageEmitter.emit("imageLoaded", { data: demoImg });
+		// }
 	}
-	/* ———————————————————————————————————————————————————————————————————————————— */
-	const imageEmitter = new EventEmitter();
+}
 
-	/* When the user uploads an image, a change is detected and the getImage function is
+function deselectAllDemoImages() {
+	for (let demoImage of demoImages) {
+		demoImage.classList.remove("selected");
+		orCircle.classList.add("greyed-out");
+		stepOneCircle.classList.remove("greyed-out");
+	}
+}
+/* ———————————————————————————————————————————————————————————————————————————— */
+const imageEmitter = new EventEmitter();
+
+/* When the user uploads an image, a change is detected and the getImage function is
 	called */
-	imageLoader.addEventListener("change", getImage);
+imageLoader.addEventListener("change", getImage);
 
-	/*
+/*
 		getImage() reads the image file, creates a new image object, and when the image
 		has loaded it emits an event containing the image data
 	*/
-	function getImage(e) {
-		e.preventDefault();
-		var reader = new FileReader();
-		reader.onload = function (event) {
-			var img = new Image();
-			img.onload = async function () {
-				if (img.height < 200 && img.width < 200) {
+function getImage(e) {
+	e.preventDefault();
+	var reader = new FileReader();
+	reader.onload = function (event) {
+		var img = new Image();
+		img.onload = async function () {
+			if (img.height < 200 && img.width < 200) {
+				imageEmitter.emit("imageLoaded", { data: img });
+			} else {
+				if (
+					//!TODO: I think I read somewhere that window.confirm shouldn't be used in actual production - look into that
+					window.confirm(
+						`⚠️ WARNING ⚠️ \n\nYou've uploaded a large image. The larger an image is, the longer it will take to load. \n\nIf you'd like to proceed, click OK.\n\nTo upload a different image, click Cancel and try again. `
+					)
+				) {
 					imageEmitter.emit("imageLoaded", { data: img });
-				} else {
-					if (
-						//!TODO: I think I read somewhere that window.confirm shouldn't be used in actual production - look into that
-						window.confirm(
-							`⚠️ WARNING ⚠️ \n\nYou've uploaded a large image. The larger an image is, the longer it will take to load. \n\nIf you'd like to proceed, click OK.\n\nTo upload a different image, click Cancel and try again. `
-						)
-					) {
-						imageEmitter.emit("imageLoaded", { data: img });
-					}
 				}
-			};
-			img.src = event.target.result;
-			deselectAllDemoImages();
+			}
 		};
-		reader.readAsDataURL(e.target.files[0]);
+		img.src = event.target.result;
+		deselectAllDemoImages();
+	};
+	reader.readAsDataURL(e.target.files[0]);
+}
+
+const allowSubmitEmitter = new EventEmitter();
+
+let canSubmit = false;
+imageEmitter.on("imageLoaded", async (payload) => {
+	if (payload.data === null) {
+		console.log("👻 received null payload");
+		canSubmit = false;
+	} else {
+		canSubmit = true;
+		allowSubmitEmitter.emit("imageLoaded", payload);
 	}
+});
 
-	const allowSubmitEmitter = new EventEmitter();
+let imgData = null;
+allowSubmitEmitter.on("imageLoaded", async (payload) => {
+	imgData = payload;
+	console.log("imgData: ", imgData);
+	console.log("allowSubmitEmitter.on");
+});
 
-	let canSubmit = false;
-	imageEmitter.on("imageLoaded", async (payload) => {
-		if (payload.data === null) {
-			console.log("👻 received null payload");
-			canSubmit = false;
-		} else {
-			canSubmit = true;
-			allowSubmitEmitter.emit("imageLoaded", payload);
-		}
-	});
-
-	let imgData = null;
-	allowSubmitEmitter.on("imageLoaded", async (payload) => {
-		imgData = payload;
-		console.log("imgData: ", imgData);
-		console.log("allowSubmitEmitter.on");
-	});
-
-	/* ———————————————————————————————————————————————————————————————————————————— */
-	// submitButton.onclick = async (e) => {
-	// 	e.preventDefault();
-	// 	console.log("Submit button clicked.");
-	// 	await showLoadingAnimation();
-	// };
-	form.onsubmit = async (e) => {
-		console.log("Form submitted. canSubmit = ", canSubmit);
-		e.preventDefault();
-		/* This implementation deviates from a straightforward approach to
+/* ———————————————————————————————————————————————————————————————————————————— */
+// submitButton.onclick = async (e) => {
+// 	e.preventDefault();
+// 	console.log("Submit button clicked.");
+// 	await showLoadingAnimation();
+// };
+form.onsubmit = async (e) => {
+	console.log("Form submitted. canSubmit = ", canSubmit);
+	e.preventDefault();
+	/* This implementation deviates from a straightforward approach to
 		prioritize maximum user-friendliness when dealing with large image inputs.
 
 		An issue arises when attempting to enable the loading animation within
@@ -180,96 +180,99 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 		root cause behind the delayed DOM updates, despite using asynchronous
 		techniques and explore alternative approaches */
 
-		console.log("Form submitted.");
+	console.log("Form submitted.");
 
-		if (canSubmit === true) {
-			await new Promise((resolve, reject) => {
-				console.log("Promise executed.");
-				loaderContainer.style.display = "block";
-				loader.style.display = "block";
-				loaderContainer.scrollIntoView({
-					behavior: "smooth",
-					block: "center",
-				});
-				noImageUploadedErrorMsg.style.display = "none";
-				hideResultSections();
-				setTimeout(() => {
-					resolve();
-				}, 100);
+	if (canSubmit === true) {
+		await new Promise((resolve, reject) => {
+			console.log("Promise executed.");
+			loaderContainer.style.display = "block";
+			loader.style.display = "block";
+			loaderContainer.scrollIntoView({
+				behavior: "smooth",
+				block: "center",
 			});
-
-			await main();
-		}
-		if (canSubmit === false) {
+			noImageUploadedErrorMsg.style.visibility = "hidden";
 			hideResultSections();
-			console.log("No image uploaded - Cannot submit.");
-			noImageUploadedErrorMsg.style.display = "block";
-			noImageUploadedErrorMsg.classList.add("shake");
-			setTimeout(function () {
-				//remove the class so animation can occur as many times as user triggers event, delay must be longer than the animation duration and any delay.
-				noImageUploadedErrorMsg.classList.remove("shake");
-			}, 500);
-			// noImageUploadedErrorMsg.classList.remove("shake");
-			if (sectionTwo.hidden === true) {
-				noImageUploadedErrorMsg.scrollIntoView({
-					behavior: "smooth",
-					block: "center",
-				});
-			}
-			if (sectionTwo.hidden === false) {
-				sectionOne.scrollIntoView({
-					behavior: "smooth",
-					block: "end",
-				});
-			}
-		}
+			setTimeout(() => {
+				resolve();
+			}, 100);
+		});
 
-		loader.style.display = "none";
-		loaderContainer.style.display = "none";
-	};
-	/* ———————————————————————————————————————————————————————————————————————————— */
-
-	async function showLoadingAnimation() {
-		loader.style.display = "block";
-		console.log("loader.style.display: ", loader.style.display);
-		return true;
+		await main();
 	}
-	async function main() {
-		// console.log("Received event:", imgData.data);
+	if (canSubmit === false) {
+		hideResultSections();
+		console.log("No image uploaded - Cannot submit.");
+		noImageUploadedErrorMsg.style.visibility = "visible";
+		errorMsgShakeAnim();
+		if (sectionTwo.hidden === true) {
+			noImageUploadedErrorMsg.scrollIntoView({
+				behavior: "smooth",
+				block: "center",
+			});
+		}
+		if (sectionTwo.hidden === false) {
+			sectionOne.scrollIntoView({
+				behavior: "smooth",
+				block: "end",
+			});
+		}
+	}
 
-		// loader.style.display = "block";
-		console.log("loader.style.display: ", loader.style.display);
+	loader.style.display = "none";
+	loaderContainer.style.display = "none";
+};
 
-		/* Draw image to the canvas, both to display it as a preview to the user and allow
+function errorMsgShakeAnim() {
+	noImageUploadedErrorMsg.classList.add("shake");
+	setTimeout(function () {
+		noImageUploadedErrorMsg.classList.remove("shake");
+		// Timeout matches animation duration
+	}, 500);
+}
+/* ———————————————————————————————————————————————————————————————————————————— */
+
+async function showLoadingAnimation() {
+	loader.style.display = "block";
+	console.log("loader.style.display: ", loader.style.display);
+	return true;
+}
+async function main() {
+	// console.log("Received event:", imgData.data);
+
+	// loader.style.display = "block";
+	console.log("loader.style.display: ", loader.style.display);
+
+	/* Draw image to the canvas, both to display it as a preview to the user and allow
 		extraction of image data from the canvas */
-		drawImage(canvas, context, imgData.data);
+	drawImage(canvas, context, imgData.data);
 
-		/* Wait for extraction of image data from the canvas and store data */
-		let imageData = await extractImageData(canvas, context);
-		// console.log("imageData: ", imageData);
+	/* Wait for extraction of image data from the canvas and store data */
+	let imageData = await extractImageData(canvas, context);
+	// console.log("imageData: ", imageData);
 
-		/* Remove any previous grid if it exists */
-		if (document.contains(document.getElementById("grid"))) {
-			document.getElementById("grid").remove();
-		}
-		console.log("loader.style.display: ", loader.style.display);
-		/* Create a grid of cells with the image's exact width and height (1 cell = 1
-		pixel) */
-		createGrid(imageData.width, imageData.height);
-
-		removeGridCellLabels();
-
-		applyExtractedColoursToGrid(imageData.channels);
-		addCopyableHtmlToTextarea();
-		addCopyableCssToTextarea();
-		unhideResultSections();
-
-		const container = document.querySelector("#grid");
-		const centerEl = document.querySelector(".row");
-
-		container.scrollLeft = centerEl.offsetWidth / 2 - container.offsetWidth / 2;
+	/* Remove any previous grid if it exists */
+	if (document.contains(document.getElementById("grid"))) {
+		document.getElementById("grid").remove();
 	}
-});
+	console.log("loader.style.display: ", loader.style.display);
+	/* Create a grid of cells with the image's exact width and height (1 cell = 1
+		pixel) */
+	createGrid(imageData.width, imageData.height);
+
+	removeGridCellLabels();
+
+	applyExtractedColoursToGrid(imageData.channels);
+	addCopyableHtmlToTextarea();
+	addCopyableCssToTextarea();
+	unhideResultSections();
+
+	const container = document.querySelector("#grid");
+	const centerEl = document.querySelector(".row");
+
+	container.scrollLeft = centerEl.offsetWidth / 2 - container.offsetWidth / 2;
+}
+// });
 
 /* —————————————————————————————— removeGridCellLabels() —————————————————————————————— */
 
