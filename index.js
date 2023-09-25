@@ -70,8 +70,8 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 					demoImage.classList.remove("selected");
 				}
 				e.target.classList.add("selected");
-				orCircle.classList.toggle("greyed-out");
-				stepOneCircle.classList.toggle("greyed-out");
+				orCircle.classList.remove("greyed-out");
+				stepOneCircle.classList.add("greyed-out");
 			}
 		}
 
