@@ -192,7 +192,7 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 				loaderContainer.style.display = "block";
 				loader.style.display = "block";
 				noImageUploadedErrorMsg.style.display = "none";
-				hideResultHeadersAndTextarea();
+				hideResultSections();
 				setTimeout(() => {
 					resolve();
 				}, 100);
@@ -525,22 +525,16 @@ function addCopyableCssToTextarea() {
 
 	textArea.value = completeCssString;
 }
-/* ————————————————————————— unhideResultHeadersAndTextarea() ————————————————————————— */
+/* ————————————————————————— unhideResultSections() ————————————————————————— */
 
-function unhideResultHeadersAndTextarea() {
-	for (let resultHeader of resultHeaders) {
-		// console.log(resultHeader);
-		resultHeader.hidden = false;
-		resultHeader.classList.remove("collapsed");
-	}
+function unhideResultSections() {
+	sectionTwo.hidden = false;
+	sectionThree.hidden = false;
 }
 
-function hideResultHeadersAndTextarea() {
-	for (let resultHeader of resultHeaders) {
-		// console.log(resultHeader);
-		resultHeader.hidden = true;
-		resultHeader.classList.add("collapsed");
-	}
+function hideResultSections() {
+	sectionTwo.hidden = true;
+	sectionThree.hidden = true;
 }
 /* ————————————————————— ✏️ drawImage(): Draws image to canvas ✏️ ————————————————————— */
 
